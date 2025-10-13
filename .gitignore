@@ -9,3 +9,6 @@ count.txt
 .tanstack
 .vscode
 .vscode/*
+
+*storybook.log
+storybook-static
