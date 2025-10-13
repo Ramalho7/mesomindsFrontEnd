@@ -8,12 +8,12 @@ export default {
   argTypes: {
     variant: {
       control: { type: 'select' },
-      options: ['default', 'action'], // Correspondente às variantes do Button.tsx
+      options: ['default', 'action'], 
       description: 'Variante visual do botão'
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg'], // Correspondente aos tamanhos do Button.tsx
+      options: ['sm', 'md', 'lg'], 
       description: 'Tamanho do botão'
     },
     asChild: {
@@ -40,7 +40,6 @@ export default {
 
 const Template: StoryFn<ButtonProps> = (args) => <Button {...args}>Texto do Botão</Button>;
 
-// Variante Default - com sombra secundária e borda secundária
 export const Default = Template.bind({});
 Default.args = {
   variant: 'default',
@@ -54,7 +53,6 @@ Default.parameters = {
   }
 };
 
-// Variante Action - com sombra de ação e borda de ação
 export const Action = Template.bind({});
 Action.args = {
   variant: 'action',
@@ -68,7 +66,6 @@ Action.parameters = {
   }
 };
 
-// Tamanhos
 export const Small = Template.bind({});
 Small.args = {
   variant: 'default',
@@ -87,7 +84,6 @@ Large.args = {
   size: 'lg',
 };
 
-// Estados
 export const Disabled = Template.bind({});
 Disabled.args = {
   variant: 'default',
@@ -95,7 +91,6 @@ Disabled.args = {
   disabled: true,
 };
 
-// Uso como Link (asChild)
 export const AsLink: StoryFn<ButtonProps> = (args) => (
   <Button {...args} asChild>
     <a href="#" style={{ textDecoration: 'none' }}>
@@ -115,7 +110,6 @@ AsLink.parameters = {
   }
 };
 
-// Showcase de todos os tamanhos
 export const AllSizes: StoryFn = () => (
   <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
     <Button variant="default" size="sm">
@@ -137,7 +131,6 @@ AllSizes.parameters = {
   }
 };
 
-// Showcase de todas as variantes
 export const AllVariants: StoryFn = () => (
   <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
     <Button variant="default" size="md">
@@ -156,7 +149,6 @@ AllVariants.parameters = {
   }
 };
 
-// Showcase de estados com hover
 export const InteractiveStates: StoryFn = () => (
   <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
     <Button variant="default" size="md">

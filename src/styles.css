@@ -19,15 +19,15 @@ code {
 }
 
 :root {
-  --background: oklch(1 0 0);
+  --background: #FFFFFF;
   --foreground: black;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
+  --primary: #FFFFFF;
+  --primary-foreground: #000;
+  --secondary: #3A6944;
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: oklch(0.552 0.016 285.938);
@@ -53,14 +53,12 @@ code {
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.871 0.006 286.286);
 
-  --color-primary: #FFFFFF;
-  --color-secondary: #3A6944;
   --color-action: #00A84C;
   --color-gray: #1E1E1E;
 }
 
 .dark {
-  --background: oklch(0.141 0.005 285.823);
+  --background: #000;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.141 0.005 285.823);
   --card-foreground: oklch(0.985 0 0);
@@ -95,7 +93,7 @@ code {
 }
 
 @theme inline {
-  --color-background: var(--color-primary);
+  --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -132,8 +130,6 @@ code {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --color-primary: var(--color-primary);
-  --color-secondary: var(--color-secondary);
   --color-action: var(--color-action);
   --color-gray: var(--color-gray);
   --shadow-custom-action: 6px 6px 1px 0px var(--color-action);
