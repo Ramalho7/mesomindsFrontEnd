@@ -1,7 +1,11 @@
 import { Link } from '@tanstack/react-router'
 import { Button } from './ui/button'
 
-export default function Header() {
+interface HeaderProps {
+  isLoggedIn: boolean;
+}
+
+export default function Header({ isLoggedIn }: HeaderProps) {
 
   return (
     <>
@@ -24,7 +28,13 @@ export default function Header() {
             Turmas
           </Link>
         </nav>
-        <Button variant={"action"}>Entrar</Button>
+
+        {isLoggedIn ? (
+          <Button variant={"action"}>Logout</Button>
+        ) : (
+          <Button variant={"action"}>Entrar</Button>
+        )
+}
       </header>
     </>
   )
