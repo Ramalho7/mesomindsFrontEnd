@@ -1,6 +1,9 @@
 module.exports = {
     theme: {
         extend: {
+            fontFamily: {
+                sans: ['Inter', 'Roboto', 'sans-serif'],
+            },
             colors: {
                 background: 'var(--color-background)',   
                 foreground: 'var(--color-foreground)',

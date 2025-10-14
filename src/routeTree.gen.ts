@@ -9,8 +9,50 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TurmasRouteImport } from './routes/turmas'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as SimuladosRouteImport } from './routes/simulados'
+import { Route as QuestoesRouteImport } from './routes/questoes'
+import { Route as ProvasRouteImport } from './routes/provas'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ConteudosRouteImport } from './routes/conteudos'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TurmasRoute = TurmasRouteImport.update({
+  id: '/turmas',
+  path: '/turmas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimuladosRoute = SimuladosRouteImport.update({
+  id: '/simulados',
+  path: '/simulados',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuestoesRoute = QuestoesRouteImport.update({
+  id: '/questoes',
+  path: '/questoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProvasRoute = ProvasRouteImport.update({
+  id: '/provas',
+  path: '/provas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConteudosRoute = ConteudosRouteImport.update({
+  id: '/conteudos',
+  path: '/conteudos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +61,130 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/conteudos': typeof ConteudosRoute
+  '/login': typeof LoginRoute
+  '/provas': typeof ProvasRoute
+  '/questoes': typeof QuestoesRoute
+  '/simulados': typeof SimuladosRoute
+  '/sobre': typeof SobreRoute
+  '/turmas': typeof TurmasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/conteudos': typeof ConteudosRoute
+  '/login': typeof LoginRoute
+  '/provas': typeof ProvasRoute
+  '/questoes': typeof QuestoesRoute
+  '/simulados': typeof SimuladosRoute
+  '/sobre': typeof SobreRoute
+  '/turmas': typeof TurmasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/conteudos': typeof ConteudosRoute
+  '/login': typeof LoginRoute
+  '/provas': typeof ProvasRoute
+  '/questoes': typeof QuestoesRoute
+  '/simulados': typeof SimuladosRoute
+  '/sobre': typeof SobreRoute
+  '/turmas': typeof TurmasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/conteudos'
+    | '/login'
+    | '/provas'
+    | '/questoes'
+    | '/simulados'
+    | '/sobre'
+    | '/turmas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/conteudos'
+    | '/login'
+    | '/provas'
+    | '/questoes'
+    | '/simulados'
+    | '/sobre'
+    | '/turmas'
+  id:
+    | '__root__'
+    | '/'
+    | '/conteudos'
+    | '/login'
+    | '/provas'
+    | '/questoes'
+    | '/simulados'
+    | '/sobre'
+    | '/turmas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConteudosRoute: typeof ConteudosRoute
+  LoginRoute: typeof LoginRoute
+  ProvasRoute: typeof ProvasRoute
+  QuestoesRoute: typeof QuestoesRoute
+  SimuladosRoute: typeof SimuladosRoute
+  SobreRoute: typeof SobreRoute
+  TurmasRoute: typeof TurmasRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/turmas': {
+      id: '/turmas'
+      path: '/turmas'
+      fullPath: '/turmas'
+      preLoaderRoute: typeof TurmasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulados': {
+      id: '/simulados'
+      path: '/simulados'
+      fullPath: '/simulados'
+      preLoaderRoute: typeof SimuladosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/questoes': {
+      id: '/questoes'
+      path: '/questoes'
+      fullPath: '/questoes'
+      preLoaderRoute: typeof QuestoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/provas': {
+      id: '/provas'
+      path: '/provas'
+      fullPath: '/provas'
+      preLoaderRoute: typeof ProvasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conteudos': {
+      id: '/conteudos'
+      path: '/conteudos'
+      fullPath: '/conteudos'
+      preLoaderRoute: typeof ConteudosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +197,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConteudosRoute: ConteudosRoute,
+  LoginRoute: LoginRoute,
+  ProvasRoute: ProvasRoute,
+  QuestoesRoute: QuestoesRoute,
+  SimuladosRoute: SimuladosRoute,
+  SobreRoute: SobreRoute,
+  TurmasRoute: TurmasRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
