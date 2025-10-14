@@ -1,6 +1,6 @@
 import React from 'react';
 import { type StoryFn, type Meta } from '@storybook/react';
-import { Button, type ButtonProps } from '../components/Button';
+import { Button } from '../components/ui/button'; 
 
 export default {
   title: 'Components/Button',
@@ -13,7 +13,7 @@ export default {
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md', 'lg'], 
+      options: ['default', 'sm', 'lg', 'icon', 'icon-sm', 'icon-lg'], 
       description: 'Tamanho do botão'
     },
     asChild: {
@@ -32,50 +32,32 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Componente de botão personalizável com variantes e tamanhos diferentes baseado em shadcn/ui'
+        component: 'Componente de botão do shadcn/ui personalizado com variantes customizadas'
       }
     }
   }
 } as Meta<typeof Button>;
+
+type ButtonProps = React.ComponentProps<typeof Button>;
 
 const Template: StoryFn<ButtonProps> = (args) => <Button {...args}>Texto do Botão</Button>;
 
 export const Default = Template.bind({});
 Default.args = {
   variant: 'default',
-  size: 'md',
-};
-Default.parameters = {
-  docs: {
-    description: {
-      story: 'Botão padrão com fundo primário, texto secundário, sombra secundária e borda secundária. No hover, muda para sombra e borda de ação.'
-    }
-  }
+  size: 'default',
 };
 
 export const Action = Template.bind({});
 Action.args = {
   variant: 'action',
-  size: 'md',
-};
-Action.parameters = {
-  docs: {
-    description: {
-      story: 'Botão de ação com fundo primário, texto de ação, sombra de ação e borda de ação. No hover, muda para sombra e borda secundária.'
-    }
-  }
+  size: 'default',
 };
 
 export const Small = Template.bind({});
 Small.args = {
   variant: 'default',
   size: 'sm',
-};
-
-export const Medium = Template.bind({});
-Medium.args = {
-  variant: 'default',
-  size: 'md',
 };
 
 export const Large = Template.bind({});
@@ -87,7 +69,7 @@ Large.args = {
 export const Disabled = Template.bind({});
 Disabled.args = {
   variant: 'default',
-  size: 'md',
+  size: 'default',
   disabled: true,
 };
 
@@ -100,14 +82,7 @@ export const AsLink: StoryFn<ButtonProps> = (args) => (
 );
 AsLink.args = {
   variant: 'action',
-  size: 'md',
-};
-AsLink.parameters = {
-  docs: {
-    description: {
-      story: 'Exemplo de uso do botão como link usando a propriedade asChild.'
-    }
-  }
+  size: 'default',
 };
 
 export const AllSizes: StoryFn = () => (
@@ -115,57 +90,36 @@ export const AllSizes: StoryFn = () => (
     <Button variant="default" size="sm">
       Pequeno
     </Button>
-    <Button variant="default" size="md">
-      Médio
+    <Button variant="default" size="default">
+      Default
     </Button>
     <Button variant="default" size="lg">
       Grande
     </Button>
   </div>
 );
-AllSizes.parameters = {
-  docs: {
-    description: {
-      story: 'Comparação visual de todos os tamanhos disponíveis (sm, md, lg).'
-    }
-  }
-};
 
 export const AllVariants: StoryFn = () => (
   <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-    <Button variant="default" size="md">
+    <Button variant="default" size="default">
       Default
     </Button>
-    <Button variant="action" size="md">
+    <Button variant="action" size="default">
       Action
     </Button>
   </div>
 );
-AllVariants.parameters = {
-  docs: {
-    description: {
-      story: 'Comparação visual de todas as variantes disponíveis (default, action).'
-    }
-  }
-};
 
 export const InteractiveStates: StoryFn = () => (
   <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-    <Button variant="default" size="md">
+    <Button variant="default" size="default">
       Default (hover me)
     </Button>
-    <Button variant="action" size="md">
+    <Button variant="action" size="default">
       Action (hover me)
     </Button>
-    <Button variant="default" size="md" disabled>
+    <Button variant="default" size="default" disabled>
       Disabled
     </Button>
   </div>
 );
-InteractiveStates.parameters = {
-  docs: {
-    description: {
-      story: 'Estados interativos dos botões. Passe o mouse sobre os botões para ver os efeitos de hover definidos no CSS.'
-    }
-  }
-};

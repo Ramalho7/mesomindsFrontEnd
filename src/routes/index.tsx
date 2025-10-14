@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Button } from '@/components/Button'
+import { Button } from '@/components/ui/button'
 import Header from '@/components/Header'
 
 export const Route = createFileRoute('/')({
