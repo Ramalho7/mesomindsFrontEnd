@@ -19,21 +19,34 @@ export function UserDropdown() {
         className="w-[19.75rem] border-2 border-action"
         align="end"
       >
-        <DropdownMenuItem className="text-lg">
-          <Link to="/perfil">Perfil</Link>
+        <DropdownMenuItem asChild>
+          <Link to="/perfil" className="!text-lg w-full h-full flex items-center">
+            Perfil
+          </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="text-lg">
-          <Link to="/configuracoes">Configurações</Link>
+        <DropdownMenuItem asChild>
+          <Link
+            to="/configuracoes"
+            className="!text-lg w-full h-full flex items-center"
+          >
+            Configurações
+          </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="text-lg">
-          <Link to="/flashcards">Flashcards</Link>
+        <DropdownMenuItem asChild>
+          <Link to="/flashcards" className="!text-lg w-full h-full flex items-center">
+            Flashcards
+          </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="text-lg">
-          <Link to="/turmas">Turmas</Link>
+        <DropdownMenuItem asChild>
+          <Link to="/turmas" className="!text-lg w-full h-full flex items-center">
+            Turmas
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="data-[highlighted]:bg-red-100 data-[highlighted]:text-red-600 text-base text-red-700">
-          Sair
+        <DropdownMenuItem asChild>
+          <button className="data-[highlighted]:bg-red-100 data-[highlighted]:text-red-600 !text-base text-red-700 w-full h-full flex items-center">
+            Sair
+          </button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
