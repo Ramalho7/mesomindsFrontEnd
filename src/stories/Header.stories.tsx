@@ -1,4 +1,3 @@
-import React from 'react';
 import StyledHeader from './StoryHeader';
 import type { Meta, StoryObj } from '@storybook/react';
 
