@@ -14,8 +14,11 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SimuladosRouteImport } from './routes/simulados'
 import { Route as QuestoesRouteImport } from './routes/questoes'
 import { Route as ProvasRouteImport } from './routes/provas'
+import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as FlashcardsRouteImport } from './routes/flashcards'
 import { Route as ConteudosRouteImport } from './routes/conteudos'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TurmasRoute = TurmasRouteImport.update({
@@ -43,14 +46,29 @@ const ProvasRoute = ProvasRouteImport.update({
   path: '/provas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FlashcardsRoute = FlashcardsRouteImport.update({
+  id: '/flashcards',
+  path: '/flashcards',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConteudosRoute = ConteudosRouteImport.update({
   id: '/conteudos',
   path: '/conteudos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -61,8 +79,11 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/conteudos': typeof ConteudosRoute
+  '/flashcards': typeof FlashcardsRoute
   '/login': typeof LoginRoute
+  '/perfil': typeof PerfilRoute
   '/provas': typeof ProvasRoute
   '/questoes': typeof QuestoesRoute
   '/simulados': typeof SimuladosRoute
@@ -71,8 +92,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/conteudos': typeof ConteudosRoute
+  '/flashcards': typeof FlashcardsRoute
   '/login': typeof LoginRoute
+  '/perfil': typeof PerfilRoute
   '/provas': typeof ProvasRoute
   '/questoes': typeof QuestoesRoute
   '/simulados': typeof SimuladosRoute
@@ -82,8 +106,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/conteudos': typeof ConteudosRoute
+  '/flashcards': typeof FlashcardsRoute
   '/login': typeof LoginRoute
+  '/perfil': typeof PerfilRoute
   '/provas': typeof ProvasRoute
   '/questoes': typeof QuestoesRoute
   '/simulados': typeof SimuladosRoute
@@ -94,8 +121,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/configuracoes'
     | '/conteudos'
+    | '/flashcards'
     | '/login'
+    | '/perfil'
     | '/provas'
     | '/questoes'
     | '/simulados'
@@ -104,8 +134,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/configuracoes'
     | '/conteudos'
+    | '/flashcards'
     | '/login'
+    | '/perfil'
     | '/provas'
     | '/questoes'
     | '/simulados'
@@ -114,8 +147,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/configuracoes'
     | '/conteudos'
+    | '/flashcards'
     | '/login'
+    | '/perfil'
     | '/provas'
     | '/questoes'
     | '/simulados'
@@ -125,8 +161,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConfiguracoesRoute: typeof ConfiguracoesRoute
   ConteudosRoute: typeof ConteudosRoute
+  FlashcardsRoute: typeof FlashcardsRoute
   LoginRoute: typeof LoginRoute
+  PerfilRoute: typeof PerfilRoute
   ProvasRoute: typeof ProvasRoute
   QuestoesRoute: typeof QuestoesRoute
   SimuladosRoute: typeof SimuladosRoute
@@ -171,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProvasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -178,11 +224,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/flashcards': {
+      id: '/flashcards'
+      path: '/flashcards'
+      fullPath: '/flashcards'
+      preLoaderRoute: typeof FlashcardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/conteudos': {
       id: '/conteudos'
       path: '/conteudos'
       fullPath: '/conteudos'
       preLoaderRoute: typeof ConteudosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -197,8 +257,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConfiguracoesRoute: ConfiguracoesRoute,
   ConteudosRoute: ConteudosRoute,
+  FlashcardsRoute: FlashcardsRoute,
   LoginRoute: LoginRoute,
+  PerfilRoute: PerfilRoute,
   ProvasRoute: ProvasRoute,
   QuestoesRoute: QuestoesRoute,
   SimuladosRoute: SimuladosRoute,
