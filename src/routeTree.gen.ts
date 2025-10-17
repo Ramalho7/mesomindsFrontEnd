@@ -9,118 +9,159 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TurmasRouteImport } from './routes/turmas'
-import { Route as SobreRouteImport } from './routes/sobre'
-import { Route as SimuladosRouteImport } from './routes/simulados'
-import { Route as QuestoesRouteImport } from './routes/questoes'
-import { Route as ProvasRouteImport } from './routes/provas'
-import { Route as PerfilRouteImport } from './routes/perfil'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as FlashcardsRouteImport } from './routes/flashcards'
-import { Route as ConteudosRouteImport } from './routes/conteudos'
-import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as PublicRouteImport } from './routes/_public'
+import { Route as DashboardRouteImport } from './routes/_dashboard'
+import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as PublicTurmasRouteImport } from './routes/_public/turmas'
+import { Route as PublicSobreRouteImport } from './routes/_public/sobre'
+import { Route as PublicSimuladosRouteImport } from './routes/_public/simulados'
+import { Route as PublicQuestoesRouteImport } from './routes/_public/questoes'
+import { Route as PublicProvasRouteImport } from './routes/_public/provas'
+import { Route as PublicPerfilRouteImport } from './routes/_public/perfil'
+import { Route as PublicLoginRouteImport } from './routes/_public/login'
+import { Route as PublicFlashcardsRouteImport } from './routes/_public/flashcards'
+import { Route as PublicConteudosRouteImport } from './routes/_public/conteudos'
+import { Route as PublicConfiguracoesRouteImport } from './routes/_public/configuracoes'
+import { Route as DashboardDashboardRouteImport } from './routes/_dashboard/dashboard'
+import { Route as DashboardContentCreatecontentRouteImport } from './routes/_dashboard/content/createcontent'
+import { Route as DashboardContentContentsRouteImport } from './routes/_dashboard/content/contents'
 
-const TurmasRoute = TurmasRouteImport.update({
-  id: '/turmas',
-  path: '/turmas',
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SobreRoute = SobreRouteImport.update({
-  id: '/sobre',
-  path: '/sobre',
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/_dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SimuladosRoute = SimuladosRouteImport.update({
-  id: '/simulados',
-  path: '/simulados',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const QuestoesRoute = QuestoesRouteImport.update({
-  id: '/questoes',
-  path: '/questoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProvasRoute = ProvasRouteImport.update({
-  id: '/provas',
-  path: '/provas',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PerfilRoute = PerfilRouteImport.update({
-  id: '/perfil',
-  path: '/perfil',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FlashcardsRoute = FlashcardsRouteImport.update({
-  id: '/flashcards',
-  path: '/flashcards',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConteudosRoute = ConteudosRouteImport.update({
-  id: '/conteudos',
-  path: '/conteudos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
-  id: '/configuracoes',
-  path: '/configuracoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PublicRoute,
 } as any)
+const PublicTurmasRoute = PublicTurmasRouteImport.update({
+  id: '/turmas',
+  path: '/turmas',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicSobreRoute = PublicSobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicSimuladosRoute = PublicSimuladosRouteImport.update({
+  id: '/simulados',
+  path: '/simulados',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicQuestoesRoute = PublicQuestoesRouteImport.update({
+  id: '/questoes',
+  path: '/questoes',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicProvasRoute = PublicProvasRouteImport.update({
+  id: '/provas',
+  path: '/provas',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicPerfilRoute = PublicPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicLoginRoute = PublicLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicFlashcardsRoute = PublicFlashcardsRouteImport.update({
+  id: '/flashcards',
+  path: '/flashcards',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicConteudosRoute = PublicConteudosRouteImport.update({
+  id: '/conteudos',
+  path: '/conteudos',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicConfiguracoesRoute = PublicConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => PublicRoute,
+} as any)
+const DashboardDashboardRoute = DashboardDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardContentCreatecontentRoute =
+  DashboardContentCreatecontentRouteImport.update({
+    id: '/content/createcontent',
+    path: '/content/createcontent',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardContentContentsRoute =
+  DashboardContentContentsRouteImport.update({
+    id: '/content/contents',
+    path: '/content/contents',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/conteudos': typeof ConteudosRoute
-  '/flashcards': typeof FlashcardsRoute
-  '/login': typeof LoginRoute
-  '/perfil': typeof PerfilRoute
-  '/provas': typeof ProvasRoute
-  '/questoes': typeof QuestoesRoute
-  '/simulados': typeof SimuladosRoute
-  '/sobre': typeof SobreRoute
-  '/turmas': typeof TurmasRoute
+  '/dashboard': typeof DashboardDashboardRoute
+  '/configuracoes': typeof PublicConfiguracoesRoute
+  '/conteudos': typeof PublicConteudosRoute
+  '/flashcards': typeof PublicFlashcardsRoute
+  '/login': typeof PublicLoginRoute
+  '/perfil': typeof PublicPerfilRoute
+  '/provas': typeof PublicProvasRoute
+  '/questoes': typeof PublicQuestoesRoute
+  '/simulados': typeof PublicSimuladosRoute
+  '/sobre': typeof PublicSobreRoute
+  '/turmas': typeof PublicTurmasRoute
+  '/': typeof PublicIndexRoute
+  '/content/contents': typeof DashboardContentContentsRoute
+  '/content/createcontent': typeof DashboardContentCreatecontentRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/conteudos': typeof ConteudosRoute
-  '/flashcards': typeof FlashcardsRoute
-  '/login': typeof LoginRoute
-  '/perfil': typeof PerfilRoute
-  '/provas': typeof ProvasRoute
-  '/questoes': typeof QuestoesRoute
-  '/simulados': typeof SimuladosRoute
-  '/sobre': typeof SobreRoute
-  '/turmas': typeof TurmasRoute
+  '/dashboard': typeof DashboardDashboardRoute
+  '/configuracoes': typeof PublicConfiguracoesRoute
+  '/conteudos': typeof PublicConteudosRoute
+  '/flashcards': typeof PublicFlashcardsRoute
+  '/login': typeof PublicLoginRoute
+  '/perfil': typeof PublicPerfilRoute
+  '/provas': typeof PublicProvasRoute
+  '/questoes': typeof PublicQuestoesRoute
+  '/simulados': typeof PublicSimuladosRoute
+  '/sobre': typeof PublicSobreRoute
+  '/turmas': typeof PublicTurmasRoute
+  '/': typeof PublicIndexRoute
+  '/content/contents': typeof DashboardContentContentsRoute
+  '/content/createcontent': typeof DashboardContentCreatecontentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/configuracoes': typeof ConfiguracoesRoute
-  '/conteudos': typeof ConteudosRoute
-  '/flashcards': typeof FlashcardsRoute
-  '/login': typeof LoginRoute
-  '/perfil': typeof PerfilRoute
-  '/provas': typeof ProvasRoute
-  '/questoes': typeof QuestoesRoute
-  '/simulados': typeof SimuladosRoute
-  '/sobre': typeof SobreRoute
-  '/turmas': typeof TurmasRoute
+  '/_dashboard': typeof DashboardRouteWithChildren
+  '/_public': typeof PublicRouteWithChildren
+  '/_dashboard/dashboard': typeof DashboardDashboardRoute
+  '/_public/configuracoes': typeof PublicConfiguracoesRoute
+  '/_public/conteudos': typeof PublicConteudosRoute
+  '/_public/flashcards': typeof PublicFlashcardsRoute
+  '/_public/login': typeof PublicLoginRoute
+  '/_public/perfil': typeof PublicPerfilRoute
+  '/_public/provas': typeof PublicProvasRoute
+  '/_public/questoes': typeof PublicQuestoesRoute
+  '/_public/simulados': typeof PublicSimuladosRoute
+  '/_public/sobre': typeof PublicSobreRoute
+  '/_public/turmas': typeof PublicTurmasRoute
+  '/_public/': typeof PublicIndexRoute
+  '/_dashboard/content/contents': typeof DashboardContentContentsRoute
+  '/_dashboard/content/createcontent': typeof DashboardContentCreatecontentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
+    | '/dashboard'
     | '/configuracoes'
     | '/conteudos'
     | '/flashcards'
@@ -131,9 +172,12 @@ export interface FileRouteTypes {
     | '/simulados'
     | '/sobre'
     | '/turmas'
+    | '/'
+    | '/content/contents'
+    | '/content/createcontent'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
+    | '/dashboard'
     | '/configuracoes'
     | '/conteudos'
     | '/flashcards'
@@ -144,129 +188,201 @@ export interface FileRouteTypes {
     | '/simulados'
     | '/sobre'
     | '/turmas'
+    | '/'
+    | '/content/contents'
+    | '/content/createcontent'
   id:
     | '__root__'
-    | '/'
-    | '/configuracoes'
-    | '/conteudos'
-    | '/flashcards'
-    | '/login'
-    | '/perfil'
-    | '/provas'
-    | '/questoes'
-    | '/simulados'
-    | '/sobre'
-    | '/turmas'
+    | '/_dashboard'
+    | '/_public'
+    | '/_dashboard/dashboard'
+    | '/_public/configuracoes'
+    | '/_public/conteudos'
+    | '/_public/flashcards'
+    | '/_public/login'
+    | '/_public/perfil'
+    | '/_public/provas'
+    | '/_public/questoes'
+    | '/_public/simulados'
+    | '/_public/sobre'
+    | '/_public/turmas'
+    | '/_public/'
+    | '/_dashboard/content/contents'
+    | '/_dashboard/content/createcontent'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ConfiguracoesRoute: typeof ConfiguracoesRoute
-  ConteudosRoute: typeof ConteudosRoute
-  FlashcardsRoute: typeof FlashcardsRoute
-  LoginRoute: typeof LoginRoute
-  PerfilRoute: typeof PerfilRoute
-  ProvasRoute: typeof ProvasRoute
-  QuestoesRoute: typeof QuestoesRoute
-  SimuladosRoute: typeof SimuladosRoute
-  SobreRoute: typeof SobreRoute
-  TurmasRoute: typeof TurmasRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  PublicRoute: typeof PublicRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/turmas': {
-      id: '/turmas'
-      path: '/turmas'
-      fullPath: '/turmas'
-      preLoaderRoute: typeof TurmasRouteImport
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sobre': {
-      id: '/sobre'
-      path: '/sobre'
-      fullPath: '/sobre'
-      preLoaderRoute: typeof SobreRouteImport
+    '/_dashboard': {
+      id: '/_dashboard'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/simulados': {
-      id: '/simulados'
-      path: '/simulados'
-      fullPath: '/simulados'
-      preLoaderRoute: typeof SimuladosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/questoes': {
-      id: '/questoes'
-      path: '/questoes'
-      fullPath: '/questoes'
-      preLoaderRoute: typeof QuestoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/provas': {
-      id: '/provas'
-      path: '/provas'
-      fullPath: '/provas'
-      preLoaderRoute: typeof ProvasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/perfil': {
-      id: '/perfil'
-      path: '/perfil'
-      fullPath: '/perfil'
-      preLoaderRoute: typeof PerfilRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/flashcards': {
-      id: '/flashcards'
-      path: '/flashcards'
-      fullPath: '/flashcards'
-      preLoaderRoute: typeof FlashcardsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/conteudos': {
-      id: '/conteudos'
-      path: '/conteudos'
-      fullPath: '/conteudos'
-      preLoaderRoute: typeof ConteudosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/configuracoes': {
-      id: '/configuracoes'
-      path: '/configuracoes'
-      fullPath: '/configuracoes'
-      preLoaderRoute: typeof ConfiguracoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_public/': {
+      id: '/_public/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/turmas': {
+      id: '/_public/turmas'
+      path: '/turmas'
+      fullPath: '/turmas'
+      preLoaderRoute: typeof PublicTurmasRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/sobre': {
+      id: '/_public/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof PublicSobreRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/simulados': {
+      id: '/_public/simulados'
+      path: '/simulados'
+      fullPath: '/simulados'
+      preLoaderRoute: typeof PublicSimuladosRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/questoes': {
+      id: '/_public/questoes'
+      path: '/questoes'
+      fullPath: '/questoes'
+      preLoaderRoute: typeof PublicQuestoesRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/provas': {
+      id: '/_public/provas'
+      path: '/provas'
+      fullPath: '/provas'
+      preLoaderRoute: typeof PublicProvasRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/perfil': {
+      id: '/_public/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PublicPerfilRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/login': {
+      id: '/_public/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof PublicLoginRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/flashcards': {
+      id: '/_public/flashcards'
+      path: '/flashcards'
+      fullPath: '/flashcards'
+      preLoaderRoute: typeof PublicFlashcardsRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/conteudos': {
+      id: '/_public/conteudos'
+      path: '/conteudos'
+      fullPath: '/conteudos'
+      preLoaderRoute: typeof PublicConteudosRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/configuracoes': {
+      id: '/_public/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof PublicConfiguracoesRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_dashboard/dashboard': {
+      id: '/_dashboard/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardDashboardRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/content/createcontent': {
+      id: '/_dashboard/content/createcontent'
+      path: '/content/createcontent'
+      fullPath: '/content/createcontent'
+      preLoaderRoute: typeof DashboardContentCreatecontentRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/content/contents': {
+      id: '/_dashboard/content/contents'
+      path: '/content/contents'
+      fullPath: '/content/contents'
+      preLoaderRoute: typeof DashboardContentContentsRouteImport
+      parentRoute: typeof DashboardRoute
     }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardDashboardRoute: typeof DashboardDashboardRoute
+  DashboardContentContentsRoute: typeof DashboardContentContentsRoute
+  DashboardContentCreatecontentRoute: typeof DashboardContentCreatecontentRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardDashboardRoute: DashboardDashboardRoute,
+  DashboardContentContentsRoute: DashboardContentContentsRoute,
+  DashboardContentCreatecontentRoute: DashboardContentCreatecontentRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
+interface PublicRouteChildren {
+  PublicConfiguracoesRoute: typeof PublicConfiguracoesRoute
+  PublicConteudosRoute: typeof PublicConteudosRoute
+  PublicFlashcardsRoute: typeof PublicFlashcardsRoute
+  PublicLoginRoute: typeof PublicLoginRoute
+  PublicPerfilRoute: typeof PublicPerfilRoute
+  PublicProvasRoute: typeof PublicProvasRoute
+  PublicQuestoesRoute: typeof PublicQuestoesRoute
+  PublicSimuladosRoute: typeof PublicSimuladosRoute
+  PublicSobreRoute: typeof PublicSobreRoute
+  PublicTurmasRoute: typeof PublicTurmasRoute
+  PublicIndexRoute: typeof PublicIndexRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicConfiguracoesRoute: PublicConfiguracoesRoute,
+  PublicConteudosRoute: PublicConteudosRoute,
+  PublicFlashcardsRoute: PublicFlashcardsRoute,
+  PublicLoginRoute: PublicLoginRoute,
+  PublicPerfilRoute: PublicPerfilRoute,
+  PublicProvasRoute: PublicProvasRoute,
+  PublicQuestoesRoute: PublicQuestoesRoute,
+  PublicSimuladosRoute: PublicSimuladosRoute,
+  PublicSobreRoute: PublicSobreRoute,
+  PublicTurmasRoute: PublicTurmasRoute,
+  PublicIndexRoute: PublicIndexRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ConfiguracoesRoute: ConfiguracoesRoute,
-  ConteudosRoute: ConteudosRoute,
-  FlashcardsRoute: FlashcardsRoute,
-  LoginRoute: LoginRoute,
-  PerfilRoute: PerfilRoute,
-  ProvasRoute: ProvasRoute,
-  QuestoesRoute: QuestoesRoute,
-  SimuladosRoute: SimuladosRoute,
-  SobreRoute: SobreRoute,
-  TurmasRoute: TurmasRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  PublicRoute: PublicRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

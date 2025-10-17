@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
-import Header from '@/components/Header/Header'
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_public/')({
   component: App,
 })
 

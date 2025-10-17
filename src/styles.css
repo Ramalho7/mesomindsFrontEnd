@@ -141,20 +141,4 @@ code {
   body {
     @apply bg-background text-foreground; 
   }
-
-  .btn-primary {
-    @apply bg-primary text-secondary; 
-  }
-
-  .btn-action {
-    @apply bg-action text-primary; 
-  }
-
-  .card {
-    @apply bg-secondary text-primary;
-  }
-
-  .text-muted {
-    @apply text-gray;
-  }
 }
