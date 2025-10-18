@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Button } from '../ui/button'
 import { UserDropdown } from './UserDropdown'
 import { useEffect, useState } from 'react'
+import { SidebarTrigger } from '../ui/sidebar'
 
 interface HeaderProps {
   isLoggedIn: boolean
@@ -32,14 +33,21 @@ export default function Header({ isLoggedIn }: HeaderProps) {
   const links = isDashboard ? dashboardLinks : publicLinks
 
   return (
-    <header className="w-full bg-white border-b border-action h-[100px]">
+    <header className="w-full bg-white border-b border-action h-[5rem]">
       <div className="mx-auto max-w-[1140px] px-4 sm:px-6 lg:px-8 h-full">
-        <div className="flex items-center justify-between h-full">
-          <Link to={isDashboard ? '/dashboard' : '/'}>
-            <div className="logoBrand w-[80px] h-[80px] rounded-full bg-gray"></div>
+        <div className="relative flex items-center justify-between h-full">
+          <div className="sm:hidden">
+            <SidebarTrigger className="p-2 rounded-md hover:bg-gray/10" />
+          </div>
+
+          <Link
+            to={isDashboard ? '/dashboard' : '/'}
+            className="sm:static absolute left-1/2 transform -translate-x-1/2 sm:transform-none"
+          >
+            <div className="logoBrand w-[3.75rem] h-[3.75rem] rounded-full bg-gray"></div>
           </Link>
 
-          <nav className="flex gap-12 text-2xl">
+          <nav className="hidden sm:flex gap-12 text-lg">
             {links.map((link) => (
               <Link key={link.to} to={link.to}>
                 {link.label}

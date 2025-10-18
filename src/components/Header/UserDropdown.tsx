@@ -12,11 +12,11 @@ export function UserDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <FaUserCircle className="w-[5rem] h-[5rem] cursor-pointer text-gray-700 hover:text-gray-900" />
+        <FaUserCircle className="w-[3.75rem] h-[3.75rem] cursor-pointer text-gray-700 hover:text-gray-900" />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        className="w-[19.75rem] border-2 border-action"
+        className="w-[19.75rem] border-2 border-action mt-2"
         align="end"
       >
         <DropdownMenuItem asChild>
