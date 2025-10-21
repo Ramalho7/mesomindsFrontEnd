@@ -87,19 +87,41 @@ function App() {
         </Link>
       </div>
 
-      <div className='flex flex-col justify-center gap-4 items-center mt-[4.063rem]'>
-        <div className='flex text-center'>
-          <img src={notes} className='w-[12.5rem] h-[12.5rem]' />
-          <div className='flex flex-col gap-3 justify-center text-center mr-[6.25rem] ml-[6.25rem]'>
-            <h2 className='text-2xl font-bold'>Está pronto?</h2>
-            <h2 className='text-2xl font-bold'>Junte-se ao <span className='text-action font-black'>MESOMINDS</span></h2>
-            <Link to='/login'>
-              <Button variant={"action"} size={"lg"} className='mt-6'>Comece agora</Button>
+      <div className='flex flex-col justify-center gap-8 items-center mt-[4.063rem] px-4 py-12 bg-gradient-to-b from-white to-blue-50 rounded-xl'>
+        <div className='flex flex-col lg:flex-row items-center justify-center gap-8 w-full max-w-4xl'>
+          <img
+            src={notes}
+            alt="Notas"
+            className='w-[12.5rem] h-[12.5rem] hidden lg:block rounded-lg shadow-lg'
+          />
+
+          <div className='flex flex-col gap-4 items-center justify-center text-center lg:text-left'>
+            <h2 className='text-3xl sm:text-4xl font-bold'>Está pronto?</h2>
+            <h2 className='text-2xl sm:text-3xl font-bold'>
+              Junte-se ao <span className='text-action font-black'>MESOMINDS</span>
+            </h2>
+            <p className='text-muted-foreground text-sm sm:text-base max-w-md mx-auto lg:mx-0'>
+              Comece sua jornada de aprendizado agora e alcance seus objetivos com nossa plataforma completa.
+            </p>
+            <Link to='/login' className='mt-4'>
+              <Button variant="action" size="lg">
+                Comece grátis agora
+              </Button>
             </Link>
           </div>
-          <img src={math} className='w-[12.5rem] h-[12.5rem]' />
+
+          <img
+            src={math}
+            alt="Matemática"
+            className='w-[12.5rem] h-[12.5rem] hidden lg:block rounded-lg shadow-lg'
+          />
         </div>
-        <img src={math} className='w-[12.5rem] h-[12.5rem] mt-8' />
+
+        <img
+          src={calc}
+          alt="Calculadora"
+          className='w-[75%] sm:w-32 lg:w-[12.5rem] h-[75%] sm:h-32 lg:h-[12.5rem] rounded-lg shadow-lg mt-4'
+        />
       </div>
     </>
   )
