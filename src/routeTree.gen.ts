@@ -22,6 +22,7 @@ import { Route as PublicLoginRouteImport } from './routes/_public/login'
 import { Route as PublicFlashcardsRouteImport } from './routes/_public/flashcards'
 import { Route as PublicConteudosRouteImport } from './routes/_public/conteudos'
 import { Route as PublicConfiguracoesRouteImport } from './routes/_public/configuracoes'
+import { Route as PublicAbordagemRouteImport } from './routes/_public/abordagem'
 import { Route as DashboardDashboardRouteImport } from './routes/_dashboard/dashboard'
 import { Route as DashboardContentCreatecontentRouteImport } from './routes/_dashboard/content/createcontent'
 import { Route as DashboardContentContentsRouteImport } from './routes/_dashboard/content/contents'
@@ -89,6 +90,11 @@ const PublicConfiguracoesRoute = PublicConfiguracoesRouteImport.update({
   path: '/configuracoes',
   getParentRoute: () => PublicRoute,
 } as any)
+const PublicAbordagemRoute = PublicAbordagemRouteImport.update({
+  id: '/abordagem',
+  path: '/abordagem',
+  getParentRoute: () => PublicRoute,
+} as any)
 const DashboardDashboardRoute = DashboardDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -109,6 +115,7 @@ const DashboardContentContentsRoute =
 
 export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardDashboardRoute
+  '/abordagem': typeof PublicAbordagemRoute
   '/configuracoes': typeof PublicConfiguracoesRoute
   '/conteudos': typeof PublicConteudosRoute
   '/flashcards': typeof PublicFlashcardsRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/dashboard': typeof DashboardDashboardRoute
+  '/abordagem': typeof PublicAbordagemRoute
   '/configuracoes': typeof PublicConfiguracoesRoute
   '/conteudos': typeof PublicConteudosRoute
   '/flashcards': typeof PublicFlashcardsRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/_dashboard': typeof DashboardRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
   '/_dashboard/dashboard': typeof DashboardDashboardRoute
+  '/_public/abordagem': typeof PublicAbordagemRoute
   '/_public/configuracoes': typeof PublicConfiguracoesRoute
   '/_public/conteudos': typeof PublicConteudosRoute
   '/_public/flashcards': typeof PublicFlashcardsRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/dashboard'
+    | '/abordagem'
     | '/configuracoes'
     | '/conteudos'
     | '/flashcards'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/dashboard'
+    | '/abordagem'
     | '/configuracoes'
     | '/conteudos'
     | '/flashcards'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/_dashboard'
     | '/_public'
     | '/_dashboard/dashboard'
+    | '/_public/abordagem'
     | '/_public/configuracoes'
     | '/_public/conteudos'
     | '/_public/flashcards'
@@ -309,6 +321,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicConfiguracoesRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_public/abordagem': {
+      id: '/_public/abordagem'
+      path: '/abordagem'
+      fullPath: '/abordagem'
+      preLoaderRoute: typeof PublicAbordagemRouteImport
+      parentRoute: typeof PublicRoute
+    }
     '/_dashboard/dashboard': {
       id: '/_dashboard/dashboard'
       path: '/dashboard'
@@ -350,6 +369,7 @@ const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
 )
 
 interface PublicRouteChildren {
+  PublicAbordagemRoute: typeof PublicAbordagemRoute
   PublicConfiguracoesRoute: typeof PublicConfiguracoesRoute
   PublicConteudosRoute: typeof PublicConteudosRoute
   PublicFlashcardsRoute: typeof PublicFlashcardsRoute
@@ -364,6 +384,7 @@ interface PublicRouteChildren {
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
+  PublicAbordagemRoute: PublicAbordagemRoute,
   PublicConfiguracoesRoute: PublicConfiguracoesRoute,
   PublicConteudosRoute: PublicConteudosRoute,
   PublicFlashcardsRoute: PublicFlashcardsRoute,
