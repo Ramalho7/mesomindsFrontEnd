@@ -87,11 +87,11 @@ AsLink.args = {
 
 export const AllSizes: StoryFn = () => (
   <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-    <Button variant="default" size="sm">
-      Pequeno
-    </Button>
     <Button variant="default" size="default">
       Default
+    </Button>
+    <Button variant="default" size="sm">
+      Pequeno
     </Button>
     <Button variant="default" size="lg">
       Grande
@@ -106,6 +106,9 @@ export const AllVariants: StoryFn = () => (
     </Button>
     <Button variant="action" size="default">
       Action
+    </Button>
+    <Button variant="destructive" size="default">
+      Destructive
     </Button>
   </div>
 );

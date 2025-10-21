@@ -11,11 +11,12 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-secondary hover:bg-primary hover:shadow-custom-action hover:border-action hover:text-action shadow-custom-secondary border-solid border-secondary border-2 text-lg",
         action: "bg-primary text-action hover:bg-primary hover:shadow-custom-secondary hover:border-secondary hover:text-secondary shadow-custom-action border-solid border-action border-2 text-lg",
+        destructive: "bg-primary text-destructive hover:bg-primary border-solid border-destructive hover:bg-destructive hover:text-primary border-2 text-lg",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-[40px] w-[150px] rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-[65px] w-[200px] text-2xl rounded-md px-6 has-[>svg]:px-4",
+        sm: "h-10 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+        lg: "h-12 text-2xl rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
         "icon-sm": "size-8",
         "icon-lg": "size-10",
