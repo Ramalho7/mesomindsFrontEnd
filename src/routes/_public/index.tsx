@@ -86,6 +86,21 @@ function App() {
           </Card>
         </Link>
       </div>
+
+      <div className='flex flex-col justify-center gap-4 items-center mt-[4.063rem]'>
+        <div className='flex text-center'>
+          <img src={notes} className='w-[12.5rem] h-[12.5rem]' />
+          <div className='flex flex-col gap-3 justify-center text-center mr-[6.25rem] ml-[6.25rem]'>
+            <h2 className='text-2xl font-bold'>Está pronto?</h2>
+            <h2 className='text-2xl font-bold'>Junte-se ao <span className='text-action font-black'>MESOMINDS</span></h2>
+            <Link to='/login'>
+              <Button variant={"action"} size={"lg"} className='mt-6'>Comece agora</Button>
+            </Link>
+          </div>
+          <img src={math} className='w-[12.5rem] h-[12.5rem]' />
+        </div>
+        <img src={math} className='w-[12.5rem] h-[12.5rem] mt-8' />
+      </div>
     </>
   )
 }
