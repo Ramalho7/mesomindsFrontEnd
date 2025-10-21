@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "../components/ui/button";
 import { UserDropdown } from "./UserDropdown";
-import { Sidebar, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Menu } from "lucide-react";
 
 interface StyledHeaderProps {
