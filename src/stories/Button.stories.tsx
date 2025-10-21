@@ -93,6 +93,9 @@ export const AllSizes: StoryFn = () => (
     <Button variant="default" size="sm">
       Pequeno
     </Button>
+    <Button variant="default" size="md">
+      Médio
+    </Button>
     <Button variant="default" size="lg">
       Grande
     </Button>

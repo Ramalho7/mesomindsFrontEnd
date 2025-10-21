@@ -20,11 +20,11 @@ function App() {
           <p className="text-xl sm:text-2xl text-center">
             Aqui, você encontra apoio, conteúdo de qualidade e a evolução que sua jornada acadêmica precisa.
           </p>
-          <div className="flex flex-col sm:flex-row mt-[1.875rem] gap-[0.938rem] sm:gap-[1.875rem] items-center justify-center">
+          <div className="flex flex-row gap-8 sm:flex-row mt-[1.875rem] sm:gap-[0.938rem] sm:gap-[1.875rem] items-center justify-center">
             <Button variant="action" size="lg" asChild>
               <Link to="/login">Comece agora</Link>
             </Button>
-            <Button size="sm" asChild>
+            <Button size="md" asChild>
               <Link to="/sobre">Saiba mais</Link>
             </Button>
           </div>
@@ -39,14 +39,16 @@ function App() {
         <Link to='/abordagem'>
           <Card variant="feature" size="md" className="w-full h-auto rounded-t-xl">
             <CardHeader className='flex flex-col !gap-5'>
-              <img src={math} className="w-full h-[250px] lg:w-[250px] lg:h-[235px] rounded-t-xl"/>
+              <img src={math} className="w-full h-[250px] lg:w-[250px] lg:h-[235px] rounded-t-xl" />
               <CardTitle>Questões comentadas</CardTitle>
             </CardHeader>
             <CardContent>
               <p>Pratique com questões detalhadamente comentadas para entender cada conceito e melhorar seu desempenho.</p>
             </CardContent>
             <CardFooter>
-              <Button variant={"action"}>Aprenda já</Button>
+              <Link to='/abordagem'>
+                <Button variant={"action"}>Aprenda já</Button>
+              </Link>
             </CardFooter>
           </Card>
         </Link>
@@ -54,28 +56,32 @@ function App() {
         <Link to='/abordagem'>
           <Card variant="feature" size="md">
             <CardHeader className='flex flex-col !gap-5'>
-              <img src={calc} className="w-full h-[250px] lg:w-[250px] lg:h-[235px] rounded-t-xl"/>
+              <img src={calc} className="w-full h-[250px] lg:w-[250px] lg:h-[235px] rounded-t-xl" />
               <CardTitle>Conteúdos Exclusivos</CardTitle>
             </CardHeader>
             <CardContent>
               <p>Acesse materiais únicos e aprofundados, criados para facilitar seu aprendizado e garantir resultados.</p>
             </CardContent>
             <CardFooter>
-              <Button variant={"action"}>Aprenda já</Button>
+              <Link to='/abordagem'>
+                <Button variant={"action"}>Aprenda já</Button>
+              </Link>
             </CardFooter>
           </Card>
         </Link>
         <Link to='/abordagem'>
           <Card variant="feature" size="md">
             <CardHeader className='flex flex-col !gap-5'>
-              <img src={notes} className="w-full h-[250px] lg:w-[250px] lg:h-[235px] rounded-t-xl"/>
+              <img src={notes} className="w-full h-[250px] lg:w-[250px] lg:h-[235px] rounded-t-xl" />
               <CardTitle>Simulados e Provas</CardTitle>
             </CardHeader>
             <CardContent>
               <p>Desafie-se com simulados e provas que simulam situações reais para testar seus conhecimentos.</p>
             </CardContent>
             <CardFooter>
-              <Button variant={"action"}>Aprenda já</Button>
+              <Link to='/abordagem'>
+                <Button variant={"action"}>Aprenda já</Button>
+              </Link>
             </CardFooter>
           </Card>
         </Link>
