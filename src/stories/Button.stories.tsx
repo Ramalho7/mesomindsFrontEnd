@@ -107,6 +107,9 @@ export const AllVariants: StoryFn = () => (
     <Button variant="action" size="default">
       Action
     </Button>
+    <Button variant="destructive" size="default">
+      Destructive
+    </Button>
   </div>
 );
 

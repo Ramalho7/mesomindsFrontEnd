@@ -10,7 +10,6 @@ import {
     SidebarSeparator,
     SidebarProvider,
 } from "@/components/ui/sidebar"
-import { useState } from "react";
 
 interface StorySidebarProps {
     links?: { to: string; label: string }[]
