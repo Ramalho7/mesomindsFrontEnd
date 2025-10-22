@@ -33,7 +33,7 @@ function App() {
       </div>
       <div className='max-w-[500px] mt-10 mb-10 flex flex-col flex-wrap'>
         <h2 className='text-4xl font-black text-action'>Tudo o que você precisa para evoluir nos estudos</h2>
-        <p className='text-lg text-muted-foreground mt-2'>Descubra com opodemos ajudar você a alcançar seus objetivos</p>
+        <p className='text-lg text-muted-foreground mt-2'>Descubra como podemos ajudar você a alcançar seus objetivos</p>
       </div>
       <div className='flex flex-col lg:flex-row gap-10'>
         <Link to='/abordagem'>
