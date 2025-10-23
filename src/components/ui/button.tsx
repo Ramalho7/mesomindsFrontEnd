@@ -12,6 +12,9 @@ const buttonVariants = cva(
         default: "bg-primary text-secondary hover:bg-primary hover:shadow-custom-action hover:border-action hover:text-action shadow-custom-secondary border-solid border-secondary border-2 text-lg",
         action: "bg-primary text-action hover:bg-primary hover:shadow-custom-secondary hover:border-secondary hover:text-secondary shadow-custom-action border-solid border-action border-2 text-lg",
         destructive: "bg-primary text-destructive hover:bg-primary border-solid border-destructive hover:bg-destructive hover:text-primary border-2 text-lg",
+        outline: "bg-primary text-black hover:bg-secondary hover:text-white border border-solid border-2 border-secondary",
+        outlineAction: "bg-primary text-black hover:bg-action hover:text-white border border-solid border-2 border-action"
+
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
