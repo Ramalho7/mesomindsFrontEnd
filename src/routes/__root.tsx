@@ -5,6 +5,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import Header from '../components/Header/Header'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/Sidebar/AppSidebar'
+import Footer from '@/components/Footer/Footer'
 
 export const Route = createRootRoute({
   component: () => (
@@ -22,7 +23,9 @@ export const Route = createRootRoute({
                 </main>
               </div>
             </div>
-
+            
+            <Footer/>
+            
             <TanStackDevtools
               config={{
                 position: 'bottom-right',

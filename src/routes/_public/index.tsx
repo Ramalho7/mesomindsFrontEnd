@@ -87,7 +87,7 @@ function App() {
         </Link>
       </div>
 
-      <div className='flex flex-col justify-center gap-8 items-center mt-[4.063rem] px-4 py-12 bg-gradient-to-b from-white to-blue-50 rounded-xl'>
+      <div className='flex flex-col justify-center gap-8 items-center mt-[4.063rem] px-4 py-12'>
         <div className='flex flex-col lg:flex-row items-center justify-center gap-8 w-full max-w-4xl'>
           <img
             src={notes}

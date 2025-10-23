@@ -8,7 +8,7 @@ export function useNavigationLinks() {
     setIsDashboard(hostname.startsWith('dashboard.') || hostname === 'dashboard.localhost')
   }, [])
 
-  const publicLinks = [
+  const publicLinks: NavigationLink[] = [
     { to: '/simulados', label: 'Simulados' },
     { to: '/questoes', label: 'Questões' },
     { to: '/conteudos', label: 'Conteúdos' },
@@ -16,13 +16,13 @@ export function useNavigationLinks() {
     { to: '/turmas', label: 'Turmas' },
   ]
 
-  const dashboardLinks = [
+  const dashboardLinks: NavigationLink[] = [
     { to: '/questoes', label: 'Questões' },
     { to: '/content/contents', label: 'Conteúdos' },
     { to: '/usuarios', label: 'Usuários' },
   ]
 
-  const links = isDashboard ? dashboardLinks : publicLinks
+  const links: NavigationLink[] = isDashboard ? dashboardLinks : publicLinks
 
   return { links, isDashboard }
 }
