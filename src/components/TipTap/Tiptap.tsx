@@ -13,11 +13,16 @@ import { common, createLowlight } from 'lowlight'
 import React, { useCallback, useRef } from 'react'
 import 'katex/dist/katex.min.css'
 import { Button } from '../ui/button'
-import { Bold as BoldIcon, Italic, Heading1, Heading2, Heading3, Link2, List, Code as CodeIcon } from 'lucide-react'
+import { Bold as BoldIcon, Italic, Heading1, Heading2, Heading3, Link2, List } from 'lucide-react'
 
 const lowlight = createLowlight(common)
 
-export default () => {
+interface TiptapProps {
+  content?: string
+  onChange?: (content: string) => void
+}
+
+export default ({ content = '', onChange }: TiptapProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const convertToBase64 = (file: File): Promise<string> => {
@@ -166,10 +171,16 @@ export default () => {
     onCreate: ({ editor: currentEditor }) => {
       migrateMathStrings(currentEditor)
     },
-    content: `
+    content: content || `
         <p>This is a basic example of implementing images and LaTeX.</p>
         <p>Try adding: x^2 + y^2 = z^2</p>
       `,
+    onUpdate: ({ editor: currentEditor }) => {
+      // Chama onChange sempre que o conteúdo mudar
+      if (onChange) {
+        onChange(currentEditor.getHTML())
+      }
+    },
     editorProps: {
       handleDrop: (_view, event, _slice, moved) => {
         if (!moved && event.dataTransfer?.files && event.dataTransfer.files[0]) {
@@ -302,7 +313,7 @@ export default () => {
   }
 
   return (
-    <div className="w-full mt-7">
+    <div className="w-full mt-7 mb-7">
       <div className="control-group border border-border rounded-lg bg-card p-4 mb-4 shadow-sm space-y-3">
         <div className="button-group flex gap-2 flex-wrap">
           <Button
