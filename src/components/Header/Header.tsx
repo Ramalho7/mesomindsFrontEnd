@@ -21,7 +21,7 @@ export default function Header({ isLoggedIn }: HeaderProps) {
           </Link>
 
           <nav className="hidden sm:flex gap-12 text-2xl">
-            {links.map((link: any) => (
+            {links.map((link: NavigationLink) => (
               <Link key={link.to} to={link.to}>
                 {link.label}
               </Link>
