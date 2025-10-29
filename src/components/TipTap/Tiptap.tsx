@@ -260,7 +260,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
 
   const setLink = useCallback(() => {
     if (!editor) return
-    
+
     const previousUrl = editor.getAttributes('link').href
     const url = window.prompt('URL', previousUrl)
 
@@ -282,7 +282,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
 
   const onInsertInlineMath = useCallback(() => {
     if (!editor) return
-    
+
     const latex = prompt('Enter inline math expression:', '')
     if (latex) {
       return editor.chain().insertInlineMath({ latex }).focus().run()
@@ -296,7 +296,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
 
   const onInsertBlockMath = useCallback(() => {
     if (!editor) return
-    
+
     const latex = prompt('Enter block math expression:', '')
     if (latex) {
       return editor.chain().insertBlockMath({ latex }).focus().run()
@@ -306,6 +306,14 @@ export default ({ content = '', onChange }: TiptapProps) => {
   const onRemoveBlockMath = useCallback(() => {
     if (!editor) return
     editor.chain().deleteBlockMath().focus().run()
+  }, [editor])
+
+  const handleSendContent = useCallback(() => {
+    if (editor) {
+      const editorContent = editor.getHTML()
+      console.log('Conteúdo enviado:', editorContent)
+      alert('Conteúdo enviado com sucesso!')
+    }
   }, [editor])
 
   if (!editor) {
@@ -457,11 +465,40 @@ export default ({ content = '', onChange }: TiptapProps) => {
             </Button>
           </div>
         </div>
+
+        <div className="border-t border-border pt-3">
+          <div className="flex gap-2 flex-wrap">
+            <Button
+              onClick={handleSendContent}
+              variant="default"
+              size="sm"
+              title="Enviar conteúdo"
+            >
+              Enviar conteúdo
+            </Button>
+          </div>
+        </div>
       </div>
 
       <EditorContent
         editor={editor}
         className={`prose max-w-none border border-border rounded-lg bg-background p-6 h-[600px] overflow-y-auto focus-within:ring-2 focus-within:ring-accent prose:text-base prose:leading-relaxed [&_.ProseMirror]:text-base [&_.ProseMirror]:leading-relaxed [&_.ProseMirror_h1]:text-4xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:mt-6 [&_.ProseMirror_h1]:mb-4 [&_.ProseMirror_h2]:text-3xl [&_.ProseMirror_h2]:font-bold [&_.ProseMirror_h2]:mt-5 [&_.ProseMirror_h2]:mb-3 [&_.ProseMirror_h3]:text-2xl [&_.ProseMirror_h3]:font-bold [&_.ProseMirror_h3]:mt-4 [&_.ProseMirror_h3]:mb-2`}
-      />        </div>
+      />
+
+      <div className='mt-5'>
+        <div className="flex gap-2 flex-wrap">
+          <Button
+            onClick={handleSendContent}
+            variant="default"
+            size="sm"
+            title="Enviar conteúdo"
+          >
+            Enviar conteúdo
+          </Button>
+        </div>
+      </div>
+    </div>
+
+
   )
 }
