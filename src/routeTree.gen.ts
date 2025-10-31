@@ -9,30 +9,46 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as DashboardRouteImport } from './routes/_dashboard'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicTurmasRouteImport } from './routes/_public/turmas'
 import { Route as PublicSobreRouteImport } from './routes/_public/sobre'
 import { Route as PublicSimuladosRouteImport } from './routes/_public/simulados'
 import { Route as PublicQuestoesRouteImport } from './routes/_public/questoes'
 import { Route as PublicProvasRouteImport } from './routes/_public/provas'
-import { Route as PublicPerfilRouteImport } from './routes/_public/perfil'
-import { Route as PublicLoginRouteImport } from './routes/_public/login'
 import { Route as PublicFlashcardsRouteImport } from './routes/_public/flashcards'
 import { Route as PublicConteudosRouteImport } from './routes/_public/conteudos'
 import { Route as PublicConfiguracoesRouteImport } from './routes/_public/configuracoes'
 import { Route as PublicAbordagemRouteImport } from './routes/_public/abordagem'
 import { Route as DashboardDashboardRouteImport } from './routes/_dashboard/dashboard'
+import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as DashboardContentCreatecontentRouteImport } from './routes/_dashboard/content/createcontent'
 import { Route as DashboardContentContentsRouteImport } from './routes/_dashboard/content/contents'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/_dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
@@ -65,16 +81,6 @@ const PublicProvasRoute = PublicProvasRouteImport.update({
   path: '/provas',
   getParentRoute: () => PublicRoute,
 } as any)
-const PublicPerfilRoute = PublicPerfilRouteImport.update({
-  id: '/perfil',
-  path: '/perfil',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicLoginRoute = PublicLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => PublicRoute,
-} as any)
 const PublicFlashcardsRoute = PublicFlashcardsRouteImport.update({
   id: '/flashcards',
   path: '/flashcards',
@@ -100,6 +106,11 @@ const DashboardDashboardRoute = DashboardDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => DashboardRoute,
 } as any)
+const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const DashboardContentCreatecontentRoute =
   DashboardContentCreatecontentRouteImport.update({
     id: '/content/createcontent',
@@ -114,13 +125,14 @@ const DashboardContentContentsRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
   '/dashboard': typeof DashboardDashboardRoute
   '/abordagem': typeof PublicAbordagemRoute
   '/configuracoes': typeof PublicConfiguracoesRoute
   '/conteudos': typeof PublicConteudosRoute
   '/flashcards': typeof PublicFlashcardsRoute
-  '/login': typeof PublicLoginRoute
-  '/perfil': typeof PublicPerfilRoute
   '/provas': typeof PublicProvasRoute
   '/questoes': typeof PublicQuestoesRoute
   '/simulados': typeof PublicSimuladosRoute
@@ -131,13 +143,14 @@ export interface FileRoutesByFullPath {
   '/content/createcontent': typeof DashboardContentCreatecontentRoute
 }
 export interface FileRoutesByTo {
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
   '/dashboard': typeof DashboardDashboardRoute
   '/abordagem': typeof PublicAbordagemRoute
   '/configuracoes': typeof PublicConfiguracoesRoute
   '/conteudos': typeof PublicConteudosRoute
   '/flashcards': typeof PublicFlashcardsRoute
-  '/login': typeof PublicLoginRoute
-  '/perfil': typeof PublicPerfilRoute
   '/provas': typeof PublicProvasRoute
   '/questoes': typeof PublicQuestoesRoute
   '/simulados': typeof PublicSimuladosRoute
@@ -149,15 +162,17 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_dashboard': typeof DashboardRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_dashboard/dashboard': typeof DashboardDashboardRoute
   '/_public/abordagem': typeof PublicAbordagemRoute
   '/_public/configuracoes': typeof PublicConfiguracoesRoute
   '/_public/conteudos': typeof PublicConteudosRoute
   '/_public/flashcards': typeof PublicFlashcardsRoute
-  '/_public/login': typeof PublicLoginRoute
-  '/_public/perfil': typeof PublicPerfilRoute
   '/_public/provas': typeof PublicProvasRoute
   '/_public/questoes': typeof PublicQuestoesRoute
   '/_public/simulados': typeof PublicSimuladosRoute
@@ -170,13 +185,14 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/login'
+    | '/register'
+    | '/perfil'
     | '/dashboard'
     | '/abordagem'
     | '/configuracoes'
     | '/conteudos'
     | '/flashcards'
-    | '/login'
-    | '/perfil'
     | '/provas'
     | '/questoes'
     | '/simulados'
@@ -187,13 +203,14 @@ export interface FileRouteTypes {
     | '/content/createcontent'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/login'
+    | '/register'
+    | '/perfil'
     | '/dashboard'
     | '/abordagem'
     | '/configuracoes'
     | '/conteudos'
     | '/flashcards'
-    | '/login'
-    | '/perfil'
     | '/provas'
     | '/questoes'
     | '/simulados'
@@ -204,15 +221,17 @@ export interface FileRouteTypes {
     | '/content/createcontent'
   id:
     | '__root__'
+    | '/_authenticated'
     | '/_dashboard'
     | '/_public'
+    | '/login'
+    | '/register'
+    | '/_authenticated/perfil'
     | '/_dashboard/dashboard'
     | '/_public/abordagem'
     | '/_public/configuracoes'
     | '/_public/conteudos'
     | '/_public/flashcards'
-    | '/_public/login'
-    | '/_public/perfil'
     | '/_public/provas'
     | '/_public/questoes'
     | '/_public/simulados'
@@ -224,12 +243,29 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   DashboardRoute: typeof DashboardRouteWithChildren
   PublicRoute: typeof PublicRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_public': {
       id: '/_public'
       path: ''
@@ -242,6 +278,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public/': {
@@ -286,20 +329,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicProvasRouteImport
       parentRoute: typeof PublicRoute
     }
-    '/_public/perfil': {
-      id: '/_public/perfil'
-      path: '/perfil'
-      fullPath: '/perfil'
-      preLoaderRoute: typeof PublicPerfilRouteImport
-      parentRoute: typeof PublicRoute
-    }
-    '/_public/login': {
-      id: '/_public/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof PublicLoginRouteImport
-      parentRoute: typeof PublicRoute
-    }
     '/_public/flashcards': {
       id: '/_public/flashcards'
       path: '/flashcards'
@@ -335,6 +364,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardDashboardRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/_authenticated/perfil': {
+      id: '/_authenticated/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_dashboard/content/createcontent': {
       id: '/_dashboard/content/createcontent'
       path: '/content/createcontent'
@@ -351,6 +387,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
 
 interface DashboardRouteChildren {
   DashboardDashboardRoute: typeof DashboardDashboardRoute
@@ -373,8 +421,6 @@ interface PublicRouteChildren {
   PublicConfiguracoesRoute: typeof PublicConfiguracoesRoute
   PublicConteudosRoute: typeof PublicConteudosRoute
   PublicFlashcardsRoute: typeof PublicFlashcardsRoute
-  PublicLoginRoute: typeof PublicLoginRoute
-  PublicPerfilRoute: typeof PublicPerfilRoute
   PublicProvasRoute: typeof PublicProvasRoute
   PublicQuestoesRoute: typeof PublicQuestoesRoute
   PublicSimuladosRoute: typeof PublicSimuladosRoute
@@ -388,8 +434,6 @@ const PublicRouteChildren: PublicRouteChildren = {
   PublicConfiguracoesRoute: PublicConfiguracoesRoute,
   PublicConteudosRoute: PublicConteudosRoute,
   PublicFlashcardsRoute: PublicFlashcardsRoute,
-  PublicLoginRoute: PublicLoginRoute,
-  PublicPerfilRoute: PublicPerfilRoute,
   PublicProvasRoute: PublicProvasRoute,
   PublicQuestoesRoute: PublicQuestoesRoute,
   PublicSimuladosRoute: PublicSimuladosRoute,
@@ -402,8 +446,11 @@ const PublicRouteWithChildren =
   PublicRoute._addFileChildren(PublicRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   DashboardRoute: DashboardRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
