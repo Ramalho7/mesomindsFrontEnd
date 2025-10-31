@@ -71,7 +71,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setUser(userData.user)
             // Store token for persistence
             localStorage.setItem('auth-token', userData.token)
-            console.log('isAuthenticated após login:', true)
         } else {
             throw new Error('Authentication failed')
         }

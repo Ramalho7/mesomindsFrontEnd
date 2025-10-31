@@ -9,8 +9,6 @@ function RouteComponent() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
-  console.log('User:', user)
-
   const handleLogout = () => {
     logout()
     navigate({ to: '/login', search: { redirect: '/' } }) 

@@ -14,6 +14,7 @@ import React, { useCallback, useRef } from 'react'
 import 'katex/dist/katex.min.css'
 import { Button } from '../ui/button'
 import { Bold as BoldIcon, Italic, Heading1, Heading2, Heading3, Link2, List } from 'lucide-react'
+import { useCreateContent } from '@/service/postContent'
 
 const lowlight = createLowlight(common)
 
@@ -24,6 +25,9 @@ interface TiptapProps {
 
 export default ({ content = '', onChange }: TiptapProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Move the useCreateContent hook to the component body
+  const { mutate } = useCreateContent()
 
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -308,17 +312,39 @@ export default ({ content = '', onChange }: TiptapProps) => {
     editor.chain().deleteBlockMath().focus().run()
   }, [editor])
 
-  const handleSendContent = useCallback(() => {
+  const handleSendContent = useCallback(async () => {
     if (editor) {
       const editorContent = editor.getHTML()
-      console.log('Conteúdo enviado:', editorContent)
-      alert('Conteúdo enviado com sucesso!')
-    }
-  }, [editor])
 
-  if (!editor) {
-    return null
-  }
+      try {
+        const payload = {
+          title: 'Título do conteúdo',
+          content: editorContent,
+          content_type: 'Artigo',
+          content_tag: 'Tecnologia',
+          status: 'Ativo' as 'Ativo',
+          published_at: new Date().toISOString().split('T')[0],
+          is_moderator_only: false,
+          images: [],
+          image_alt_text: [],
+        }
+
+        mutate(payload, {
+          onSuccess: (response) => {
+            console.log('Conteúdo enviado com sucesso:', response)
+            alert('Conteúdo enviado com sucesso!')
+          },
+          onError: (error) => {
+            console.error('Erro ao enviar conteúdo:', error)
+            alert('Erro ao enviar conteúdo.')
+          },
+        })
+      } catch (error) {
+        console.error('Erro ao enviar conteúdo:', error)
+        alert('Erro ao enviar conteúdo.')
+      }
+    }
+  }, [editor, mutate]) 
 
   return (
     <div className="w-full mt-7 mb-7">
