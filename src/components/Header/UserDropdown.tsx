@@ -7,8 +7,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "@tanstack/react-router";
 import { FaUserCircle } from "react-icons/fa";
+import { useAuth } from "@/auth";
 
 export function UserDropdown() {
+  const { logout } = useAuth()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -44,7 +46,7 @@ export function UserDropdown() {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <button className="data-[highlighted]:bg-red-100 data-[highlighted]:text-red-600 !text-base text-red-700 w-full h-full flex items-center">
+          <button className="data-[highlighted]:bg-red-100 data-[highlighted]:text-red-600 !text-base text-red-700 w-full h-full flex items-center" onClick={() => logout()}>
             Sair
           </button>
         </DropdownMenuItem>

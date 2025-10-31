@@ -31,7 +31,7 @@ export default function Header({ isLoggedIn }: HeaderProps) {
           {isLoggedIn ? (
             <UserDropdown />
           ) : (
-            <Button variant="action">Entrar</Button>
+            <Link to='/login' search={{ redirect: '/perfil' }}><Button variant="action">Entrar</Button></Link>
           )}
         </div>
       </div>
