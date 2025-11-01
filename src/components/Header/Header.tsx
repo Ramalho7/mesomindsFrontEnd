@@ -12,7 +12,7 @@ export default function Header({ isLoggedIn }: HeaderProps) {
   const { links, isDashboard } = useNavigationLinks()
 
   return (
-    <header className="w-full bg-white border-b border-action h-[100px]">
+    <header className="w-full bg-white border-b border-accent h-[100px]">
       <div className="mx-auto max-w-[1140px] px-4 sm:px-6 lg:px-8 h-full">
         <div className="flex items-center justify-between h-full">
           <SidebarTrigger className="sm:hidden" />

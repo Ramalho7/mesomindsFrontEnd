@@ -14,7 +14,6 @@ import React, { useCallback, useRef } from 'react'
 import 'katex/dist/katex.min.css'
 import { Button } from '../ui/button'
 import { Bold as BoldIcon, Italic, Heading1, Heading2, Heading3, Link2, List } from 'lucide-react'
-import { useCreateContent } from '@/service/content/postContent'
 
 const lowlight = createLowlight(common)
 
@@ -169,13 +168,16 @@ export default ({ content = '', onChange }: TiptapProps) => {
         },
       }),
     ],
-    onCreate: ({ editor: currentEditor }) => {
-      migrateMathStrings(currentEditor)
-    },
     content: content || `
         <p>This is a basic example of implementing images and LaTeX.</p>
         <p>Try adding: x^2 + y^2 = z^2</p>
       `,
+    onCreate: ({ editor: currentEditor }) => {
+      migrateMathStrings(currentEditor)
+      if(onChange){
+        onChange(currentEditor.getHTML())
+      }
+    },
     onUpdate: ({ editor: currentEditor }) => {
       if (onChange) {
         onChange(currentEditor.getHTML())
@@ -318,7 +320,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
             type="button"
             size="sm"
           >
-            Set image from URL
+            Adicionar imagem por URL
           </Button>
           <Button
             onClick={triggerFileInput}
@@ -326,7 +328,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
             type="button"
             size="sm"
           >
-            Upload image
+            Upload imagem
           </Button>
           <input
             ref={fileInputRef}
@@ -409,7 +411,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               type="button"
               title="Unset Link"
             >
-              Unset link
+              Remover link
             </Button>
 
             <Button
@@ -433,7 +435,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               size="sm"
               title="Insert inline math"
             >
-              Insert inline math
+              Inserir LaTex inline
             </Button>
 
             <Button
@@ -443,7 +445,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               size="sm"
               title="Remove inline math"
             >
-              Remove inline math
+              Remover LaTex inline
             </Button>
 
             <Button
@@ -453,7 +455,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               size="sm"
               title="Insert block math"
             >
-              Insert block math
+              Adicionar bloco LaTex
             </Button>
 
             <Button
@@ -463,7 +465,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               size="sm"
               title="Remove block math"
             >
-              Remove block math
+              Remover bloco LaTex
             </Button>
           </div>
         </div>

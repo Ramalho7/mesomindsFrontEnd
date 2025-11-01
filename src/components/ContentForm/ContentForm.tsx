@@ -7,16 +7,26 @@ import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command'
 import { useContentTags } from '@/service/content/contentTag/getContentTag'
 import { useContentTypes } from '@/service/content/contentType/getContentType'
-import { extractBase64Images }  from '../../utils/extractBase64Images' 
+import { extractBase64Images } from '../../utils/extractBase64Images'
+import { Input } from '../ui/input'
+import { useRouter } from '@tanstack/react-router'
 
 export default function ContentForm() {
+
+    const router = useRouter();
+
+    const handleBack = () => {
+        router.history.back();
+    }
+
     const [title, setTitle] = useState('')
     const [contentType, setContentType] = useState('')
     const [selectedTags, setSelectedTags] = useState<string[]>([])
     const [content, setContent] = useState('')
     const [openTags, setOpenTags] = useState(false)
     const [openTypes, setOpenTypes] = useState(false)
-    const [inputValue, setInputValue] = useState("")
+    const [inputTagsValue, setInputTagsValue] = useState("")
+    const [inputTypesValue, setInputTypesValue] = useState("")
     const { mutate } = useCreateContent()
 
     const { data: contenTagData, isLoading: loadingTagData, isError: errorTagData } = useContentTags()
@@ -62,7 +72,7 @@ export default function ContentForm() {
     console.error('erro, type ', loadingTypeData)
 
     return (
-        <div className="w-full mt-7 mb-7">
+        <div className="w-full mt-7 mb-7 mx-auto">
             <form
                 onSubmit={(e) => {
                     e.preventDefault()
@@ -71,142 +81,172 @@ export default function ContentForm() {
                 className="space-y-4"
             >
                 <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                        Título
-                    </label>
-                    <input
+                    <div className='flex flex-col gap-1'>
+                        <label htmlFor="title" className="text-lg font-bold">
+                            Título
+                        </label>
+                        <label htmlFor="title" className="text-sm font-normal font-gray-300 mb-4">
+                            Informe o título do seu conteúdo, esse título será exibido na plataforma para os usuários
+                        </label>
+                    </div>
+                    <Input
                         id="title"
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         placeholder="Digite o título do conteúdo"
                         required
                     />
                 </div>
 
-                <Popover open={openTags} onOpenChange={setOpenTags}>
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
-                            role="combobox"
-                            aria-expanded={openTags}
-                            className="w-[300px] justify-between"
-                        >
-                            {selectedTags.length > 0
-                                ? selectedTags.join(', ')
-                                : "Selecione ou adicione tags"}
-                            <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[300px] p-0">
-                        <Command>
-                            <CommandInput
-                                placeholder="Buscar ou adicionar tags..."
-                                value={inputValue}
-                                onValueChange={setInputValue}
-                            />
-                            <CommandList>
-                                {loadingTagData && <CommandEmpty>Carregando tags...</CommandEmpty>}
-                                {errorTagData && <CommandEmpty>Erro ao carregar tags.</CommandEmpty>}
-                                {!loadingTagData && contenTagData?.data.length === 0 && (
-                                    <CommandEmpty>Nenhuma tag encontrada.</CommandEmpty>
-                                )}
-                                <CommandGroup>
-                                    {contenTagData?.data.map((tag) => (
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full h-full">
+                    <Popover open={openTags} onOpenChange={setOpenTags}>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={openTags}
+                                className="w-[300px] justify-between"
+                            >
+                                {selectedTags.length > 0
+                                    ? selectedTags.join(', ')
+                                    : "Selecione ou adicione tags"}
+                                <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[300px] p-0">
+                            <Command>
+                                <CommandInput
+                                    placeholder="Buscar ou adicionar tags..."
+                                    value={inputTagsValue}
+                                    onValueChange={setInputTagsValue}
+                                />
+                                <CommandList>
+                                    {loadingTagData && <CommandEmpty>Carregando tags...</CommandEmpty>}
+                                    {errorTagData && <CommandEmpty>Erro ao carregar tags.</CommandEmpty>}
+                                    {!loadingTagData && contenTagData?.data.length === 0 && (
+                                        <CommandEmpty>Nenhuma tag encontrada.</CommandEmpty>
+                                    )}
+                                    <CommandGroup>
+                                        {contenTagData?.data.map((tag) => (
+                                            <CommandItem
+                                                key={tag.id}
+                                                value={tag.tag_name}
+                                                onSelect={() => {
+                                                    if (selectedTags.includes(tag.tag_name)) {
+                                                        setSelectedTags(selectedTags.filter((t) => t !== tag.tag_name))
+                                                    } else {
+                                                        setSelectedTags([...selectedTags, tag.tag_name])
+                                                    }
+                                                }}
+                                            >
+                                                <CheckIcon
+                                                    className={`mr-2 h-4 w-4 ${selectedTags.includes(tag.tag_name) ? "opacity-100" : "opacity-0"
+                                                        }`}
+                                                />
+                                                {tag.tag_name}
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                    {inputTagsValue && !contenTagData?.data.some((tag) => tag.tag_name === inputTagsValue) && (
                                         <CommandItem
-                                            key={tag.id}
-                                            value={tag.tag_name}
+                                            value={inputTagsValue}
                                             onSelect={() => {
-                                                if (selectedTags.includes(tag.tag_name)) {
-                                                    setSelectedTags(selectedTags.filter((t) => t !== tag.tag_name))
-                                                } else {
-                                                    setSelectedTags([...selectedTags, tag.tag_name])
+                                                if (!selectedTags.includes(inputTagsValue)) {
+                                                    setSelectedTags([...selectedTags, inputTagsValue])
                                                 }
+                                                setInputTagsValue("")
                                             }}
                                         >
-                                            <CheckIcon
-                                                className={`mr-2 h-4 w-4 ${selectedTags.includes(tag.tag_name) ? "opacity-100" : "opacity-0"
-                                                    }`}
-                                            />
-                                            {tag.tag_name}
+                                            <CheckIcon className="mr-2 h-4 w-4 opacity-0" />
+                                            Adicionar nova tag: <strong>{inputTagsValue}</strong>
                                         </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                                {inputValue && !contenTagData?.data.some((tag) => tag.tag_name === inputValue) && (
-                                    <CommandItem
-                                        value={inputValue}
-                                        onSelect={() => {
-                                            if (!selectedTags.includes(inputValue)) {
-                                                setSelectedTags([...selectedTags, inputValue])
-                                            }
-                                            setInputValue("")
-                                        }}
-                                    >
-                                        <CheckIcon className="mr-2 h-4 w-4 opacity-0" />
-                                        Adicionar nova tag: <strong>{inputValue}</strong>
-                                    </CommandItem>
-                                )}
-                            </CommandList>
-                        </Command>
-                    </PopoverContent>
-                </Popover>
+                                    )}
+                                </CommandList>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
 
-                <Popover open={openTypes} onOpenChange={setOpenTypes}>
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
-                            role="combobox"
-                            aria-expanded={openTypes}
-                            className="w-[300px] justify-between"
-                        >
-                            {contentType || "Selecione o tipo de conteúdo"}
-                            <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[300px] p-0">
-                        <Command>
-                            <CommandList>
-                                {loadingTypeData && <CommandEmpty>Carregando tipos...</CommandEmpty>}
-                                {errorTypeData && <CommandEmpty>Erro ao carregar tipos.</CommandEmpty>}
-                                {!loadingTypeData && contenTypeData?.data.length === 0 && (
-                                    <CommandEmpty>Nenhum tipo encontrado.</CommandEmpty>
-                                )}
-                                <CommandGroup>
-                                    {contenTypeData?.data.map((type) => (
+                    <Popover open={openTypes} onOpenChange={setOpenTypes}>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={openTypes}
+                                className="w-[300px] justify-between"
+                            >
+                                {contentType || "Selecione o tipo de conteúdo"}
+                                <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[300px] p-0">
+                            <Command>
+                                <CommandInput
+                                    placeholder="Buscar ou adicionar tags..."
+                                    value={inputTypesValue}
+                                    onValueChange={setInputTypesValue}
+                                />
+                                <CommandList>
+                                    {loadingTypeData && <CommandEmpty>Carregando tipos...</CommandEmpty>}
+                                    {errorTypeData && <CommandEmpty>Erro ao carregar tipos.</CommandEmpty>}
+                                    {!loadingTypeData && contenTypeData?.data.length === 0 && (
+                                        <CommandEmpty>Nenhum tipo encontrado.</CommandEmpty>
+                                    )}
+                                    <CommandGroup>
+                                        {contenTypeData?.data.map((type) => (
+                                            <CommandItem
+                                                key={type.id}
+                                                value={type.title}
+                                                onSelect={() => {
+                                                    setContentType(type.title)
+                                                    setOpenTypes(false)
+                                                }}
+                                            >
+                                                <CheckIcon
+                                                    className={`mr-2 h-4 w-4 ${contentType === type.title ? "opacity-100" : "opacity-0"
+                                                        }`}
+                                                />
+                                                {type.title}
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                    {inputTypesValue && !contenTypeData?.data.some((type) => type.title === inputTypesValue) && (
                                         <CommandItem
-                                            key={type.id}
-                                            value={type.title}
+                                            value={inputTypesValue}
                                             onSelect={() => {
-                                                setContentType(type.title)
-                                                setOpenTypes(false)
+                                                setContentType(inputTypesValue);
+                                                setOpenTypes(false);
                                             }}
                                         >
-                                            <CheckIcon
-                                                className={`mr-2 h-4 w-4 ${contentType === type.title ? "opacity-100" : "opacity-0"
-                                                    }`}
-                                            />
-                                            {type.title}
+                                            <CheckIcon className="mr-2 h-4 w-4 opacity-0" />
+                                            Adicionar novo tipo: <strong>{inputTypesValue}</strong>
                                         </CommandItem>
-                                    ))}
-                                </CommandGroup>
-                            </CommandList>
-                        </Command>
-                    </PopoverContent>
-                </Popover>
-
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Conteúdo</label>
-                    <Tiptap content={content} onChange={setContent} />
+                                    )}
+                                </CommandList>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
                 </div>
 
                 <div>
-                    <button
+                    <label className="text-lg font-bold">Conteúdo</label>
+                    <Tiptap content={content} onChange={setContent} />
+                </div>
+
+                <div className='flex justify-between'>
+                    <Button
                         type="submit"
-                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        variant={"default"}
+                        onClick={handleBack}
+                    >
+                        Voltar
+                    </Button>
+                    <Button
+                        type="submit"
+                        variant={"action"}
                     >
                         Enviar Conteúdo
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

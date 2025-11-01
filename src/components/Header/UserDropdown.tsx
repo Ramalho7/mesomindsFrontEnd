@@ -24,7 +24,7 @@ export function UserDropdown() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        className="w-[19.75rem] border-2 border-action mt-2"
+        className="w-[19.75rem] border-2 border-accent mt-2"
         align="end"
       >
         <DropdownMenuItem asChild>
