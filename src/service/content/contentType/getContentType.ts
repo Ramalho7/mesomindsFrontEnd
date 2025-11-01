@@ -8,8 +8,8 @@ const contentTypeSchema = z.object({
     id: z.number(),
     title: z.string(),
     description: z.string(),
-    creator: creatorSchema,
-    last_editor: creatorSchema,
+    creator: creatorSchema.nullable(),
+    last_editor: creatorSchema.nullable(),
     created_at: z.string(),
     updated_at: z.string(),
     status: z.enum(['Ativo', 'Inativo']),
@@ -44,21 +44,46 @@ const apiResponseSchema = z.object({
 })
 
 export type ContentTypeResponseZ = z.infer<typeof contentTypeResponseSchema>
-export type ContentTag = z.infer<typeof contentTypeSchema>
+export type ContentType = z.infer<typeof contentTypeSchema>
 
 async function fetchContentTypes(): Promise<ContentTypeResponse> {
     try {
-        const response = await api.get('api/tiposconteudo')
-        console.log('Resposta da API type:', response.data)
+        const initialResponse = await api.get('api/tiposconteudo', {
+            params: { page: 1, per_page: 100 }, 
+        });
 
-        const validatedResponse = apiResponseSchema.parse(response.data)
+        const validatedResponse = apiResponseSchema.parse(initialResponse.data);
 
-        return validatedResponse.data
+        const totalItems = validatedResponse.data.total; 
+        const perPage = validatedResponse.data.per_page; 
+        const totalPages = Math.ceil(totalItems / perPage); 
+
+        let allData: ContentType[] = [...validatedResponse.data.data]; 
+
+        for (let currentPage = 2; currentPage <= totalPages; currentPage++) {
+            const response = await api.get('api/tiposconteudo', {
+                params: { page: currentPage, per_page: perPage },
+            });
+
+            const pageResponse = apiResponseSchema.parse(response.data);
+
+            if (pageResponse.data.data) {
+                allData = [...allData, ...pageResponse.data.data];
+            }
+        }
+
+        return {
+            ...validatedResponse.data,
+            data: allData,
+            total: allData.length,
+        };
     } catch (error) {
         if (error instanceof z.ZodError) {
-            console.error('Erro de validação Zod:', error.issues)
+            console.error('Erro de validação Zod:', error.issues);
+        } else {
+            console.error('Erro ao buscar os tipos de conteúdo:', error);
         }
-        throw error
+        throw error;
     }
 }
 

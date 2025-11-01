@@ -5,8 +5,8 @@ export interface ContentType {
   id: number
   title: string
   description: string
-  creator: Creator
-  last_editor: LastEditor
+  creator: Creator | null
+  last_editor: LastEditor | null
   created_at: string
   updated_at: string
   status: "Ativo" | "Inativo"

@@ -11,8 +11,8 @@ const contentTagSchema = z.object({
     is_moderator_only: z.number(),
     count: z.number(),
     description: z.string(),
-    creator: creatorSchema,
-    last_editor: creatorSchema,
+    creator: creatorSchema.nullable(),
+    last_editor: creatorSchema.nullable(),
     created_at: z.string(),
     updated_at: z.string(),
     status: z.enum(['Ativo', 'Inativo']),
@@ -51,17 +51,42 @@ export type ContentTag = z.infer<typeof contentTagSchema>
 
 async function fetchContentTags(): Promise<ContentTagResponse> {
     try {
-        const response = await api.get('api/tagsconteudo')
-        console.log('Resposta da API:', response.data)
+        const initialResponse = await api.get('api/tagsconteudo', {
+            params: { page: 1, per_page: 100 }, 
+        });
 
-        const validatedResponse = apiResponseSchema.parse(response.data)
+        const validatedResponse = apiResponseSchema.parse(initialResponse.data);
 
-        return validatedResponse.data
+        const totalItems = validatedResponse.data.total; 
+        const perPage = validatedResponse.data.per_page; 
+        const totalPages = Math.ceil(totalItems / perPage); 
+
+        let allData: ContentTag[] = [...validatedResponse.data.data]; 
+
+        for (let currentPage = 2; currentPage <= totalPages; currentPage++) {
+            const response = await api.get('api/tagsconteudo', {
+                params: { page: currentPage, per_page: perPage },
+            });
+
+            const pageResponse = apiResponseSchema.parse(response.data);
+
+            if (pageResponse.data.data) {
+                allData = [...allData, ...pageResponse.data.data];
+            }
+        }
+
+        return {
+            ...validatedResponse.data,
+            data: allData,
+            total: allData.length,
+        };
     } catch (error) {
         if (error instanceof z.ZodError) {
-            console.error('Erro de validação Zod:', error.issues)
+            console.error('Erro de validação Zod:', error.issues);
+        } else {
+            console.error('Erro ao buscar os tipos de conteúdo:', error);
         }
-        throw error
+        throw error;
     }
 }
 
