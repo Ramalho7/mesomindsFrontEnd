@@ -17,7 +17,7 @@ export default function Header({ isLoggedIn }: HeaderProps) {
         <div className="flex items-center justify-between h-full">
           <SidebarTrigger className="sm:hidden" />
           <Link to={isDashboard ? '/dashboard' : '/'}>
-            <div className="logoBrand w-[80px] h-[80px] rounded-full bg-gray"></div>
+            <div className="logoBrand w-[80px] h-[80px] rounded-full bg-gray-800"></div>
           </Link>
 
           <nav className="hidden sm:flex gap-12 text-2xl">
