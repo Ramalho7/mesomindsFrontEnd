@@ -1,0 +1,74 @@
+import type { ContentTagResponse } from "@/Interface/content/contentTag/ContentTagResponse"
+
+import { z } from 'zod'
+import { useQuery } from '@tanstack/react-query'
+import api from '@/service/axios'
+import { creatorSchema } from "@/service/schemas/creatorZodSchema"
+
+const contentTagSchema = z.object({
+    id: z.number(),
+    tag_name: z.string(),
+    is_moderator_only: z.number(),
+    count: z.number(),
+    description: z.string(),
+    creator: creatorSchema,
+    last_editor: creatorSchema,
+    created_at: z.string(),
+    updated_at: z.string(),
+    status: z.enum(['Ativo', 'Inativo']),
+})
+
+export const contentTagResponseSchema = z.object({
+    current_page: z.number(),
+    data: z.array(contentTagSchema),
+    first_page_url: z.string(),
+    from: z.number(),
+    last_page: z.number(),
+    last_page_url: z.string(),
+    links: z.array(
+        z.object({
+            url: z.string().nullable(),
+            label: z.string(),
+            page: z.number().nullable(),
+            active: z.boolean(),
+        })
+    ),
+    next_page_url: z.string().nullable(),
+    path: z.string(),
+    per_page: z.number(),
+    prev_page_url: z.string().nullable(),
+    to: z.number(),
+    total: z.number(),
+})
+
+const apiResponseSchema = z.object({
+    success: z.boolean(),
+    data: contentTagResponseSchema,
+})
+
+export type ContentTagResponseZ = z.infer<typeof contentTagResponseSchema>
+export type ContentTag = z.infer<typeof contentTagSchema>
+
+async function fetchContentTags(): Promise<ContentTagResponse> {
+    try {
+        const response = await api.get('api/tagsconteudo')
+        console.log('Resposta da API:', response.data)
+
+        const validatedResponse = apiResponseSchema.parse(response.data)
+
+        return validatedResponse.data
+    } catch (error) {
+        if (error instanceof z.ZodError) {
+            console.error('Erro de validação Zod:', error.issues)
+        }
+        throw error
+    }
+}
+
+export function useContentTags() {
+    return useQuery({
+        queryKey: ['contentTags'],
+        queryFn: fetchContentTags,
+        staleTime: 1000 * 60 * 5,
+    })
+}

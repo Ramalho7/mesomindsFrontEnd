@@ -14,7 +14,7 @@ import React, { useCallback, useRef } from 'react'
 import 'katex/dist/katex.min.css'
 import { Button } from '../ui/button'
 import { Bold as BoldIcon, Italic, Heading1, Heading2, Heading3, Link2, List } from 'lucide-react'
-import { useCreateContent } from '@/service/postContent'
+import { useCreateContent } from '@/service/content/postContent'
 
 const lowlight = createLowlight(common)
 
@@ -25,9 +25,6 @@ interface TiptapProps {
 
 export default ({ content = '', onChange }: TiptapProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
-
-  // Move the useCreateContent hook to the component body
-  const { mutate } = useCreateContent()
 
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -180,7 +177,6 @@ export default ({ content = '', onChange }: TiptapProps) => {
         <p>Try adding: x^2 + y^2 = z^2</p>
       `,
     onUpdate: ({ editor: currentEditor }) => {
-      // Chama onChange sempre que o conteúdo mudar
       if (onChange) {
         onChange(currentEditor.getHTML())
       }
@@ -312,40 +308,6 @@ export default ({ content = '', onChange }: TiptapProps) => {
     editor.chain().deleteBlockMath().focus().run()
   }, [editor])
 
-  const handleSendContent = useCallback(async () => {
-    if (editor) {
-      const editorContent = editor.getHTML()
-
-      try {
-        const payload = {
-          title: 'Título do conteúdo',
-          content: editorContent,
-          content_type: 'Artigo',
-          content_tag: 'Tecnologia',
-          status: 'Ativo' as 'Ativo',
-          published_at: new Date().toISOString().split('T')[0],
-          is_moderator_only: false,
-          images: [],
-          image_alt_text: [],
-        }
-
-        mutate(payload, {
-          onSuccess: (response) => {
-            console.log('Conteúdo enviado com sucesso:', response)
-            alert('Conteúdo enviado com sucesso!')
-          },
-          onError: (error) => {
-            console.error('Erro ao enviar conteúdo:', error)
-            alert('Erro ao enviar conteúdo.')
-          },
-        })
-      } catch (error) {
-        console.error('Erro ao enviar conteúdo:', error)
-        alert('Erro ao enviar conteúdo.')
-      }
-    }
-  }, [editor, mutate]) 
-
   return (
     <div className="w-full mt-7 mb-7">
       <div className="control-group border border-border rounded-lg bg-card p-4 mb-4 shadow-sm space-y-3">
@@ -353,6 +315,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
           <Button
             onClick={addImage}
             variant="outline"
+            type="button"
             size="sm"
           >
             Set image from URL
@@ -360,6 +323,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
           <Button
             onClick={triggerFileInput}
             variant="outline"
+            type="button"
             size="sm"
           >
             Upload image
@@ -380,6 +344,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               disabled={!editor.can().chain().focus().toggleBold().run()}
               variant={editor.isActive('bold') ? 'default' : 'outline'}
               size="sm"
+              type="button"
               title="Bold (Ctrl+B)"
             >
               <BoldIcon className="w-4 h-4" />
@@ -390,6 +355,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               disabled={!editor.can().chain().focus().toggleItalic().run()}
               variant={editor.isActive('italic') ? 'default' : 'outline'}
               size="sm"
+              type="button"
               title="Italic (Ctrl+I)"
             >
               <Italic className="w-4 h-4" />
@@ -399,6 +365,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
               variant={editor.isActive('heading', { level: 1 }) ? 'default' : 'outline'}
               size="sm"
+              type="button"
               title="Heading 1"
             >
               <Heading1 className="w-4 h-4" />
@@ -408,6 +375,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
               variant={editor.isActive('heading', { level: 2 }) ? 'default' : 'outline'}
               size="sm"
+              type="button"
               title="Heading 2"
             >
               <Heading2 className="w-4 h-4" />
@@ -417,6 +385,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
               variant={editor.isActive('heading', { level: 3 }) ? 'default' : 'outline'}
               size="sm"
+              type="button"
               title="Heading 3"
             >
               <Heading3 className="w-4 h-4" />
@@ -426,6 +395,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               onClick={setLink}
               variant={editor.isActive('link') ? 'default' : 'outline'}
               size="sm"
+              type="button"
               title="Set Link"
             >
               <Link2 className="w-4 h-4" />
@@ -436,6 +406,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               disabled={!editor.isActive('link')}
               variant="outline"
               size="sm"
+              type="button"
               title="Unset Link"
             >
               Unset link
@@ -445,6 +416,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
               onClick={() => editor.chain().focus().toggleBulletList().run()}
               variant={editor.isActive('bulletList') ? 'default' : 'outline'}
               size="sm"
+              type="button"
               title="Bullet List"
             >
               <List className="w-4 h-4" />
@@ -457,6 +429,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
             <Button
               onClick={onInsertInlineMath}
               variant="outline"
+              type="button"
               size="sm"
               title="Insert inline math"
             >
@@ -466,6 +439,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
             <Button
               onClick={onRemoveInlineMath}
               variant="outline"
+              type="button"
               size="sm"
               title="Remove inline math"
             >
@@ -475,6 +449,7 @@ export default ({ content = '', onChange }: TiptapProps) => {
             <Button
               onClick={onInsertBlockMath}
               variant="outline"
+              type="button"
               size="sm"
               title="Insert block math"
             >
@@ -484,23 +459,11 @@ export default ({ content = '', onChange }: TiptapProps) => {
             <Button
               onClick={onRemoveBlockMath}
               variant="outline"
+              type="button"
               size="sm"
               title="Remove block math"
             >
               Remove block math
-            </Button>
-          </div>
-        </div>
-
-        <div className="border-t border-border pt-3">
-          <div className="flex gap-2 flex-wrap">
-            <Button
-              onClick={handleSendContent}
-              variant="default"
-              size="sm"
-              title="Enviar conteúdo"
-            >
-              Enviar conteúdo
             </Button>
           </div>
         </div>
@@ -510,21 +473,6 @@ export default ({ content = '', onChange }: TiptapProps) => {
         editor={editor}
         className={`prose max-w-none border border-border rounded-lg bg-background p-6 h-[600px] overflow-y-auto focus-within:ring-2 focus-within:ring-accent prose:text-base prose:leading-relaxed [&_.ProseMirror]:text-base [&_.ProseMirror]:leading-relaxed [&_.ProseMirror_h1]:text-4xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:mt-6 [&_.ProseMirror_h1]:mb-4 [&_.ProseMirror_h2]:text-3xl [&_.ProseMirror_h2]:font-bold [&_.ProseMirror_h2]:mt-5 [&_.ProseMirror_h2]:mb-3 [&_.ProseMirror_h3]:text-2xl [&_.ProseMirror_h3]:font-bold [&_.ProseMirror_h3]:mt-4 [&_.ProseMirror_h3]:mb-2`}
       />
-
-      <div className='mt-5'>
-        <div className="flex gap-2 flex-wrap">
-          <Button
-            onClick={handleSendContent}
-            variant="default"
-            size="sm"
-            title="Enviar conteúdo"
-          >
-            Enviar conteúdo
-          </Button>
-        </div>
-      </div>
     </div>
-
-
   )
 }
