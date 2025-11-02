@@ -1,30 +1,30 @@
-import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { useAuth } from '@/auth'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { TanStackDevtools } from "@tanstack/react-devtools";
+import { useAuth } from "@/auth";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import Header from '../components/Header/Header'
-import { SidebarProvider } from '@/components/ui/sidebar'
-import { AppSidebar } from '@/components/Sidebar/AppSidebar'
-import Footer from '@/components/Footer/Footer'
-import type { User } from '@/Interface/User'
+import Header from "../components/Header/Header";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/Sidebar/AppSidebar";
+import Footer from "@/components/Footer/Footer";
+import type { User } from "@/Interface/User";
 
 interface AuthState {
-  isAuthenticated: boolean
-  user: User | null
-  login: (username: string, password: string) => Promise<void>
-  logout: () => void
+  isAuthenticated: boolean;
+  user: User | null;
+  login: (username: string, password: string) => Promise<void>;
+  logout: () => void;
 }
 
 interface MyRouterContext {
-  auth: AuthState
+  auth: AuthState;
 }
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 function RootComponent() {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated } = useAuth();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -36,22 +36,22 @@ function RootComponent() {
               <Header isLoggedIn={isAuthenticated} />
 
               <div className="flex justify-center flex-1">
-                <div className="w-full px-4 sm:px-6 lg:px-8 max-w-[1140px]">
+                <div className="w-full px-2 sm:px-6 lg:px-8 max-w-[1140px]">
                   <main>
                     <Outlet />
                   </main>
                 </div>
               </div>
-              
-              <Footer/>
-              
+
+              <Footer />
+
               <TanStackDevtools
                 config={{
-                  position: 'bottom-right',
+                  position: "bottom-right",
                 }}
                 plugins={[
                   {
-                    name: 'Tanstack Router',
+                    name: "Tanstack Router",
                     render: <TanStackRouterDevtoolsPanel />,
                   },
                 ]}
@@ -61,9 +61,10 @@ function RootComponent() {
         </div>
       </SidebarProvider>
     </QueryClientProvider>
-  )
+  );
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: RootComponent,
-})
+});
+
