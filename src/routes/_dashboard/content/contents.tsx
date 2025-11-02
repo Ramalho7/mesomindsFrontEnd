@@ -1,3 +1,4 @@
+import { useAuth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -27,6 +28,7 @@ import type { ContentTag } from "@/Interface/content/contentTag/ContentTag";
 import type { ContentType } from "@/service/content/contentType/getContentType";
 import { useDeleteContent } from "@/service/content/deleteContent";
 import { useGetContent } from "@/service/content/getContent";
+import { formatDate } from "@/utils/formatDate";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { CheckIcon, ChevronsUpDown, Delete, Plus, SquarePen } from "lucide-react";
@@ -88,7 +90,13 @@ function RouteComponent() {
   );
   const { mutate: mutateDeleteContent } = useDeleteContent()
 
+  const { user } = useAuth();
+
   const handleDelete = (contentId: number) => {
+    if (user?.tipo !== "ADM") {
+      alert("Você não possui permissão para deletar conteúdos");
+      return;
+    }
     if (window.confirm(`Deseja remover o conteúdo id: "${contentId}`)) {
       mutateDeleteContent(
         { id: contentId },
@@ -351,18 +359,50 @@ function RouteComponent() {
                 </span>
               </p>
             </div>
-            <p className="flex gap-2 items-center">
-              <span className="font-bold text-secondary text-lg">
-                Nome criador:
-              </span>
-              {content.creator?.nome}
-            </p>
-            <p className="flex gap-2 items-center">
-              <span className="font-bold text-secondary text-lg">
-                Criador id:
-              </span>{" "}
-              {content.creator?.id}
-            </p>
+            <div className="flex justify-between">
+              <div>
+              <p className="flex gap-2 items-center">
+                <span className="font-bold text-secondary text-lg">
+                  Nome criador:
+                </span>
+                {content.creator?.nome}
+              </p>
+              <p className="flex gap-2 items-center">
+                <span className="font-bold text-secondary text-lg">
+                  Criador id:
+                </span>{" "}
+                {content.creator?.id}
+              </p>
+              </div>
+              <div>
+              <p className="flex gap-2 items-center">
+                <span className="font-bold text-secondary text-lg">
+                  Nome último editor:
+                </span>
+                {content.last_editor?.nome}
+              </p>
+              <p className="flex gap-2 items-center">
+                <span className="font-bold text-secondary text-lg">
+                  último editor id:
+                </span>{" "}
+                {content.last_editor?.id}
+              </p>
+              </div>
+            </div>
+            <div>
+              <p className="flex gap-2 items-center">
+                <span className="font-bold text-secondary text-lg">
+                  Data de crição: 
+                </span>
+                {formatDate(content.created_at)}
+              </p>
+              <p className="flex gap-2 items-center">
+                <span className="font-bold text-secondary text-lg">
+                  Data de última edição: 
+                </span>
+                {formatDate(content.updated_at)}
+              </p>
+            </div>
           </div>
         ))}
       </div>
