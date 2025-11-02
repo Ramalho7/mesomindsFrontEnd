@@ -19,6 +19,9 @@ export const Route = createFileRoute('/_dashboard/content/contents')({
 function RouteComponent() {
   const [openStatusFilter, setOpenStatusFilter] = useState(false);
   const [openContentType, setOpenContentType] = useState(false);
+  const [openContentTag, setOpenContentTag] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined);
@@ -35,13 +38,20 @@ function RouteComponent() {
     return () => {
       clearTimeout(handler);
     };
-  }, [search, statusFilter, setContentTypeFilter])
+  }, [search, statusFilter, contentTypeFilter, contentTagFilter])
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const page = queryParams.get('page');
+    setCurrentPage(page ? parseInt(page, 10) : 1);
+  }, []);
 
   const { data: contents, isLoading, isError } = useGetContent({
     search,
     status: statusFilter,
     content_type: contentTypeFilter,
     content_tag: contentTagFilter,
+    page: currentPage
   },
     enable
   )
@@ -65,6 +75,15 @@ function RouteComponent() {
     }
     return acc;
   }, []);
+
+  const uniqueContentTags = contents?.data
+    .flatMap((content) => content.content_tags)
+    .reduce<ContentTag[]>((acc, tag) => {
+      if (!acc.some((item) => item.id === tag.id)) {
+        acc.push(tag);
+      }
+      return acc;
+    }, []);
 
   return (
     <div className='flex flex-col'>
@@ -133,7 +152,7 @@ function RouteComponent() {
               <CommandInput placeholder='Selecione um Status' />
               <CommandList>
                 <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
-                <CommandGroup heading="Status">
+                <CommandGroup heading="Tipos">
                   {uniqueContentTypes?.map((contentType) => (
                     <CommandItem
                       key={contentType.id}
@@ -143,7 +162,7 @@ function RouteComponent() {
                         setOpenContentType(false);
                       }}
                     >
-                      {statusFilter === contentType.title && <CheckIcon className="mr-2" />}
+                      {contentTypeFilter === contentType.title && <CheckIcon className="mr-2" />}
                       {contentType.title}
                     </CommandItem>
                   ))}
@@ -153,15 +172,51 @@ function RouteComponent() {
           </PopoverContent>
         </Popover>
 
+
+        <Popover open={openContentTag} onOpenChange={setOpenContentTag}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={openContentTag}
+            >
+              Tipo de conteúdo
+              <ChevronsUpDown className="opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <Command>
+              <CommandInput placeholder='Selecione um Status' />
+              <CommandList>
+                <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
+                <CommandGroup heading="Tags">
+                  {uniqueContentTags?.map((contentTag) => (
+                    <CommandItem
+                      key={contentTag.id}
+                      onSelect={() => {
+                        setContentTagFilter(contentTag.tag_name);
+                        setEnabled(false);
+                        setOpenContentTag(false);
+                      }}
+                    >
+                      {contentTagFilter === contentTag.tag_name && <CheckIcon className="mr-2" />}
+                      {contentTag.tag_name}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </div>
 
       <div>
         {contents?.data.map((content: ContentPayload, index: any) => (
-          <div>
+          <div key={content.id}>
             <p>id {content.id}</p>
             <p>title {content.title}</p>
             {content.content_tags.map((tag: ContentTag, index: any) => (
-              <div>
+              <div key={tag.id}>
                 {tag.tag_name}
               </div>
             ))}
@@ -180,21 +235,61 @@ function RouteComponent() {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious href={contents?.prev_page_url || "#"} />
+            <PaginationPrevious
+              href={`?page=${contents?.prev_page_url ? contents?.prev_page_url.split('page=')[1] : 1}`}
+              onClick={(e) => {
+                e.preventDefault();
+                const page = contents?.prev_page_url?.split('page=')[1];
+                setCurrentPage(page ? parseInt(page, 10) : 1);
+              }}
+            />
           </PaginationItem>
-          {contents?.links.map((link: any, index: any) => (
+          {contents?.links.some((link: any) => link.page && link.page > currentPage + 1) && (
             <PaginationItem>
-              {link.url ? (
-                <PaginationLink href={link.url} className={link.active ? "font-bold" : ""}>
-                  {link.label}
-                </PaginationLink>
-              ) : (
-                <PaginationEllipsis />
-              )}
+              <PaginationEllipsis />
             </PaginationItem>
-          ))}
+          )}
+          {contents?.links
+            .filter((link: any) => typeof link.page === 'number')
+            .reduce<any[]>((acc, link: any) => {
+              if (!acc.some((item) => item.page === link.page)) {
+                acc.push(link);
+              }
+              return acc;
+            }, [])
+            .filter((link: any) => {
+              const currentPageNum = currentPage;
+              return link.page >= currentPageNum - 1 && link.page <= currentPageNum + 1;
+            })
+            .map((link: any) => (
+              <PaginationItem key={`page-${link.page}`}>
+                <PaginationLink
+                  href={`?page=${link.page}`}
+                  className={link.active ? 'font-bold' : ''}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setCurrentPage(link.page);
+                  }}
+                >
+                  {link.page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+          {contents?.links.some((link: any) => link.page && link.page > currentPage + 1) && (
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
           <PaginationItem>
-            <PaginationNext href={contents?.next_page_url || "#"} />
+            <PaginationNext
+              href={`?page=${contents?.next_page_url ? contents?.next_page_url.split('page=')[1] : 1}`}
+              onClick={(e) => {
+                e.preventDefault();
+                const page = contents?.next_page_url?.split('page=')[1];
+                setCurrentPage(page ? parseInt(page, 10) : 1);
+              }}
+            />
           </PaginationItem>
         </PaginationContent>
       </Pagination>

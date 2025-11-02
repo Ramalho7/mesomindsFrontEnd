@@ -90,6 +90,7 @@ async function fetchContents(params?: {
     status?: string,
     content_type?: string
     content_tag?: string
+    page?: number
 }): Promise<ContentPayloadResponse> {
     try {
         const response = await api.get('/api/conteudos', { params });
@@ -116,6 +117,7 @@ export function useGetContent(params?: {
     status?: string,
     content_type?: string
     content_tag?: string
+    page?: number
 }, enabled: boolean = true
 ) {
     return useQuery({
