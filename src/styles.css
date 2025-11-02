@@ -29,7 +29,7 @@ code {
   --primary: #FFFFFF;
   --primary-foreground: #000;
   --secondary: #3A6944;
-  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --secondary-foreground: #FFFFFF;
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: #4b4b4b;
   --accent: #00A84C;

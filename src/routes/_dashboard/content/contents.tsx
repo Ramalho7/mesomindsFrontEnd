@@ -90,136 +90,147 @@ function RouteComponent() {
       <Link to='/content/createcontent'>Create contents</Link>
       <div>
 
-        <h1>Conteúdos</h1>
+        <h1 className='text-2xl text-secondary'>Conteúdos</h1>
         <Input
+          id='input-search'
+          name='input-search'
           type="search"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value)
             setEnabled(false)
           }}
+          placeholder='Busque por conteúdos'
+          className='mt-[24px] mb-[16px]'
         />
 
-        <Popover open={openStatusFilter} onOpenChange={setOpenStatusFilter}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={openStatusFilter}
-            >
-              Status
-              <ChevronsUpDown className="opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <Command>
-              <CommandInput placeholder='Selecione um Status' />
-              <CommandList>
-                <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
-                <CommandGroup heading="Status">
-                  {uniqueStatuses?.map((status) => (
-                    <CommandItem
-                      key={status}
-                      onSelect={() => {
-                        setStatusFilter(status);
-                        setEnabled(false);
-                        setOpenStatusFilter(false);
-                      }}
-                    >
-                      {statusFilter === status && <CheckIcon className="mr-2" />}
-                      {status}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
+        <div className='flex flex-col sm:flex-row justify-center align-center gap-[8px] sm:gap-[16px]'>
+          <Popover open={openStatusFilter} onOpenChange={setOpenStatusFilter}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={openStatusFilter}
+              >
+                Status
+                <ChevronsUpDown className="opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <Command>
+                <CommandInput placeholder='Selecione um Status' />
+                <CommandList>
+                  <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
+                  <CommandGroup heading="Status">
+                    {uniqueStatuses?.map((status) => (
+                      <CommandItem
+                        key={status}
+                        onSelect={() => {
+                          setStatusFilter(status);
+                          setEnabled(false);
+                          setOpenStatusFilter(false);
+                        }}
+                      >
+                        {statusFilter === status && <CheckIcon className="mr-2" />}
+                        {status}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
 
-        <Popover open={openContentType} onOpenChange={setOpenContentType}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={openContentType}
-            >
-              Tipo de conteúdo
-              <ChevronsUpDown className="opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <Command>
-              <CommandInput placeholder='Selecione um Status' />
-              <CommandList>
-                <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
-                <CommandGroup heading="Tipos">
-                  {uniqueContentTypes?.map((contentType) => (
-                    <CommandItem
-                      key={contentType.id}
-                      onSelect={() => {
-                        setContentTypeFilter(contentType.title);
-                        setEnabled(false);
-                        setOpenContentType(false);
-                      }}
-                    >
-                      {contentTypeFilter === contentType.title && <CheckIcon className="mr-2" />}
-                      {contentType.title}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
+          <Popover open={openContentType} onOpenChange={setOpenContentType}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={openContentType}
+              >
+                Tipo de conteúdo
+                <ChevronsUpDown className="opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <Command>
+                <CommandInput placeholder='Selecione um Status' />
+                <CommandList>
+                  <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
+                  <CommandGroup heading="Tipos">
+                    {uniqueContentTypes?.map((contentType) => (
+                      <CommandItem
+                        key={contentType.id}
+                        onSelect={() => {
+                          setContentTypeFilter(contentType.title);
+                          setEnabled(false);
+                          setOpenContentType(false);
+                        }}
+                      >
+                        {contentTypeFilter === contentType.title && <CheckIcon className="mr-2" />}
+                        {contentType.title}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
 
 
-        <Popover open={openContentTag} onOpenChange={setOpenContentTag}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={openContentTag}
-            >
-              Tipo de conteúdo
-              <ChevronsUpDown className="opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <Command>
-              <CommandInput placeholder='Selecione um Status' />
-              <CommandList>
-                <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
-                <CommandGroup heading="Tags">
-                  {uniqueContentTags?.map((contentTag) => (
-                    <CommandItem
-                      key={contentTag.id}
-                      onSelect={() => {
-                        setContentTagFilter(contentTag.tag_name);
-                        setEnabled(false);
-                        setOpenContentTag(false);
-                      }}
-                    >
-                      {contentTagFilter === contentTag.tag_name && <CheckIcon className="mr-2" />}
-                      {contentTag.tag_name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
+          <Popover open={openContentTag} onOpenChange={setOpenContentTag}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={openContentTag}
+              >
+                Tipo de conteúdo
+                <ChevronsUpDown className="opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <Command>
+                <CommandInput placeholder='Selecione um Status' />
+                <CommandList>
+                  <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
+                  <CommandGroup heading="Tags">
+                    {uniqueContentTags?.map((contentTag) => (
+                      <CommandItem
+                        key={contentTag.id}
+                        onSelect={() => {
+                          setContentTagFilter(contentTag.tag_name);
+                          setEnabled(false);
+                          setOpenContentTag(false);
+                        }}
+                      >
+                        {contentTagFilter === contentTag.tag_name && <CheckIcon className="mr-2" />}
+                        {contentTag.tag_name}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
 
-      <div>
+      <div className='w-full'>
         {contents?.data.map((content: ContentPayload, index: any) => (
-          <div key={content.id}>
-            <p>id {content.id}</p>
-            <p>title {content.title}</p>
-            {content.content_tags.map((tag: ContentTag, index: any) => (
-              <div key={tag.id}>
-                {tag.tag_name}
-              </div>
-            ))}
+          <div key={content.id} className='border border-2 rounded-lg py-[24px] px-[24px]'>
+            <div className='flex justify-between mb-[16px]'>
+              <p><span className='bg-secondary py-[8px] px-[8px] rounded-lg text-secondary-foreground text-lg font-bold'>Título</span> <span className='font-bold text-secondary'>{content.title}</span></p>
+              <p><span className='bg-secondary py-[8px] px-[8px] rounded-lg text-secondary-foreground text-lg font-bold'>ID</span> <span className='font-bold text-secondary'>{content.id}</span></p>
+            </div>
+            <div className='flex gap-2'>
+              <p>Tags:</p>
+              {content.content_tags.map((tag: ContentTag, index: any) => (
+                <div key={tag.id} className='bg-secondary py-[8px] px-[8px] rounded-[8px]'>
+                  {tag.tag_name}
+                </div>
+              ))}
+            </div>
             <p>Tipo: {content.content_type.title}, descricao {content.content_type.description}</p>
             <p>Criador id: {content.creator?.id}</p>
             <p>Criador: {content.creator?.nome}</p>
@@ -232,7 +243,7 @@ function RouteComponent() {
           </div>
         ))}
       </div>
-      <Pagination>
+      <Pagination className='mt-10 mb-10'>
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -265,7 +276,7 @@ function RouteComponent() {
               <PaginationItem key={`page-${link.page}`}>
                 <PaginationLink
                   href={`?page=${link.page}`}
-                  className={link.active ? 'font-bold' : ''}
+                  isActive={link.active}
                   onClick={(e) => {
                     e.preventDefault();
                     setCurrentPage(link.page);
