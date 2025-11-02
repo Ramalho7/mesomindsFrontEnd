@@ -1,16 +1,15 @@
 import { Button } from '@/components/ui/button'
-import { CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command'
 import { Input } from '@/components/ui/input'
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
-import { Popover } from '@/components/ui/popover'
+import { PopoverContent, PopoverTrigger, Popover } from '@/components/ui/popover'
 import type { ContentPayload } from '@/Interface/content/ContentPayload'
 import type { ContentTag } from '@/Interface/content/contentTag/ContentTag'
+import type { ContentType } from '@/service/content/contentType/getContentType'
 import { useGetContent } from '@/service/content/getContent'
-import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
-import { CommandInput } from 'cmdk'
-import { CheckIcon, ChevronsUpDown, Command, Tag } from 'lucide-react'
+import { CheckIcon, ChevronsUpDown } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
 export const Route = createFileRoute('/_dashboard/content/contents')({
@@ -18,8 +17,8 @@ export const Route = createFileRoute('/_dashboard/content/contents')({
 })
 
 function RouteComponent() {
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState("")
+  const [openStatusFilter, setOpenStatusFilter] = useState(false);
+  const [openContentType, setOpenContentType] = useState(false);
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined);
@@ -36,7 +35,7 @@ function RouteComponent() {
     return () => {
       clearTimeout(handler);
     };
-  }, [search])
+  }, [search, statusFilter, setContentTypeFilter])
 
   const { data: contents, isLoading, isError } = useGetContent({
     search,
@@ -56,6 +55,17 @@ function RouteComponent() {
     return <div>Erro ao carregar os conteúdos.</div>
   }
 
+  const uniqueStatuses = contents?.data
+    .map((content: ContentPayload) => content.status)
+    .filter((status, index, self) => self.indexOf(status) === index);
+
+  const uniqueContentTypes = contents?.data.reduce<ContentType[]>((acc, content) => {
+    if (!acc.some((item) => item.id === content.content_type.id)) {
+      acc.push(content.content_type as ContentType);
+    }
+    return acc;
+  }, []);
+
   return (
     <div className='flex flex-col'>
       <Link to='/content/createcontent'>Create contents</Link>
@@ -65,38 +75,86 @@ function RouteComponent() {
         <Input
           type="search"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value)
+            setEnabled(false)
+          }}
         />
 
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover open={openStatusFilter} onOpenChange={setOpenStatusFilter}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
               role="combobox"
-              aria-expanded={open}
+              aria-expanded={openStatusFilter}
             >
-
+              Status
               <ChevronsUpDown className="opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent>
             <Command>
-              <CommandInput placeholder='Selecione um filtro'>
-                <CommandList>
-                  <CommandEmpty>No framework found.</CommandEmpty>
-                  <CommandGroup>
-
+              <CommandInput placeholder='Selecione um Status' />
+              <CommandList>
+                <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
+                <CommandGroup heading="Status">
+                  {uniqueStatuses?.map((status) => (
                     <CommandItem
+                      key={status}
+                      onSelect={() => {
+                        setStatusFilter(status);
+                        setEnabled(false);
+                        setOpenStatusFilter(false);
+                      }}
                     >
+                      {statusFilter === status && <CheckIcon className="mr-2" />}
+                      {status}
                     </CommandItem>
-
-                  </CommandGroup>
-                </CommandList>
-              </CommandInput>
+                  ))}
+                </CommandGroup>
+              </CommandList>
             </Command>
           </PopoverContent>
         </Popover>
+
+        <Popover open={openContentType} onOpenChange={setOpenContentType}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={openContentType}
+            >
+              Tipo de conteúdo
+              <ChevronsUpDown className="opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <Command>
+              <CommandInput placeholder='Selecione um Status' />
+              <CommandList>
+                <CommandEmpty>Nenhum filtro encontrado.</CommandEmpty>
+                <CommandGroup heading="Status">
+                  {uniqueContentTypes?.map((contentType) => (
+                    <CommandItem
+                      key={contentType.id}
+                      onSelect={() => {
+                        setContentTypeFilter(contentType.title);
+                        setEnabled(false);
+                        setOpenContentType(false);
+                      }}
+                    >
+                      {statusFilter === contentType.title && <CheckIcon className="mr-2" />}
+                      {contentType.title}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+
       </div>
+
       <div>
         {contents?.data.map((content: ContentPayload, index: any) => (
           <div>
