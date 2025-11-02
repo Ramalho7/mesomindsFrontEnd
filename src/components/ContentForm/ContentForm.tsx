@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useCreateContent } from '@/service/content/postContent'
+import type { getContentSchema } from '@/service/content/getContentById'
 import Tiptap from '@/components/TipTap/Tiptap'
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import { Button } from '../ui/button'
@@ -10,8 +11,15 @@ import { useContentTypes } from '@/service/content/contentType/getContentType'
 import { extractBase64Images } from '../../utils/extractBase64Images'
 import { Input } from '../ui/input'
 import { useRouter } from '@tanstack/react-router'
+import { useUpdateContent } from '@/service/content/editContent'
+import type { ContentPayload } from '@/Interface/content/ContentPayload'
 
-export default function ContentForm() {
+interface ContentFormProps {
+    initialData?: getContentSchema | ContentPayload
+    isEditMode?: boolean
+}
+
+export default function ContentForm({ initialData, isEditMode = false }: ContentFormProps) {
 
     const router = useRouter();
 
@@ -19,18 +27,31 @@ export default function ContentForm() {
         router.history.back();
     }
 
-    const [title, setTitle] = useState('')
-    const [contentType, setContentType] = useState('')
-    const [selectedTags, setSelectedTags] = useState<string[]>([])
-    const [content, setContent] = useState('')
+    const [title, setTitle] = useState(initialData?.title || '')
+    const [contentType, setContentType] = useState(initialData?.content_type.title || '')
+    const [selectedTags, setSelectedTags] = useState<string[]>(
+        initialData?.content_tags.map(tag => tag.tag_name) || []
+    )
+    const [content, setContent] = useState(initialData?.content || '')
     const [openTags, setOpenTags] = useState(false)
     const [openTypes, setOpenTypes] = useState(false)
     const [inputTagsValue, setInputTagsValue] = useState("")
     const [inputTypesValue, setInputTypesValue] = useState("")
-    const { mutate } = useCreateContent()
+
+    const { mutate: createMutate } = useCreateContent()
+    const { mutate: updateMutate } = useUpdateContent()
 
     const { data: contenTagData, isLoading: loadingTagData, isError: errorTagData } = useContentTags()
     const { data: contenTypeData, isLoading: loadingTypeData, isError: errorTypeData } = useContentTypes()
+
+    useEffect(() => {
+        if (initialData) {
+            setTitle(initialData.title)
+            setContentType(initialData.content_type.title)
+            setSelectedTags(initialData.content_tags.map(tag => tag.tag_name))
+            setContent(initialData.content)
+        }
+    }, [initialData])
 
     const handleSubmit = useCallback(() => {
 
@@ -51,19 +72,41 @@ export default function ContentForm() {
             image_alt_text: images.map(() => 'Descrição padrão'),
         }
 
-        mutate(payload, {
-            onSuccess: (response) => {
-                console.log('Conteúdo enviado com sucesso:', response)
-                alert('Conteúdo enviado com sucesso!')
-            },
-            onError: (error) => {
-                console.error('Erro ao enviar conteúdo:', error)
-                alert('Erro ao enviar conteúdo.')
-            },
-        })
+        if (isEditMode && initialData) {
+            updateMutate(
+                { id: initialData.id, ...payload },
+                {
+                    onSuccess: (response: any) => {
+                        console.log(`Conteúdo atualizado com sucesso:`, response)
+                        alert(`Conteúdo atualizado com sucesso!`)
+                        router.history.back()
+                    },
+                    onError: (error: any) => {
+                        console.error(`Erro ao atualizar conteúdo:`, error)
+                        alert(`Erro ao atualizar conteúdo.`)
+                    },
+                }
+            )
+        } else {
+            createMutate(
+                payload,
+                {
+                    onSuccess: (response: any) => {
+                        console.log(`Conteúdo criado com sucesso:`, response)
+                        alert(`Conteúdo criado com sucesso!`)
+                        router.history.back()
+                    },
+                    onError: (error: any) => {
+                        console.error(`Erro ao criar conteúdo:`, error)
+                        alert(`Erro ao criar conteúdo.`)
+                    },
+                }
+            )
+        }
 
         console.log('Payload gerado no handleSubmit:', payload)
-    }, [title, content, contentType, selectedTags, mutate])
+    }, [title, content, contentType, selectedTags, isEditMode, initialData, createMutate, updateMutate, router])
+
 
     console.error('erro, tag ', errorTagData)
     console.error('erro, type ', errorTypeData)
@@ -245,7 +288,7 @@ export default function ContentForm() {
                         type="submit"
                         variant={"action"}
                     >
-                        Enviar Conteúdo
+                        {isEditMode ? 'Atualizar Conteúdo' : 'Enviar Conteúdo'}
                     </Button>
                 </div>
             </form>

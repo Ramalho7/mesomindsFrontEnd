@@ -4,7 +4,7 @@ import api from '@/service/axios'
 import { creatorSchema } from "@/service/schemas/creatorZodSchema"
 import type { ContentTypeResponse } from "@/Interface/content/contentType/ContentTypeResponse"
 
-const contentTypeSchema = z.object({
+export const contentTypeSchema = z.object({
     id: z.number(),
     title: z.string(),
     description: z.string(),

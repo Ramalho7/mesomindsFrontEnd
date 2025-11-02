@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import api from '@/service/axios'
 import { creatorSchema } from "@/service/schemas/creatorZodSchema"
 
-const contentTagSchema = z.object({
+export const contentTagSchema = z.object({
     id: z.number(),
     tag_name: z.string(),
     is_moderator_only: z.number(),

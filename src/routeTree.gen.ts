@@ -28,6 +28,8 @@ import { Route as DashboardDashboardRouteImport } from './routes/_dashboard/dash
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as DashboardContentCreatecontentRouteImport } from './routes/_dashboard/content/createcontent'
 import { Route as DashboardContentContentsRouteImport } from './routes/_dashboard/content/contents'
+import { Route as DashboardContentEditContentRouteImport } from './routes/_dashboard/content/$editContent'
+import { Route as DashboardContentContentIdRouteImport } from './routes/_dashboard/content/$contentId'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -123,6 +125,18 @@ const DashboardContentContentsRoute =
     path: '/content/contents',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardContentEditContentRoute =
+  DashboardContentEditContentRouteImport.update({
+    id: '/content/$editContent',
+    path: '/content/$editContent',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardContentContentIdRoute =
+  DashboardContentContentIdRouteImport.update({
+    id: '/content/$contentId',
+    path: '/content/$contentId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
@@ -139,6 +153,8 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof PublicSobreRoute
   '/turmas': typeof PublicTurmasRoute
   '/': typeof PublicIndexRoute
+  '/content/$contentId': typeof DashboardContentContentIdRoute
+  '/content/$editContent': typeof DashboardContentEditContentRoute
   '/content/contents': typeof DashboardContentContentsRoute
   '/content/createcontent': typeof DashboardContentCreatecontentRoute
 }
@@ -157,6 +173,8 @@ export interface FileRoutesByTo {
   '/sobre': typeof PublicSobreRoute
   '/turmas': typeof PublicTurmasRoute
   '/': typeof PublicIndexRoute
+  '/content/$contentId': typeof DashboardContentContentIdRoute
+  '/content/$editContent': typeof DashboardContentEditContentRoute
   '/content/contents': typeof DashboardContentContentsRoute
   '/content/createcontent': typeof DashboardContentCreatecontentRoute
 }
@@ -179,6 +197,8 @@ export interface FileRoutesById {
   '/_public/sobre': typeof PublicSobreRoute
   '/_public/turmas': typeof PublicTurmasRoute
   '/_public/': typeof PublicIndexRoute
+  '/_dashboard/content/$contentId': typeof DashboardContentContentIdRoute
+  '/_dashboard/content/$editContent': typeof DashboardContentEditContentRoute
   '/_dashboard/content/contents': typeof DashboardContentContentsRoute
   '/_dashboard/content/createcontent': typeof DashboardContentCreatecontentRoute
 }
@@ -199,6 +219,8 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/turmas'
     | '/'
+    | '/content/$contentId'
+    | '/content/$editContent'
     | '/content/contents'
     | '/content/createcontent'
   fileRoutesByTo: FileRoutesByTo
@@ -217,6 +239,8 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/turmas'
     | '/'
+    | '/content/$contentId'
+    | '/content/$editContent'
     | '/content/contents'
     | '/content/createcontent'
   id:
@@ -238,6 +262,8 @@ export interface FileRouteTypes {
     | '/_public/sobre'
     | '/_public/turmas'
     | '/_public/'
+    | '/_dashboard/content/$contentId'
+    | '/_dashboard/content/$editContent'
     | '/_dashboard/content/contents'
     | '/_dashboard/content/createcontent'
   fileRoutesById: FileRoutesById
@@ -385,6 +411,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardContentContentsRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/_dashboard/content/$editContent': {
+      id: '/_dashboard/content/$editContent'
+      path: '/content/$editContent'
+      fullPath: '/content/$editContent'
+      preLoaderRoute: typeof DashboardContentEditContentRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/content/$contentId': {
+      id: '/_dashboard/content/$contentId'
+      path: '/content/$contentId'
+      fullPath: '/content/$contentId'
+      preLoaderRoute: typeof DashboardContentContentIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
@@ -402,12 +442,16 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 
 interface DashboardRouteChildren {
   DashboardDashboardRoute: typeof DashboardDashboardRoute
+  DashboardContentContentIdRoute: typeof DashboardContentContentIdRoute
+  DashboardContentEditContentRoute: typeof DashboardContentEditContentRoute
   DashboardContentContentsRoute: typeof DashboardContentContentsRoute
   DashboardContentCreatecontentRoute: typeof DashboardContentCreatecontentRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardDashboardRoute: DashboardDashboardRoute,
+  DashboardContentContentIdRoute: DashboardContentContentIdRoute,
+  DashboardContentEditContentRoute: DashboardContentEditContentRoute,
   DashboardContentContentsRoute: DashboardContentContentsRoute,
   DashboardContentCreatecontentRoute: DashboardContentCreatecontentRoute,
 }
