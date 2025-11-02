@@ -85,9 +85,14 @@ const apiResponseSchema = z.object({
 
 export type ContentResponseZ = z.infer<typeof getContentSchemaResponse>
 
-async function fetchContents(): Promise<ContentPayloadResponse> {
+async function fetchContents(params?: {
+    search?: string,
+    status?: string,
+    content_type?: string
+    content_tag?: string
+}): Promise<ContentPayloadResponse> {
     try {
-        const response = await api.get('/api/conteudos');
+        const response = await api.get('/api/conteudos', { params });
         console.log('Resposta da API:', response.data);
 
         const parsedResponse = apiResponseSchema.parse(response.data);
@@ -106,10 +111,17 @@ async function fetchContents(): Promise<ContentPayloadResponse> {
     }
 }
 
-export function useGetContent() {
+export function useGetContent(params?: {
+    search?: string,
+    status?: string,
+    content_type?: string
+    content_tag?: string
+}, enabled: boolean = true
+) {
     return useQuery({
-        queryKey: ['content'],
-        queryFn: fetchContents,
+        queryKey: ['content', params],
+        queryFn: () => fetchContents(params),
         staleTime: 1000 * 60 * 5,
+        enabled
     })
 }

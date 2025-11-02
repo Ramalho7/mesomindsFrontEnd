@@ -11,7 +11,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
 import { CommandInput } from 'cmdk'
 import { CheckIcon, ChevronsUpDown, Command, Tag } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const Route = createFileRoute('/_dashboard/content/contents')({
   component: RouteComponent,
@@ -21,11 +21,36 @@ function RouteComponent() {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState("")
 
-  const { data: contents, isLoading, isError } = useGetContent()
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined);
+  const [contentTypeFilter, setContentTypeFilter] = useState<string | undefined>(undefined);
+  const [contentTagFilter, setContentTagFilter] = useState<string | undefined>(undefined);
 
-  if (isLoading) {
-    return <div>Carregando conteúdos...</div>
-  }
+  const [enable, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setEnabled(true);
+    }, 200);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [search])
+
+  const { data: contents, isLoading, isError } = useGetContent({
+    search,
+    status: statusFilter,
+    content_type: contentTypeFilter,
+    content_tag: contentTagFilter,
+  },
+    enable
+  )
+
+
+  // if (isLoading) {
+  //   return <div>Carregando conteúdos...</div>
+  // }
 
   if (isError) {
     return <div>Erro ao carregar os conteúdos.</div>
@@ -37,7 +62,12 @@ function RouteComponent() {
       <div>
 
         <h1>Conteúdos</h1>
-        <Input type="search" />
+        <Input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
