@@ -46,5 +46,14 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, './src')
     }
-  }
+  },
+  esbuild: {
+    logOverride: { 'console': 'silent' },
+  },
+  define: {
+    'process.env': {}, 
+  },
+  optimizeDeps: {
+    exclude: ['console'], 
+  },
 });

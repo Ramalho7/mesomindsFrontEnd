@@ -1,114 +1,30 @@
-import Document from '@tiptap/extension-document'
-import Image from '@tiptap/extension-image'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
 import { Dropcursor } from '@tiptap/extensions'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import React, { useCallback, useRef, useState } from 'react'
-import katex from 'katex'
+import Image from '@tiptap/extension-image'
+import Bold from '@tiptap/extension-bold'
+import Code from '@tiptap/extension-code'
+import Link from '@tiptap/extension-link'
+import Heading from '@tiptap/extension-heading'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import Mathematics, { migrateMathStrings } from '@tiptap/extension-mathematics'
+import FileHandler from '@tiptap/extension-file-handler'
+import { common, createLowlight } from 'lowlight'
+import React, { useCallback, useRef } from 'react'
 import 'katex/dist/katex.min.css'
-import { Node, mergeAttributes } from '@tiptap/core'
-import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { Decoration, DecorationSet } from '@tiptap/pm/view'
+import { Button } from '../ui/button'
+import { Bold as BoldIcon, Italic, Heading1, Heading2, Heading3, Link2, List } from 'lucide-react'
 
-// Extensão para LaTeX inline
-const InlineMath = Node.create({
-  name: 'inlineMath',
-  group: 'inline',
-  inline: true,
-  atom: true,
+const lowlight = createLowlight(common)
 
-  addAttributes() {
-    return {
-      latex: {
-        default: '',
-      },
-    }
-  },
+interface TiptapProps {
+  content?: string
+  onChange?: (content: string) => void
+}
 
-  parseHTML() {
-    return [
-      {
-        tag: 'span.math-inline',
-      },
-    ]
-  },
-
-  renderHTML({ HTMLAttributes }) {
-    return ['span', mergeAttributes({ class: 'math-inline' }, HTMLAttributes)]
-  },
-
-  addNodeView() {
-    return ({ node }) => {
-      const dom = document.createElement('span')
-      dom.className = 'math-inline'
-      try {
-        katex.render(node.attrs.latex, dom, {
-          throwOnError: false,
-          displayMode: false,
-        })
-      } catch (e) {
-        dom.textContent = node.attrs.latex
-      }
-      return {
-        dom,
-      }
-    }
-  },
-})
-
-// Extensão para LaTeX em bloco
-const MathBlock = Node.create({
-  name: 'mathBlock',
-  group: 'block',
-  atom: true,
-
-  addAttributes() {
-    return {
-      latex: {
-        default: '',
-      },
-    }
-  },
-
-  parseHTML() {
-    return [
-      {
-        tag: 'div.math-block',
-      },
-    ]
-  },
-
-  renderHTML({ HTMLAttributes }) {
-    return ['div', mergeAttributes({ class: 'math-block' }, HTMLAttributes)]
-  },
-
-  addNodeView() {
-    return ({ node }) => {
-      const dom = document.createElement('div')
-      dom.className = 'math-block'
-      try {
-        katex.render(node.attrs.latex, dom, {
-          throwOnError: false,
-          displayMode: true,
-        })
-      } catch (e) {
-        dom.textContent = node.attrs.latex
-      }
-      return {
-        dom,
-      }
-    }
-  },
-})
-
-export default () => {
+export default ({ content = '', onChange }: TiptapProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [latexInput, setLatexInput] = useState('')
-  const [showLatexModal, setShowLatexModal] = useState(false)
-  const [isInline, setIsInline] = useState(true)
-  
+
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
@@ -119,62 +35,196 @@ export default () => {
   }
 
   const editor = useEditor({
+    shouldRerenderOnTransaction: true,
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        codeBlock: false,
+        heading: false,
+      }),
+      Bold,
+      Code,
+      Heading.configure({
+        levels: [1, 2, 3],
+      }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: 'https',
+        protocols: ['http', 'https'],
+        isAllowedUri: (url, ctx) => {
+          try {
+            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`${ctx.defaultProtocol}://${url}`)
+
+            if (!ctx.defaultValidate(parsedUrl.href)) {
+              return false
+            }
+
+            const disallowedProtocols = ['ftp', 'file', 'mailto']
+            const protocol = parsedUrl.protocol.replace(':', '')
+
+            if (disallowedProtocols.includes(protocol)) {
+              return false
+            }
+
+            const allowedProtocols = ctx.protocols.map(p => (typeof p === 'string' ? p : p.scheme))
+
+            if (!allowedProtocols.includes(protocol)) {
+              return false
+            }
+
+            const disallowedDomains = ['example-phishing.com', 'malicious-site.net']
+            const domain = parsedUrl.hostname
+
+            if (disallowedDomains.includes(domain)) {
+              return false
+            }
+
+            return true
+          } catch {
+            return false
+          }
+        },
+        shouldAutoLink: url => {
+          try {
+            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`https://${url}`)
+
+            const disallowedDomains = ['example-no-autolink.com', 'another-no-autolink.com']
+            const domain = parsedUrl.hostname
+
+            return !disallowedDomains.includes(domain)
+          } catch {
+            return false
+          }
+        },
+      }),
+      CodeBlockLowlight.configure({
+        lowlight,
+      }),
       Image.configure({
         inline: true,
         allowBase64: true,
       }),
+      FileHandler.configure({
+        allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
+        onDrop: (currentEditor, files, pos) => {
+          files.forEach(file => {
+            const fileReader = new FileReader()
+
+            fileReader.readAsDataURL(file)
+            fileReader.onload = () => {
+              currentEditor
+                .chain()
+                .insertContentAt(pos, {
+                  type: 'image',
+                  attrs: {
+                    src: fileReader.result,
+                  },
+                })
+                .focus()
+                .run()
+            }
+          })
+        },
+        onPaste: (currentEditor, files) => {
+          files.forEach(file => {
+            const fileReader = new FileReader()
+
+            fileReader.readAsDataURL(file)
+            fileReader.onload = () => {
+              currentEditor
+                .chain()
+                .insertContentAt(currentEditor.state.selection.anchor, {
+                  type: 'image',
+                  attrs: {
+                    src: fileReader.result,
+                  },
+                })
+                .focus()
+                .run()
+            }
+          })
+        },
+      }),
       Dropcursor,
-      InlineMath,
-      MathBlock,
+      Mathematics.configure({
+        inlineOptions: {
+          onClick: (node, pos) => {
+            const newCalculation = prompt('Enter new calculation:', node.attrs.latex)
+            if (newCalculation && editor) {
+              editor.chain().setNodeSelection(pos).updateInlineMath({ latex: newCalculation }).focus().run()
+            }
+          },
+        },
+        blockOptions: {
+          onClick: (node, pos) => {
+            const newCalculation = prompt('Enter new calculation:', node.attrs.latex)
+            if (newCalculation && editor) {
+              editor.chain().setNodeSelection(pos).updateBlockMath({ latex: newCalculation }).focus().run()
+            }
+          },
+        },
+        katexOptions: {
+          throwOnError: false,
+        },
+      }),
     ],
-    content: `
+    content: content || `
         <p>This is a basic example of implementing images and LaTeX.</p>
         <p>Try adding: x^2 + y^2 = z^2</p>
       `,
+    onCreate: ({ editor: currentEditor }) => {
+      migrateMathStrings(currentEditor)
+      if(onChange){
+        onChange(currentEditor.getHTML())
+      }
+    },
+    onUpdate: ({ editor: currentEditor }) => {
+      if (onChange) {
+        onChange(currentEditor.getHTML())
+      }
+    },
     editorProps: {
-      handleDrop: (view, event, slice, moved) => {
+      handleDrop: (_view, event, _slice, moved) => {
         if (!moved && event.dataTransfer?.files && event.dataTransfer.files[0]) {
           const file = event.dataTransfer.files[0]
-          
+
           if (file.type.startsWith('image/')) {
             event.preventDefault()
-            
+
             convertToBase64(file).then((base64) => {
-              const { schema } = view.state
-              const coordinates = view.posAtCoords({
+              const { schema } = _view.state
+              const coordinates = _view.posAtCoords({
                 left: event.clientX,
                 top: event.clientY,
               })
 
               if (coordinates) {
                 const node = schema.nodes.image.create({ src: base64 })
-                const transaction = view.state.tr.insert(coordinates.pos, node)
-                view.dispatch(transaction)
+                const transaction = _view.state.tr.insert(coordinates.pos, node)
+                _view.dispatch(transaction)
               }
             })
-            
+
             return true
           }
         }
         return false
       },
-      handlePaste: (view, event) => {
+      handlePaste: (_view, event) => {
         const items = event.clipboardData?.items
-        
+
         if (items) {
           for (let i = 0; i < items.length; i++) {
             if (items[i].type.startsWith('image/')) {
               event.preventDefault()
-              
+
               const file = items[i].getAsFile()
               if (file) {
                 convertToBase64(file).then((base64) => {
                   editor?.chain().focus().setImage({ src: base64 }).run()
                 })
               }
-              
+
               return true
             }
           }
@@ -194,13 +244,13 @@ export default () => {
 
   const handleImageUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
-    
+
     if (file && editor) {
       convertToBase64(file).then((base64) => {
         editor.chain().focus().setImage({ src: base64 }).run()
       })
     }
-    
+
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -210,122 +260,221 @@ export default () => {
     fileInputRef.current?.click()
   }, [])
 
-  const handleInsertLatex = useCallback(() => {
-    if (editor && latexInput) {
-      if (isInline) {
-        editor
-          .chain()
-          .focus()
-          .insertContent({
-            type: 'inlineMath',
-            attrs: {
-              latex: latexInput,
-            },
-          })
-          .run()
-      } else {
-        editor
-          .chain()
-          .focus()
-          .insertContent({
-            type: 'mathBlock',
-            attrs: {
-              latex: latexInput,
-            },
-          })
-          .run()
-      }
-      
-      setLatexInput('')
-      setShowLatexModal(false)
-    }
-  }, [editor, latexInput, isInline])
+  const setLink = useCallback(() => {
+    if (!editor) return
 
-  if (!editor) {
-    return null
-  }
+    const previousUrl = editor.getAttributes('link').href
+    const url = window.prompt('URL', previousUrl)
+
+    if (url === null) {
+      return
+    }
+
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run()
+      return
+    }
+
+    try {
+      editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+    } catch (e) {
+      alert('Invalid URL')
+    }
+  }, [editor])
+
+  const onInsertInlineMath = useCallback(() => {
+    if (!editor) return
+
+    const latex = prompt('Enter inline math expression:', '')
+    if (latex) {
+      return editor.chain().insertInlineMath({ latex }).focus().run()
+    }
+  }, [editor])
+
+  const onRemoveInlineMath = useCallback(() => {
+    if (!editor) return
+    editor.chain().deleteInlineMath().focus().run()
+  }, [editor])
+
+  const onInsertBlockMath = useCallback(() => {
+    if (!editor) return
+
+    const latex = prompt('Enter block math expression:', '')
+    if (latex) {
+      return editor.chain().insertBlockMath({ latex }).focus().run()
+    }
+  }, [editor])
+
+  const onRemoveBlockMath = useCallback(() => {
+    if (!editor) return
+    editor.chain().deleteBlockMath().focus().run()
+  }, [editor])
 
   return (
-    <>
-      <div className="control-group">
-        <div className="button-group">
-          <button onClick={addImage}>Set image from URL</button>
-          <button onClick={triggerFileInput}>Upload image</button>
-          <button onClick={() => setShowLatexModal(true)}>Add LaTeX</button>
+    <div className="w-full mt-7 mb-7">
+      <div className="control-group border border-border rounded-lg bg-card p-4 mb-4 shadow-sm space-y-3">
+        <div className="button-group flex gap-2 flex-wrap">
+          <Button
+            onClick={addImage}
+            variant="outline"
+            type="button"
+            size="sm"
+          >
+            Adicionar imagem por URL
+          </Button>
+          <Button
+            onClick={triggerFileInput}
+            variant="outline"
+            type="button"
+            size="sm"
+          >
+            Upload imagem
+          </Button>
           <input
             ref={fileInputRef}
             type="file"
             accept="image/*"
-            style={{ display: 'none' }}
+            className="hidden"
             onChange={handleImageUpload}
           />
         </div>
-      </div>
 
-      {showLatexModal && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000
-        }}>
-          <div style={{
-            backgroundColor: 'white',
-            padding: '20px',
-            borderRadius: '8px',
-            minWidth: '400px'
-          }}>
-            <h3>Insert LaTeX</h3>
-            <div style={{ marginBottom: '10px' }}>
-              <label>
-                <input
-                  type="radio"
-                  checked={isInline}
-                  onChange={() => setIsInline(true)}
-                />
-                Inline ($...$)
-              </label>
-              <label style={{ marginLeft: '10px' }}>
-                <input
-                  type="radio"
-                  checked={!isInline}
-                  onChange={() => setIsInline(false)}
-                />
-                Block ($$...$$)
-              </label>
-            </div>
-            <textarea
-              value={latexInput}
-              onChange={(e) => setLatexInput(e.target.value)}
-              placeholder="Ex: x^2 + y^2 = z^2"
-              style={{
-                width: '100%',
-                minHeight: '100px',
-                marginBottom: '10px',
-                padding: '8px',
-                fontFamily: 'monospace'
-              }}
-            />
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={handleInsertLatex}>Insert</button>
-              <button onClick={() => {
-                setShowLatexModal(false)
-                setLatexInput('')
-              }}>
-                Cancel
-              </button>
-            </div>
+        <div className="border-t border-border pt-3">
+          <div className="flex gap-2 flex-wrap">
+            <Button
+              onClick={() => editor.chain().focus().toggleBold().run()}
+              disabled={!editor.can().chain().focus().toggleBold().run()}
+              variant={editor.isActive('bold') ? 'default' : 'outline'}
+              size="sm"
+              type="button"
+              title="Bold (Ctrl+B)"
+            >
+              <BoldIcon className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={() => editor.chain().focus().toggleItalic().run()}
+              disabled={!editor.can().chain().focus().toggleItalic().run()}
+              variant={editor.isActive('italic') ? 'default' : 'outline'}
+              size="sm"
+              type="button"
+              title="Italic (Ctrl+I)"
+            >
+              <Italic className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+              variant={editor.isActive('heading', { level: 1 }) ? 'default' : 'outline'}
+              size="sm"
+              type="button"
+              title="Heading 1"
+            >
+              <Heading1 className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+              variant={editor.isActive('heading', { level: 2 }) ? 'default' : 'outline'}
+              size="sm"
+              type="button"
+              title="Heading 2"
+            >
+              <Heading2 className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+              variant={editor.isActive('heading', { level: 3 }) ? 'default' : 'outline'}
+              size="sm"
+              type="button"
+              title="Heading 3"
+            >
+              <Heading3 className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={setLink}
+              variant={editor.isActive('link') ? 'default' : 'outline'}
+              size="sm"
+              type="button"
+              title="Set Link"
+            >
+              <Link2 className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={() => editor.chain().focus().unsetLink().run()}
+              disabled={!editor.isActive('link')}
+              variant="outline"
+              size="sm"
+              type="button"
+              title="Unset Link"
+            >
+              Remover link
+            </Button>
+
+            <Button
+              onClick={() => editor.chain().focus().toggleBulletList().run()}
+              variant={editor.isActive('bulletList') ? 'default' : 'outline'}
+              size="sm"
+              type="button"
+              title="Bullet List"
+            >
+              <List className="w-4 h-4" />
+            </Button>
           </div>
         </div>
-      )}
 
-      <EditorContent editor={editor} />
-    </>
+        <div className="border-t border-border pt-3">
+          <div className="flex gap-2 flex-wrap">
+            <Button
+              onClick={onInsertInlineMath}
+              variant="outline"
+              type="button"
+              size="sm"
+              title="Insert inline math"
+            >
+              Inserir LaTex inline
+            </Button>
+
+            <Button
+              onClick={onRemoveInlineMath}
+              variant="outline"
+              type="button"
+              size="sm"
+              title="Remove inline math"
+            >
+              Remover LaTex inline
+            </Button>
+
+            <Button
+              onClick={onInsertBlockMath}
+              variant="outline"
+              type="button"
+              size="sm"
+              title="Insert block math"
+            >
+              Adicionar bloco LaTex
+            </Button>
+
+            <Button
+              onClick={onRemoveBlockMath}
+              variant="outline"
+              type="button"
+              size="sm"
+              title="Remove block math"
+            >
+              Remover bloco LaTex
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <EditorContent
+        editor={editor}
+        className={`prose max-w-none border border-border rounded-lg bg-background p-6 h-[600px] overflow-y-auto focus-within:ring-2 focus-within:ring-accent prose:text-base prose:leading-relaxed [&_.ProseMirror]:text-base [&_.ProseMirror]:leading-relaxed [&_.ProseMirror_h1]:text-4xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:mt-6 [&_.ProseMirror_h1]:mb-4 [&_.ProseMirror_h2]:text-3xl [&_.ProseMirror_h2]:font-bold [&_.ProseMirror_h2]:mt-5 [&_.ProseMirror_h2]:mb-3 [&_.ProseMirror_h3]:text-2xl [&_.ProseMirror_h3]:font-bold [&_.ProseMirror_h3]:mt-4 [&_.ProseMirror_h3]:mb-2`}
+      />
+    </div>
   )
 }

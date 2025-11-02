@@ -1,4 +1,4 @@
-import Tiptap from '@/components/TipTap/Tiptap'
+import ContentForm from '@/components/ContentForm/ContentForm'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_dashboard/content/createcontent')({
@@ -7,6 +7,6 @@ export const Route = createFileRoute('/_dashboard/content/createcontent')({
 
 function RouteComponent() {
   return (
-    <Tiptap />
+    <ContentForm/>
   )
 }

@@ -9,10 +9,10 @@ export default function Footer() {
     return (
         <>
             <div className="flex flex-col min-h-[31.25rem] mt-auto">
-                <footer className="sm:flex sm:flex-col sm:justify-between border-solid border-t-2 border-action p-5 flex-grow">
+                <footer className="sm:flex sm:flex-col sm:justify-between border-solid border-t-2 border-accent p-5 flex-grow">
                     <div className="sm:flex sm:gap-[6.25rem] md:gap-[2.5rem]">
                         <div>
-                            <h2 className="font-black text-action text-5xl">Mesominds</h2>
+                            <h2 className="font-black text-accent text-5xl">Mesominds</h2>
                             <p className='text-black text-xl'>Plataforma dedicada ao ensino de matemática grátis!</p>
                         </div>
                         <div className='flex flex-row gap-2 mt-7 sm:mt-0 sm:gap-0 sm:max-h-[31.25rem] md:max-h-[11.25rem] md:gap-4'>
