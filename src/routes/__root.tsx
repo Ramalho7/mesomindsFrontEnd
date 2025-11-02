@@ -1,21 +1,14 @@
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { useAuth } from "@/auth";
+import { useAuth, type AuthState } from "@/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Header from "../components/Header/Header";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/Sidebar/AppSidebar";
 import Footer from "@/components/Footer/Footer";
-import type { User } from "@/Interface/User";
 
-interface AuthState {
-  isAuthenticated: boolean;
-  user: User | null;
-  login: (username: string, password: string) => Promise<void>;
-  logout: () => void;
-}
 
 interface MyRouterContext {
   auth: AuthState;

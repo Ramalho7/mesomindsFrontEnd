@@ -1,21 +1,21 @@
-import { useAuth } from '@/auth'
-import { createFileRoute, Navigate, useNavigate } from '@tanstack/react-router'
+import { useAuth } from "@/auth";
+import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/_authenticated/perfil')({
+export const Route = createFileRoute("/_authenticated/perfil")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const { user, logout } = useAuth()
-  const navigate = useNavigate()
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout()
-    navigate({ to: '/login', search: { redirect: '/' } }) 
-  }
+    logout();
+    navigate({ to: "/login", search: { redirect: "/" } });
+  };
 
   if (!user) {
-    return <div>Loading user data...</div>
+    return <div>Loading user data...</div>;
   }
 
   return (
@@ -36,6 +36,7 @@ function RouteComponent() {
           Hello, <strong>{user?.nome}</strong>! You are successfully
           authenticated.
         </p>
+        <p>Tipo user: {user?.tipo}</p>
         <p className="text-sm text-gray-500 mt-2">Email: {user?.email}</p>
       </div>
     </div>
