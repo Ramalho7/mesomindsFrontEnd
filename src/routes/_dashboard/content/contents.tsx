@@ -28,7 +28,7 @@ import type { ContentType } from "@/service/content/contentType/getContentType";
 import { useGetContent } from "@/service/content/getContent";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { CheckIcon, ChevronsUpDown, SquarePen } from "lucide-react";
+import { CheckIcon, ChevronsUpDown, Plus, SquarePen } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_dashboard/content/contents")({
@@ -118,10 +118,17 @@ function RouteComponent() {
     }, []);
 
   return (
-    <div className="flex flex-col">
-      <Link to="/content/createcontent">Create contents</Link>
+    <div className="flex flex-col mt-10">
       <div>
-        <h1 className="text-2xl text-secondary">Conteúdos</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="font-black text-2xl text-secondary">Conteúdos</h1>
+          <Link
+            to="/content/createcontent"
+            className="py-[8px] px-[8px] bg-accent rounded-lg"
+          >
+            <Plus className="text-accent-foreground" />
+          </Link>
+        </div>
         <Input
           id="input-search"
           name="input-search"
@@ -256,28 +263,38 @@ function RouteComponent() {
         {contents?.data.map((content: ContentPayload, index: any) => (
           <div
             key={content.id}
-            className="border border-2 rounded-lg py-[24px] px-[24px]"
+            className="border border-2 rounded-lg py-[24px] px-[24px] shadow-md"
           >
             <div className="flex justify-between mb-[16px]">
-              <p className="flex gap-2 items-center">
-                <span className="bg-secondary py-[8px] px-[8px] rounded-lg text-secondary-foreground text-lg font-bold">
-                  Título
-                </span>{" "}
-                <span className="font-bold text-secondary">
-                  {content.title}
-                </span>
+              <p>
+                <Link
+                  to="/content/$contentId"
+                  params={{ contentId: content.id.toString() }}
+                  className="flex gap-2 items-center"
+                >
+                  <span className="bg-secondary py-[8px] px-[8px] rounded-lg text-secondary-foreground text-lg font-bold">
+                    Título
+                  </span>{" "}
+                  <span className="font-bold text-secondary">
+                    {content.title}
+                  </span>
+                </Link>
               </p>
               <div className="flex gap-8 items-center">
-                <p className="flex gap-2">
+                <p>
                   <Link
                     to="/content/$contentId"
                     params={{ contentId: content.id.toString() }}
+                    className="flex gap-2 items-center"
                   >
                     <span className="bg-secondary py-[8px] px-[8px] rounded-lg text-secondary-foreground text-lg font-bold">
                       ID
                     </span>
+
+                    <span className="font-bold text-secondary">
+                      {content.id}
+                    </span>
                   </Link>
-                  <span className="font-bold text-secondary">{content.id}</span>
                 </p>
                 <Link
                   to="/content/$editContent"
