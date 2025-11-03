@@ -32,6 +32,10 @@ import { formatDate } from "@/utils/formatDate";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { CheckIcon, ChevronsUpDown, Delete, Plus, SquarePen } from "lucide-react";
+import { useGetContent } from "@/service/content/getContent";
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
+import { CheckIcon, ChevronsUpDown, Plus, SquarePen } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_dashboard/content/contents")({
@@ -403,6 +407,18 @@ function RouteComponent() {
                 {formatDate(content.updated_at)}
               </p>
             </div>
+            <p className="flex gap-2 items-center">
+              <span className="font-bold text-secondary text-lg">
+                Nome criador:
+              </span>
+              {content.creator?.nome}
+            </p>
+            <p className="flex gap-2 items-center">
+              <span className="font-bold text-secondary text-lg">
+                Criador id:
+              </span>{" "}
+              {content.creator?.id}
+            </p>
           </div>
         ))}
       </div>
@@ -425,6 +441,10 @@ function RouteComponent() {
                 <PaginationEllipsis />
               </PaginationItem>
             )}
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
           {contents?.links
             .filter((link: any) => typeof link.page === "number")
             .reduce<any[]>((acc, link: any) => {
@@ -462,6 +482,10 @@ function RouteComponent() {
                 <PaginationEllipsis />
               </PaginationItem>
             )}
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
           <PaginationItem>
             <PaginationNext
               href={`?page=${contents?.next_page_url ? contents?.next_page_url.split("page=")[1] : 1}`}
