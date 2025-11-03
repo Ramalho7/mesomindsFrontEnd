@@ -27,15 +27,11 @@ import type { ContentPayload } from "@/Interface/content/ContentPayload";
 import type { ContentTag } from "@/Interface/content/contentTag/ContentTag";
 import type { ContentType } from "@/service/content/contentType/getContentType";
 import { useDeleteContent } from "@/service/content/deleteContent";
-import { useGetContent } from "@/service/content/getContent";
 import { formatDate } from "@/utils/formatDate";
-import { createFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
 import { CheckIcon, ChevronsUpDown, Delete, Plus, SquarePen } from "lucide-react";
 import { useGetContent } from "@/service/content/getContent";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { CheckIcon, ChevronsUpDown, Plus, SquarePen } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_dashboard/content/contents")({
@@ -97,6 +93,8 @@ function RouteComponent() {
   const { user } = useAuth();
 
   const handleDelete = (contentId: number) => {
+    console.log('User tipo:', user?.tipo);
+    console.log('User tipo trimmed:', user?.tipo?.trim());
     if (user?.tipo !== "ADM") {
       alert("Você não possui permissão para deletar conteúdos");
       return;
@@ -324,7 +322,7 @@ function RouteComponent() {
                   </Link>
                 </p>
                 <Link
-                  to="/content/$editContent"
+                  to="/content/$editContent/edit"
                   params={{ editContent: content.id.toString() }}
                 >
                   <SquarePen className="text-accent" />
@@ -441,10 +439,9 @@ function RouteComponent() {
                 <PaginationEllipsis />
               </PaginationItem>
             )}
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
           {contents?.links
             .filter((link: any) => typeof link.page === "number")
             .reduce<any[]>((acc, link: any) => {
@@ -482,10 +479,9 @@ function RouteComponent() {
                 <PaginationEllipsis />
               </PaginationItem>
             )}
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
           <PaginationItem>
             <PaginationNext
               href={`?page=${contents?.next_page_url ? contents?.next_page_url.split("page=")[1] : 1}`}

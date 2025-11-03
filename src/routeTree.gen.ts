@@ -29,8 +29,8 @@ import { Route as PublicConteudosIndexRouteImport } from './routes/_public/conte
 import { Route as PublicConteudosConteudoIdRouteImport } from './routes/_public/conteudos/$conteudoId'
 import { Route as DashboardContentCreatecontentRouteImport } from './routes/_dashboard/content/createcontent'
 import { Route as DashboardContentContentsRouteImport } from './routes/_dashboard/content/contents'
-import { Route as DashboardContentEditContentRouteImport } from './routes/_dashboard/content/$editContent'
 import { Route as DashboardContentContentIdRouteImport } from './routes/_dashboard/content/$contentId'
+import { Route as DashboardContentEditContentEditRouteImport } from './routes/_dashboard/content/$editContent.edit'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -132,16 +132,16 @@ const DashboardContentContentsRoute =
     path: '/content/contents',
     getParentRoute: () => DashboardRoute,
   } as any)
-const DashboardContentEditContentRoute =
-  DashboardContentEditContentRouteImport.update({
-    id: '/content/$editContent',
-    path: '/content/$editContent',
-    getParentRoute: () => DashboardRoute,
-  } as any)
 const DashboardContentContentIdRoute =
   DashboardContentContentIdRouteImport.update({
     id: '/content/$contentId',
     path: '/content/$contentId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardContentEditContentEditRoute =
+  DashboardContentEditContentEditRouteImport.update({
+    id: '/content/$editContent/edit',
+    path: '/content/$editContent/edit',
     getParentRoute: () => DashboardRoute,
   } as any)
 
@@ -160,11 +160,11 @@ export interface FileRoutesByFullPath {
   '/turmas': typeof PublicTurmasRoute
   '/': typeof PublicIndexRoute
   '/content/$contentId': typeof DashboardContentContentIdRoute
-  '/content/$editContent': typeof DashboardContentEditContentRoute
   '/content/contents': typeof DashboardContentContentsRoute
   '/content/createcontent': typeof DashboardContentCreatecontentRoute
   '/conteudos/$conteudoId': typeof PublicConteudosConteudoIdRoute
   '/conteudos': typeof PublicConteudosIndexRoute
+  '/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -181,11 +181,11 @@ export interface FileRoutesByTo {
   '/turmas': typeof PublicTurmasRoute
   '/': typeof PublicIndexRoute
   '/content/$contentId': typeof DashboardContentContentIdRoute
-  '/content/$editContent': typeof DashboardContentEditContentRoute
   '/content/contents': typeof DashboardContentContentsRoute
   '/content/createcontent': typeof DashboardContentCreatecontentRoute
   '/conteudos/$conteudoId': typeof PublicConteudosConteudoIdRoute
   '/conteudos': typeof PublicConteudosIndexRoute
+  '/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -206,11 +206,11 @@ export interface FileRoutesById {
   '/_public/turmas': typeof PublicTurmasRoute
   '/_public/': typeof PublicIndexRoute
   '/_dashboard/content/$contentId': typeof DashboardContentContentIdRoute
-  '/_dashboard/content/$editContent': typeof DashboardContentEditContentRoute
   '/_dashboard/content/contents': typeof DashboardContentContentsRoute
   '/_dashboard/content/createcontent': typeof DashboardContentCreatecontentRoute
   '/_public/conteudos/$conteudoId': typeof PublicConteudosConteudoIdRoute
   '/_public/conteudos/': typeof PublicConteudosIndexRoute
+  '/_dashboard/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -229,11 +229,11 @@ export interface FileRouteTypes {
     | '/turmas'
     | '/'
     | '/content/$contentId'
-    | '/content/$editContent'
     | '/content/contents'
     | '/content/createcontent'
     | '/conteudos/$conteudoId'
     | '/conteudos'
+    | '/content/$editContent/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -250,11 +250,11 @@ export interface FileRouteTypes {
     | '/turmas'
     | '/'
     | '/content/$contentId'
-    | '/content/$editContent'
     | '/content/contents'
     | '/content/createcontent'
     | '/conteudos/$conteudoId'
     | '/conteudos'
+    | '/content/$editContent/edit'
   id:
     | '__root__'
     | '/_authenticated'
@@ -274,11 +274,11 @@ export interface FileRouteTypes {
     | '/_public/turmas'
     | '/_public/'
     | '/_dashboard/content/$contentId'
-    | '/_dashboard/content/$editContent'
     | '/_dashboard/content/contents'
     | '/_dashboard/content/createcontent'
     | '/_public/conteudos/$conteudoId'
     | '/_public/conteudos/'
+    | '/_dashboard/content/$editContent/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -431,18 +431,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardContentContentsRouteImport
       parentRoute: typeof DashboardRoute
     }
-    '/_dashboard/content/$editContent': {
-      id: '/_dashboard/content/$editContent'
-      path: '/content/$editContent'
-      fullPath: '/content/$editContent'
-      preLoaderRoute: typeof DashboardContentEditContentRouteImport
-      parentRoute: typeof DashboardRoute
-    }
     '/_dashboard/content/$contentId': {
       id: '/_dashboard/content/$contentId'
       path: '/content/$contentId'
       fullPath: '/content/$contentId'
       preLoaderRoute: typeof DashboardContentContentIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/content/$editContent/edit': {
+      id: '/_dashboard/content/$editContent/edit'
+      path: '/content/$editContent/edit'
+      fullPath: '/content/$editContent/edit'
+      preLoaderRoute: typeof DashboardContentEditContentEditRouteImport
       parentRoute: typeof DashboardRoute
     }
   }
@@ -463,17 +463,17 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 interface DashboardRouteChildren {
   DashboardDashboardRoute: typeof DashboardDashboardRoute
   DashboardContentContentIdRoute: typeof DashboardContentContentIdRoute
-  DashboardContentEditContentRoute: typeof DashboardContentEditContentRoute
   DashboardContentContentsRoute: typeof DashboardContentContentsRoute
   DashboardContentCreatecontentRoute: typeof DashboardContentCreatecontentRoute
+  DashboardContentEditContentEditRoute: typeof DashboardContentEditContentEditRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardDashboardRoute: DashboardDashboardRoute,
   DashboardContentContentIdRoute: DashboardContentContentIdRoute,
-  DashboardContentEditContentRoute: DashboardContentEditContentRoute,
   DashboardContentContentsRoute: DashboardContentContentsRoute,
   DashboardContentCreatecontentRoute: DashboardContentCreatecontentRoute,
+  DashboardContentEditContentEditRoute: DashboardContentEditContentEditRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(

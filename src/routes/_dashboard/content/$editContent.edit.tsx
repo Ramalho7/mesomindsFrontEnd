@@ -2,12 +2,12 @@ import ContentForm from '@/components/ContentForm/ContentForm'
 import { useGetContentById } from '@/service/content/getContentById'
 import { createFileRoute, useParams } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/_dashboard/content/$editContent')({
+export const Route = createFileRoute('/_dashboard/content/$editContent/edit')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const { editContent } = useParams({ from: '/_dashboard/content/$editContent' })
+  const { editContent } = useParams({ from: '/_dashboard/content/$editContent/edit' })
     const { data: content, isLoading, isError } = useGetContentById(Number(editContent))
 
     if (isLoading) {
