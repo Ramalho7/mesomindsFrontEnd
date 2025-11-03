@@ -15,14 +15,14 @@ function App() {
       <div className="flex justify-center items-center w-full h-[38.438rem] bg-[url('/src/assets/images/dinoBanner.svg')] bg-cover bg-center mt-[2.188rem]">
         <div className="flex flex-col items-center text-left justify-center gap-[15px] w-[90%] max-w-[80%] h-[85%] bg-white/75 px-[0.938rem] py-[1.875rem]">
           <p className="text-3xl sm:text-5xl text-center">
-            A evolução que você precisa para alcançar seus objetivos começa na <span className="font-black text-action">Mesominds</span>.
+            A evolução que você precisa para alcançar seus objetivos começa na <span className="font-black text-accent">Mesominds</span>.
           </p>
           <p className="text-xl sm:text-2xl text-center">
             Aqui, você encontra apoio, conteúdo de qualidade e a evolução que sua jornada acadêmica precisa.
           </p>
           <div className="flex flex-row gap-8 sm:flex-row mt-[1.875rem] sm:gap-[0.938rem] sm:gap-[1.875rem] items-center justify-center">
             <Button variant="action" size="lg" asChild>
-              <Link to="/login">Comece agora</Link>
+              <Link to="/login" search={{ redirect: '/perfil' }}>Comece agora</Link>
             </Button>
             <Button size="md" asChild>
               <Link to="/sobre">Saiba mais</Link>
@@ -32,7 +32,7 @@ function App() {
 
       </div>
       <div className='max-w-[500px] mt-10 mb-10 flex flex-col flex-wrap'>
-        <h2 className='text-4xl font-black text-action'>Tudo o que você precisa para evoluir nos estudos</h2>
+        <h2 className='text-4xl font-black text-accent'>Tudo o que você precisa para evoluir nos estudos</h2>
         <p className='text-lg text-muted-foreground mt-2'>Descubra como podemos ajudar você a alcançar seus objetivos</p>
       </div>
       <div className='flex flex-col lg:flex-row gap-10'>
@@ -98,12 +98,12 @@ function App() {
           <div className='flex flex-col gap-4 items-center justify-center text-center lg:text-left'>
             <h2 className='text-3xl sm:text-4xl font-bold'>Está pronto?</h2>
             <h2 className='text-2xl sm:text-3xl font-bold'>
-              Junte-se ao <span className='text-action font-black'>MESOMINDS</span>
+              Junte-se ao <span className='text-accent font-black'>MESOMINDS</span>
             </h2>
             <p className='text-muted-foreground text-sm sm:text-base max-w-md mx-auto lg:mx-0'>
               Comece sua jornada de aprendizado agora e alcance seus objetivos com nossa plataforma completa.
             </p>
-            <Link to='/login' className='mt-4'>
+            <Link to='/login' search={{ redirect: '/perfil' }} className='mt-4'>
               <Button variant="action" size="lg">
                 Comece grátis agora
               </Button>

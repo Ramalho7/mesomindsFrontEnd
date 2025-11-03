@@ -1,3 +1,4 @@
+import { createFileRoute } from '@tanstack/react-router'
 import { useAuth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,24 +26,20 @@ import {
 } from "@/components/ui/popover";
 import type { ContentPayload } from "@/Interface/content/ContentPayload";
 import type { ContentTag } from "@/Interface/content/contentTag/ContentTag";
-import type { ContentType } from "@/service/content/contentType/getContentType";
+import { useContentTypes, type ContentType } from "@/service/content/contentType/getContentType";
 import { useDeleteContent } from "@/service/content/deleteContent";
 import { useGetContent } from "@/service/content/getContent";
 import { formatDate } from "@/utils/formatDate";
-import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { CheckIcon, ChevronsUpDown, Delete, Plus, SquarePen } from "lucide-react";
-import { useGetContent } from "@/service/content/getContent";
-import { createFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
-import { CheckIcon, ChevronsUpDown, Plus, SquarePen } from "lucide-react";
 import React, { useEffect, useState } from "react";
-
-export const Route = createFileRoute("/_dashboard/content/contents")({
+import { useContentTags } from '@/service/content/contentTag/getContentTag';
+export const Route = createFileRoute('/_public/conteudos/')({
   component: RouteComponent,
-});
+})
 
 function RouteComponent() {
+
   const [openStatusFilter, setOpenStatusFilter] = useState(false);
   const [openContentType, setOpenContentType] = useState(false);
   const [openContentTag, setOpenContentTag] = useState(false);
@@ -60,8 +57,6 @@ function RouteComponent() {
     undefined,
   );
 
-  const [enable, setEnabled] = useState(false);
-
   useEffect(() => {
     const handler = setTimeout(() => {
       setEnabled(true);
@@ -72,16 +67,10 @@ function RouteComponent() {
     };
   }, [search, statusFilter, contentTypeFilter, contentTagFilter]);
 
-  useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const page = queryParams.get("page");
-    setCurrentPage(page ? parseInt(page, 10) : 1);
-  }, []);
+  const [enable, setEnabled] = useState(false);
 
   const {
     data: contents,
-    isLoading,
-    isError,
   } = useGetContent(
     {
       search,
@@ -92,69 +81,24 @@ function RouteComponent() {
     },
     enable,
   );
-  const { mutate: mutateDeleteContent } = useDeleteContent()
-
-  const { user } = useAuth();
-
-  const handleDelete = (contentId: number) => {
-    if (user?.tipo !== "ADM") {
-      alert("Você não possui permissão para deletar conteúdos");
-      return;
-    }
-    if (window.confirm(`Deseja remover o conteúdo id: "${contentId}`)) {
-      mutateDeleteContent(
-        { id: contentId },
-        {
-          onSuccess: () => {
-            console.log('Conteúdo deletado com sucesso')
-          },
-        }
-      )
-    }
-  }
-
-  // if (isLoading) {
-  //   return <div>Carregando conteúdos...</div>
-  // }
-
-  if (isError) {
-    return <div>Erro ao carregar os conteúdos.</div>;
-  }
 
   const uniqueStatuses = contents?.data
     .map((content: ContentPayload) => content.status)
     .filter((status, index, self) => self.indexOf(status) === index);
 
-  const uniqueContentTypes = contents?.data.reduce<ContentType[]>(
-    (acc, content) => {
-      if (!acc.some((item) => item.id === content.content_type.id)) {
-        acc.push(content.content_type as ContentType);
-      }
-      return acc;
-    },
-    [],
-  );
+  const { data: allTypes } = useContentTypes();
 
-  const uniqueContentTags = contents?.data
-    .flatMap((content) => content.content_tags)
-    .reduce<ContentTag[]>((acc, tag) => {
-      if (!acc.some((item) => item.id === tag.id)) {
-        acc.push(tag);
-      }
-      return acc;
-    }, []);
+  const uniqueContentTypes = allTypes?.data || [];
+
+  const  { data: allTags } = useContentTags();
+
+  const uniqueContentTags = allTags?.data || [];
 
   return (
     <div className="flex flex-col mt-10">
       <div>
         <div className="flex items-center justify-between">
           <h1 className="font-black text-2xl text-secondary">Conteúdos</h1>
-          <Link
-            to="/content/createcontent"
-            className="py-[8px] px-[8px] bg-accent rounded-lg"
-          >
-            <Plus className="text-accent-foreground" />
-          </Link>
         </div>
         <Input
           id="input-search"
@@ -215,7 +159,7 @@ function RouteComponent() {
                 role="combobox"
                 aria-expanded={openContentType}
               >
-                Tipo de conteúdo
+                Por tipo de conteúdo
                 <ChevronsUpDown className="opacity-50" />
               </Button>
             </PopoverTrigger>
@@ -253,7 +197,7 @@ function RouteComponent() {
                 role="combobox"
                 aria-expanded={openContentTag}
               >
-                Tipo de conteúdo
+                Tags
                 <ChevronsUpDown className="opacity-50" />
               </Button>
             </PopoverTrigger>
@@ -288,140 +232,77 @@ function RouteComponent() {
 
       <div className="flex flex-col mx-auto mt-10 mb-10 gap-10 w-full">
         {contents?.data.map((content: ContentPayload, index: any) => (
-          <div
-            key={content.id}
+          <Link
+            to="/conteudos/$conteudoId"
+            params={{ conteudoId: content.id.toString() }}
             className="border border-2 rounded-lg py-[24px] px-[24px] shadow-md"
           >
-            <div className="flex justify-between mb-[16px]">
-              <p>
-                <Link
-                  to="/content/$contentId"
-                  params={{ contentId: content.id.toString() }}
-                  className="flex gap-2 items-center"
-                >
+            <div
+              key={content.id}
+            >
+              <div className="flex justify-between mb-[16px]">
+                <p>
+
                   <span className="bg-secondary py-[8px] px-[8px] rounded-lg text-secondary-foreground text-lg font-bold">
                     Título
                   </span>{" "}
                   <span className="font-bold text-secondary">
                     {content.title}
                   </span>
-                </Link>
-              </p>
-              <div className="flex gap-8 items-center">
-                <p>
-                  <Link
-                    to="/content/$contentId"
-                    params={{ contentId: content.id.toString() }}
-                    className="flex gap-2 items-center"
-                  >
-                    <span className="bg-secondary py-[8px] px-[8px] rounded-lg text-secondary-foreground text-lg font-bold">
-                      ID
-                    </span>
-
-                    <span className="font-bold text-secondary">
-                      {content.id}
-                    </span>
-                  </Link>
                 </p>
-                <Link
-                  to="/content/$editContent"
-                  params={{ editContent: content.id.toString() }}
-                >
-                  <SquarePen className="text-accent" />
-                </Link>
-                <Delete className="text-accent" onClick={() => handleDelete(content.id)} />
               </div>
-            </div>
-            <div className="flex gap-2 items-center">
-              <p className="font-bold text-lg text-secondary">Tags:</p>
-              {content.content_tags.map((tag: ContentTag, index: any) => (
-                <div
-                  key={tag.id}
-                  className="bg-secondary/30 py-[8px] px-[8px] rounded-[8px]"
-                >
-                  {tag.tag_name}
+              <div className="flex gap-2 items-center">
+                <p className="font-bold text-lg text-secondary">Tags:</p>
+                {content.content_tags.map((tag: ContentTag, index: any) => (
+                  <div
+                    key={tag.id}
+                    className="bg-secondary/30 py-[8px] px-[8px] rounded-[8px]"
+                  >
+                    {tag.tag_name}
+                  </div>
+                ))}
+              </div>
+              <div>
+                <p className="flex flex-col">
+                  <span className="flex gap-2 items-center">
+                    <span className="font-bold text-secondary text-lg">
+                      Tipo:
+                    </span>
+                    <span className="text-md underline decoration-accent">
+                      {content.content_type.title}
+                    </span>
+                  </span>
+                </p>
+              </div>
+              <div className="flex justify-between">
+                <div>
+                  <p className="flex gap-2 items-center">
+                    <span className="font-bold text-secondary text-lg">
+                      Nome criador:
+                    </span>
+                    {content.creator?.nome}
+                  </p>
                 </div>
-              ))}
-            </div>
-            <div>
-              <p className="flex flex-col">
-                <span className="flex gap-2 items-center">
-                  <span className="font-bold text-secondary text-lg">
-                    Tipo:
-                  </span>
-                  <span className="text-md underline decoration-accent">
-                    {content.content_type.title}
-                  </span>
-                </span>
-                <span className="flex gap-2 items-center">
-                  <span className="font-bold text-secondary text-lg">
-                    Descricao Tipo:
-                  </span>
-                  <span className="text-md underline decoration-accent">
-                    {content.content_type.description}
-                  </span>
-                </span>
-              </p>
-            </div>
-            <div className="flex justify-between">
-              <div>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  Nome criador:
-                </span>
-                {content.creator?.nome}
-              </p>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  Criador id:
-                </span>{" "}
-                {content.creator?.id}
-              </p>
               </div>
               <div>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  Nome último editor:
-                </span>
-                {content.last_editor?.nome}
-              </p>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  último editor id:
-                </span>{" "}
-                {content.last_editor?.id}
-              </p>
+                <p className="flex gap-2 items-center">
+                  <span className="font-bold text-secondary text-lg">
+                    Data de crição:
+                  </span>
+                  {formatDate(content.created_at)}
+                </p>
+                <p className="flex gap-2 items-center">
+                  <span className="font-bold text-secondary text-lg">
+                    Data de última edição:
+                  </span>
+                  {formatDate(content.updated_at)}
+                </p>
               </div>
             </div>
-            <div>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  Data de crição: 
-                </span>
-                {formatDate(content.created_at)}
-              </p>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  Data de última edição: 
-                </span>
-                {formatDate(content.updated_at)}
-              </p>
-            </div>
-            <p className="flex gap-2 items-center">
-              <span className="font-bold text-secondary text-lg">
-                Nome criador:
-              </span>
-              {content.creator?.nome}
-            </p>
-            <p className="flex gap-2 items-center">
-              <span className="font-bold text-secondary text-lg">
-                Criador id:
-              </span>{" "}
-              {content.creator?.id}
-            </p>
-          </div>
+          </Link>
         ))}
       </div>
+
       <Pagination className="mt-10 mb-10">
         <PaginationContent>
           <PaginationItem>
@@ -441,10 +322,6 @@ function RouteComponent() {
                 <PaginationEllipsis />
               </PaginationItem>
             )}
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
           {contents?.links
             .filter((link: any) => typeof link.page === "number")
             .reduce<any[]>((acc, link: any) => {
@@ -482,10 +359,6 @@ function RouteComponent() {
                 <PaginationEllipsis />
               </PaginationItem>
             )}
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
           <PaginationItem>
             <PaginationNext
               href={`?page=${contents?.next_page_url ? contents?.next_page_url.split("page=")[1] : 1}`}
@@ -499,5 +372,5 @@ function RouteComponent() {
         </PaginationContent>
       </Pagination>
     </div>
-  );
+  )
 }

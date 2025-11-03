@@ -93,7 +93,7 @@ async function fetchContents(params?: {
     page?: number
 }): Promise<ContentPayloadResponse> {
     try {
-        const response = await api.get('/api/conteudos', { params });
+        const response = await api.get('/api/conteudos', { params , skipAuth: true}, );
         console.log('Resposta da API:', response.data);
 
         const parsedResponse = apiResponseSchema.parse(response.data);

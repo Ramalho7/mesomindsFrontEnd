@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useState } from 'react'
 
@@ -45,8 +47,8 @@ function LoginComponent() {
                 onSubmit={handleSubmit}
                 className="max-w-md w-full space-y-4 p-6 border rounded-lg"
             >
-                <h1 className="text-2xl font-bold text-center">Sign In</h1>
-
+                <h1 className="text-2xl font-black text-center">Bem-vindo de volta!</h1>
+                <h2 className='text-lg font-medium text-center'>Entre com os seus dados de usuário</h2>
                 {error && (
                     <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
                         {error}
@@ -57,7 +59,7 @@ function LoginComponent() {
                     <label htmlFor="email" className="block text-sm font-medium mb-1">
                         Email
                     </label>
-                    <input
+                    <Input
                         id="email"
                         name="email"
                         type="text"
@@ -72,7 +74,7 @@ function LoginComponent() {
                     <label htmlFor="password" className="block text-sm font-medium mb-1">
                         Password
                     </label>
-                    <input
+                    <Input
                         id="password"
                         name='password'
                         type="password"
@@ -83,13 +85,14 @@ function LoginComponent() {
                     />
                 </div>
 
-                <button
+                <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                    variant={"action"}
                 >
                     {isLoading ? 'Signing in...' : 'Sign In'}
-                </button>
+                </Button>
             </form>
         </div>
     )
