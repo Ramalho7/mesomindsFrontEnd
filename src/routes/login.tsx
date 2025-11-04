@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { useState } from 'react'
 
 export const Route = createFileRoute('/login')({
@@ -72,7 +72,7 @@ function LoginComponent() {
 
                 <div>
                     <label htmlFor="password" className="block text-sm font-medium mb-1">
-                        Password
+                        Senha
                     </label>
                     <Input
                         id="password"
@@ -93,6 +93,10 @@ function LoginComponent() {
                 >
                     {isLoading ? 'Signing in...' : 'Sign In'}
                 </Button>
+                <Link
+            to={"/register"}
+            search={{ redirect: '/perfil'}}
+            ><p>Ainda não possui conta? Crie agora.</p></Link>
             </form>
         </div>
     )

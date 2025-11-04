@@ -5,6 +5,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   user: User | null;
   login: (username: string, password: string) => Promise<void>;
+  register: (email: string, password: string, password_confirmation: string, nome: string, tipo: "Aluno" | "Professor") => Promise<void>
   logout: () => void;
   isLoading: boolean;
 }
@@ -30,7 +31,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           if (userData.user) {
             setIsAuthenticated(true);
             setUser(userData.user);
-            setIsLoading(false)
           } else {
             localStorage.removeItem("auth-token");
           }
@@ -46,10 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Show loading state while checking auth
-
   const login = async (email: string, password: string) => {
-    // Replace with your authentication logic
     const response = await fetch("http://localhost:8000/api/login", {
       method: "POST",
       headers: {
@@ -63,14 +60,55 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const userData = await response.json();
       setIsAuthenticated(true);
       setUser(userData.user);
-      // Store token for persistence
       localStorage.setItem("auth-token", userData.token);
     } else {
       throw new Error("Authentication failed");
     }
   };
 
-  const logout = () => {
+  useEffect(() => {
+    console.log('isAuthenticated atualizado:', isAuthenticated);
+  }, [isAuthenticated]);
+
+  const register = async (
+    email: string,
+    password: string,
+    password_confirmation: string,
+    nome: string,
+    tipo: "Aluno" | "Professor"
+  ) => {
+    const response = await fetch("http://localhost:8000/api/register", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ nome, email, password, tipo, password_confirmation }),
+    });
+
+    if (response.ok) {
+      const userData = await response.json();
+      setIsAuthenticated(true);
+      setUser(userData.user);
+      localStorage.setItem("auth-token", userData.token);
+    } else {
+      throw new Error("Erro ao tentar se registrar");
+    }
+  };
+
+  const logout = async () => {
+    const token = localStorage.getItem("auth-token");
+    if (token) {
+      try {
+        await fetch("http://localhost:8000/api/logout", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } catch (error) {
+        console.error("Erro ao fazer logout na API:", error);
+      }
+    }
+    
     setIsAuthenticated(false);
     setUser(null);
     localStorage.removeItem("auth-token");
@@ -78,7 +116,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, login, logout, isLoading }}
+      value={{ isAuthenticated, user, login, logout, isLoading, register }}
     >
       {children}
     </AuthContext.Provider>
@@ -92,4 +130,3 @@ export function useAuth() {
   }
   return context;
 }
-
