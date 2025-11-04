@@ -2,7 +2,7 @@ import { z, ZodError } from "zod";
 import api from "@/service/axios";
 import type { ContentPayloadResponse } from "@/Interface/content/ContentPayloadResponse";
 import { imageSchema } from "../schemas/imageSchema";
-import { creatorSchema } from "../schemas/creatorZodSchema";
+import { UserSchema } from "../schemas/UserSchema";
 
 const contentTypeSchema = z.object({
   id: z.number(),
@@ -11,8 +11,8 @@ const contentTypeSchema = z.object({
   created_at: z.string(),
   updated_at: z.string(),
   status: z.enum(["Ativo", "Inativo"]),
-  creator: creatorSchema.nullish(),
-  last_editor: creatorSchema.nullish(),
+  creator: UserSchema.nullish(),
+  last_editor: UserSchema.nullish(),
 });
 
 const contentTagSchema = z.array(
@@ -22,8 +22,8 @@ const contentTagSchema = z.array(
     is_moderator_only: z.number(),
     count: z.number(),
     description: z.string(),
-    creator: creatorSchema.nullish(),
-    last_editor: creatorSchema.nullish(),
+    creator: UserSchema.nullish(),
+    last_editor: UserSchema.nullish(),
     created_at: z.string(),
     updated_at: z.string(),
     status: z.enum(["Ativo", "Inativo"]),
@@ -44,8 +44,8 @@ const getContentSchema = z.object({
   published_at: z.string().nullable(),
   created_at: z.string(),
   updated_at: z.string(),
-  creator: creatorSchema.nullish(),
-  last_editor: creatorSchema.nullish(),
+  creator: UserSchema.nullish(),
+  last_editor: UserSchema.nullish(),
   content_type: contentTypeSchema,
   content_tags: contentTagSchema,
   images: z.array(imageSchema).nullable(),

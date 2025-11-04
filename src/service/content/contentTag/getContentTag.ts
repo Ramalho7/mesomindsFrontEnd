@@ -2,7 +2,7 @@ import type { ContentTagResponse } from "@/Interface/content/contentTag/ContentT
 
 import { z } from "zod";
 import api from "@/service/axios";
-import { creatorSchema } from "@/service/schemas/creatorZodSchema";
+import { UserSchema } from "@/service/schemas/UserSchema";
 
 export const contentTagSchema = z.object({
   id: z.number(),
@@ -10,8 +10,8 @@ export const contentTagSchema = z.object({
   is_moderator_only: z.number(),
   count: z.number(),
   description: z.string(),
-  creator: creatorSchema.nullable(),
-  last_editor: creatorSchema.nullable(),
+  creator: UserSchema.nullable(),
+  last_editor: UserSchema.nullable(),
   created_at: z.string(),
   updated_at: z.string(),
   status: z.enum(["Ativo", "Inativo"]),
@@ -88,4 +88,3 @@ export async function fetchContentTags(): Promise<ContentTagResponse> {
     throw error;
   }
 }
-

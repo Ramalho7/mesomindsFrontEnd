@@ -1,14 +1,14 @@
 import { z } from "zod";
 import api from "@/service/axios";
-import { creatorSchema } from "@/service/schemas/creatorZodSchema";
 import type { ContentTypeResponse } from "@/Interface/content/contentType/ContentTypeResponse";
+import { UserSchema } from "@/service/schemas/UserSchema";
 
 export const contentTypeSchema = z.object({
   id: z.number(),
   title: z.string(),
   description: z.string(),
-  creator: creatorSchema.nullable(),
-  last_editor: creatorSchema.nullable(),
+  creator: UserSchema.nullable(),
+  last_editor: UserSchema.nullable(),
   created_at: z.string(),
   updated_at: z.string(),
   status: z.enum(["Ativo", "Inativo"]),
@@ -85,4 +85,3 @@ export async function fetchContentTypes(): Promise<ContentTypeResponse> {
     throw error;
   }
 }
-
