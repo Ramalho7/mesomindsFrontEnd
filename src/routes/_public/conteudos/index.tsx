@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useAuth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -26,10 +25,6 @@ import {
 } from "@/components/ui/popover";
 import type { ContentPayload } from "@/Interface/content/ContentPayload";
 import type { ContentTag } from "@/Interface/content/contentTag/ContentTag";
-import {
-  useContentTypes,
-  type ContentType,
-} from "@/service/content/contentType/getContentType";
 import { formatDate } from "@/utils/formatDate";
 import { Link } from "@tanstack/react-router";
 import {
@@ -40,8 +35,9 @@ import {
   SquarePen,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useContentTags } from "@/service/content/contentTag/getContentTag";
 import { useGetContent } from "@/hooks/content/useGetContent";
+import { useContentTags } from "@/hooks/content/contentTags/useGetContentTags";
+import { useContentTypes } from "@/hooks/content/contentTypes/useGetContentTypes";
 export const Route = createFileRoute("/_public/conteudos/")({
   component: RouteComponent,
 });
