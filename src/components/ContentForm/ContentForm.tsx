@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useCreateContent } from "@/service/content/postContent";
 import type { getContentSchema } from "@/service/content/getContentById";
 import Tiptap from "@/components/TipTap/Tiptap";
 import {
@@ -22,8 +21,9 @@ import { useContentTypes } from "@/service/content/contentType/getContentType";
 import { extractBase64Images } from "../../utils/extractBase64Images";
 import { Input } from "../ui/input";
 import { useRouter } from "@tanstack/react-router";
-import { useUpdateContent } from "@/service/content/editContent";
 import type { ContentPayload } from "@/Interface/content/ContentPayload";
+import { useCreateContent } from "@/hooks/content/useCreateContent";
+import { useUpdateContent } from "@/hooks/content/useUpdateContent";
 
 interface ContentFormProps {
   initialData?: getContentSchema | ContentPayload;
@@ -342,4 +342,3 @@ export default function ContentForm({
     </div>
   );
 }
-

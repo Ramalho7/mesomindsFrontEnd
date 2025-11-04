@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,20 +26,27 @@ import {
 } from "@/components/ui/popover";
 import type { ContentPayload } from "@/Interface/content/ContentPayload";
 import type { ContentTag } from "@/Interface/content/contentTag/ContentTag";
-import { useContentTypes, type ContentType } from "@/service/content/contentType/getContentType";
-import { useDeleteContent } from "@/service/content/deleteContent";
-import { useGetContent } from "@/service/content/getContent";
+import {
+  useContentTypes,
+  type ContentType,
+} from "@/service/content/contentType/getContentType";
 import { formatDate } from "@/utils/formatDate";
 import { Link } from "@tanstack/react-router";
-import { CheckIcon, ChevronsUpDown, Delete, Plus, SquarePen } from "lucide-react";
+import {
+  CheckIcon,
+  ChevronsUpDown,
+  Delete,
+  Plus,
+  SquarePen,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useContentTags } from '@/service/content/contentTag/getContentTag';
-export const Route = createFileRoute('/_public/conteudos/')({
+import { useContentTags } from "@/service/content/contentTag/getContentTag";
+import { useGetContent } from "@/hooks/content/useGetContent";
+export const Route = createFileRoute("/_public/conteudos/")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-
   const [openStatusFilter, setOpenStatusFilter] = useState(false);
   const [openContentType, setOpenContentType] = useState(false);
   const [openContentTag, setOpenContentTag] = useState(false);
@@ -69,9 +76,7 @@ function RouteComponent() {
 
   const [enable, setEnabled] = useState(false);
 
-  const {
-    data: contents,
-  } = useGetContent(
+  const { data: contents } = useGetContent(
     {
       search,
       status: statusFilter,
@@ -90,7 +95,7 @@ function RouteComponent() {
 
   const uniqueContentTypes = allTypes?.data || [];
 
-  const  { data: allTags } = useContentTags();
+  const { data: allTags } = useContentTags();
 
   const uniqueContentTags = allTags?.data || [];
 
@@ -237,12 +242,9 @@ function RouteComponent() {
             params={{ conteudoId: content.id.toString() }}
             className="border border-2 rounded-lg py-[24px] px-[24px] shadow-md"
           >
-            <div
-              key={content.id}
-            >
+            <div key={content.id}>
               <div className="flex justify-between mb-[16px]">
                 <p>
-
                   <span className="bg-secondary py-[8px] px-[8px] rounded-lg text-secondary-foreground text-lg font-bold">
                     Título
                   </span>{" "}
@@ -318,10 +320,10 @@ function RouteComponent() {
           {contents?.links.some(
             (link: any) => link.page && link.page > currentPage + 1,
           ) && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
           {contents?.links
             .filter((link: any) => typeof link.page === "number")
             .reduce<any[]>((acc, link: any) => {
@@ -355,10 +357,10 @@ function RouteComponent() {
           {contents?.links.some(
             (link: any) => link.page && link.page > currentPage + 1,
           ) && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
           <PaginationItem>
             <PaginationNext
               href={`?page=${contents?.next_page_url ? contents?.next_page_url.split("page=")[1] : 1}`}
@@ -372,5 +374,5 @@ function RouteComponent() {
         </PaginationContent>
       </Pagination>
     </div>
-  )
+  );
 }
