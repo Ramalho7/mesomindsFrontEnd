@@ -3,6 +3,10 @@ import type { User } from "./Interface/User";
 import { PayloadLoginShema } from "./service/schemas/loginSchema";
 import { z } from "zod";
 import api from "./service/axios";
+import {
+  PayloadRegisterSchema,
+  ResponseRegisterShema,
+} from "./service/schemas/registerSchema";
 
 export interface AuthState {
   isAuthenticated: boolean;
@@ -79,35 +83,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     console.log("isAuthenticated atualizado:", isAuthenticated);
   }, [isAuthenticated]);
 
-  const register = async (
-    email: string,
-    password: string,
-    password_confirmation: string,
-    nome: string,
-    tipo: "Aluno" | "Professor",
-  ) => {
-    const response = await fetch("http://localhost:8000/api/register", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nome,
-        email,
-        password,
-        tipo,
-        password_confirmation,
-      }),
-    });
+  const register = async (data: any) => {
+    try {
+      const validatedPayload = PayloadRegisterSchema.parse(data);
 
-    if (response.ok) {
-      const userData = await response.json();
+      const response = await api.post("api/register", validatedPayload);
+
+      const userData = await response.data;
       setIsAuthenticated(true);
       setUser(userData.user);
       localStorage.setItem("auth-token", userData.token);
-    } else {
-      throw new Error("Erro ao tentar se registrar");
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error("Validation errors:", error.issues);
+      } else {
+        console.error(error);
+      }
     }
   };
 
