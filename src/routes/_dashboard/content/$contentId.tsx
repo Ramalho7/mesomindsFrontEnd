@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import type { ContentTag } from "@/Interface/content/contentTag/ContentTag";
-import { useGetContentById } from "@/service/content/getContentById";
+import { useGetContentById } from "@/hooks/content/useGetContentById";
 import { createFileRoute, useParams, useRouter } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_dashboard/content/$contentId")({
@@ -53,4 +52,3 @@ function RouteComponent() {
     </div>
   );
 }
-
