@@ -1,25 +1,5 @@
-import { z } from "zod";
 import api from "@/service/axios";
-
-export const DeleteContentSchema = z.object({
-  id: z.number().min(1, "ID do conteúdo é obrigatório"),
-});
-
-export type DeleteContentPayload = z.infer<typeof DeleteContentSchema>;
-
-export const DeleteContentResponseSchema = z.object({
-  success: z.boolean(),
-  message: z.string().optional(),
-  data: z
-    .object({
-      id: z.number(),
-      title: z.string(),
-    })
-    .optional(),
-  errors: z.record(z.string(), z.array(z.string())).optional(),
-});
-
-export type DeleteContentResponse = z.infer<typeof DeleteContentResponseSchema>;
+import { DeleteContentResponseSchema, DeleteContentSchema, type DeleteContentPayload, type DeleteContentResponse } from "../schemas/contentSchema/DeleteContentSchema";
 
 export async function DeleteContentApi(
   payload: DeleteContentPayload,
