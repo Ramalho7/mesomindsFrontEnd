@@ -8,10 +8,7 @@ export const Route = createFileRoute("/_dashboard/question/createQuestion")({
 function RouteComponent() {
   return (
     <div>
-      <h1>Enunciado</h1>
-      <h2>
-        Aqui escreva o seu enunciado, é suportado imagens, links, LaTex, etc.
-      </h2>
+      <h1 className="text-2xl">Criar Questão</h1>
       <QuestionForm/>  
     </div>
   );

@@ -12,8 +12,8 @@ export const PostQuestionSchema = z.object({
         .optional(),
 }).refine(
     (data) => {
-        if (data.type === "Aberta") {
-            return !data.alternatives || data.alternatives.length === 0;
+        if (data.type === "Multipla" || data.type === "VerdadeiroFalso") {
+            return data.alternatives && data.alternatives.length > 0;
         }
         return true;
     },
