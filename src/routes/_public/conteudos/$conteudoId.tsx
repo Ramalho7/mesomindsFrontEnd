@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { useGetContentById } from '@/service/content/getContentById';
+import { useGetContentById } from '@/hooks/content/useGetContentById';
 import { formatDate } from '@/utils/formatDate';
 import { createFileRoute, useParams, useRouter } from '@tanstack/react-router'
 import { Share2 } from 'lucide-react';
