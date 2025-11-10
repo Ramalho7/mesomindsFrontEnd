@@ -1,73 +1,12 @@
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { createFileRoute, redirect } from '@tanstack/react-router'
-import { useState } from 'react'
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/register')({
-    validateSearch: (search) => ({
-        redirect: (search.redirect as string) || '/',
-    }),
-    beforeLoad: ({ context, search }) => {
-        // Redirect if already authenticated
-        if (context.auth.isAuthenticated) {
-            throw redirect({ to: search.redirect })
-        }
-    },
-    component: RegisterComponent,
+  component: RouteComponent,
 })
 
-function RegisterComponent() {
-    const { auth } = Route.useRouteContext()
-    const { redirect } = Route.useSearch()
-    const navigate = Route.useNavigate()
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        userType: ''
-    })
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState('')
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }))
-    }
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setIsLoading(true)
-        setError('')
-
-        // Validações
-        if (formData.password !== formData.confirmPassword) {
-            setError('As senhas não coincidem')
-            setIsLoading(false)
-            return
-        }
-
-        if (!formData.userType) {
-            setError('Selecione um tipo de usuário')
-            setIsLoading(false)
-            return
-        }
-
-        try {
-            // Aqui você implementaria a lógica de registro
-            // await auth.register(formData)
-            
-            // Após registro bem-sucedido, redireciona para login
-            navigate({ to: "/login" })
-        } catch (err) {
-            setError('Erro ao criar conta. Tente novamente.')
-        } finally {
-            setIsLoading(false)
-        }
-    }
+function RouteComponent() {
+  return <div>Hello "/register"!</div>
+}
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-white-50 py-12">

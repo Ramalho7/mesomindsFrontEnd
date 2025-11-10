@@ -26,13 +26,19 @@ import {
 import type { ContentPayload } from "@/Interface/content/ContentPayload";
 import type { ContentTag } from "@/Interface/content/contentTag/ContentTag";
 import type { ContentType } from "@/service/content/contentType/getContentType";
-import { useDeleteContent } from "@/service/content/deleteContent";
 import { formatDate } from "@/utils/formatDate";
-import { CheckIcon, ChevronsUpDown, Delete, Plus, SquarePen } from "lucide-react";
-import { useGetContent } from "@/service/content/getContent";
+import {
+  CheckIcon,
+  ChevronsUpDown,
+  Delete,
+  Plus,
+  SquarePen,
+} from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import React, { useEffect, useState } from "react";
+import { useGetContent } from "@/hooks/content/useGetContent";
+import { useDeleteContent } from "@/hooks/content/useDeleteContent";
 
 export const Route = createFileRoute("/_dashboard/content/contents")({
   component: RouteComponent,
@@ -74,11 +80,7 @@ function RouteComponent() {
     setCurrentPage(page ? parseInt(page, 10) : 1);
   }, []);
 
-  const {
-    data: contents,
-    isLoading,
-    isError,
-  } = useGetContent(
+  const { data: contents, isError } = useGetContent(
     {
       search,
       status: statusFilter,
@@ -88,13 +90,13 @@ function RouteComponent() {
     },
     enable,
   );
-  const { mutate: mutateDeleteContent } = useDeleteContent()
+  const { mutate: mutateDeleteContent } = useDeleteContent();
 
   const { user } = useAuth();
 
   const handleDelete = (contentId: number) => {
-    console.log('User tipo:', user?.tipo);
-    console.log('User tipo trimmed:', user?.tipo?.trim());
+    console.log("User tipo:", user?.tipo);
+    console.log("User tipo trimmed:", user?.tipo?.trim());
     if (user?.tipo !== "ADM") {
       alert("Você não possui permissão para deletar conteúdos");
       return;
@@ -104,12 +106,12 @@ function RouteComponent() {
         { id: contentId },
         {
           onSuccess: () => {
-            console.log('Conteúdo deletado com sucesso')
+            console.log("Conteúdo deletado com sucesso");
           },
-        }
-      )
+        },
+      );
     }
-  }
+  };
 
   // if (isLoading) {
   //   return <div>Carregando conteúdos...</div>
@@ -327,7 +329,10 @@ function RouteComponent() {
                 >
                   <SquarePen className="text-accent" />
                 </Link>
-                <Delete className="text-accent" onClick={() => handleDelete(content.id)} />
+                <Delete
+                  className="text-accent"
+                  onClick={() => handleDelete(content.id)}
+                />
               </div>
             </div>
             <div className="flex gap-2 items-center">
@@ -363,44 +368,44 @@ function RouteComponent() {
             </div>
             <div className="flex justify-between">
               <div>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  Nome criador:
-                </span>
-                {content.creator?.nome}
-              </p>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  Criador id:
-                </span>{" "}
-                {content.creator?.id}
-              </p>
+                <p className="flex gap-2 items-center">
+                  <span className="font-bold text-secondary text-lg">
+                    Nome criador:
+                  </span>
+                  {content.creator?.nome}
+                </p>
+                <p className="flex gap-2 items-center">
+                  <span className="font-bold text-secondary text-lg">
+                    Criador id:
+                  </span>{" "}
+                  {content.creator?.id}
+                </p>
               </div>
               <div>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  Nome último editor:
-                </span>
-                {content.last_editor?.nome}
-              </p>
-              <p className="flex gap-2 items-center">
-                <span className="font-bold text-secondary text-lg">
-                  último editor id:
-                </span>{" "}
-                {content.last_editor?.id}
-              </p>
+                <p className="flex gap-2 items-center">
+                  <span className="font-bold text-secondary text-lg">
+                    Nome último editor:
+                  </span>
+                  {content.last_editor?.nome}
+                </p>
+                <p className="flex gap-2 items-center">
+                  <span className="font-bold text-secondary text-lg">
+                    último editor id:
+                  </span>{" "}
+                  {content.last_editor?.id}
+                </p>
               </div>
             </div>
             <div>
               <p className="flex gap-2 items-center">
                 <span className="font-bold text-secondary text-lg">
-                  Data de crição: 
+                  Data de crição:
                 </span>
                 {formatDate(content.created_at)}
               </p>
               <p className="flex gap-2 items-center">
                 <span className="font-bold text-secondary text-lg">
-                  Data de última edição: 
+                  Data de última edição:
                 </span>
                 {formatDate(content.updated_at)}
               </p>
@@ -435,10 +440,10 @@ function RouteComponent() {
           {contents?.links.some(
             (link: any) => link.page && link.page > currentPage + 1,
           ) && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
@@ -475,10 +480,10 @@ function RouteComponent() {
           {contents?.links.some(
             (link: any) => link.page && link.page > currentPage + 1,
           ) && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
           <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
