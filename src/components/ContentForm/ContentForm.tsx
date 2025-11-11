@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect } from "react";
-import type { getContentSchema } from "@/service/content/getContentById";
 import Tiptap from "@/components/TipTap/Tiptap";
 import {
   Popover,
@@ -24,6 +23,7 @@ import { useCreateContent } from "@/hooks/content/useCreateContent";
 import { useUpdateContent } from "@/hooks/content/useUpdateContent";
 import { useContentTypes } from "@/hooks/content/contentTypes/useGetContentTypes";
 import { useContentTags } from "@/hooks/content/contentTags/useGetContentTags";
+import type { getContentSchema } from "@/service/schemas/contentSchema/GetContentsSchema";
 
 interface ContentFormProps {
   initialData?: getContentSchema | ContentPayload;
@@ -45,7 +45,7 @@ export default function ContentForm({
     initialData?.content_type.title || "",
   );
   const [selectedTags, setSelectedTags] = useState<string[]>(
-    initialData?.content_tags.map((tag) => tag.tag_name) || [],
+    initialData?.content_tags.map((tag: any) => tag.tag_name) || [],
   );
   const [content, setContent] = useState(initialData?.content || "");
   const [openTags, setOpenTags] = useState(false);
@@ -72,7 +72,7 @@ export default function ContentForm({
     if (initialData) {
       setTitle(initialData.title);
       setContentType(initialData.content_type.title);
-      setSelectedTags(initialData.content_tags.map((tag) => tag.tag_name));
+      setSelectedTags(initialData.content_tags.map((tag: any) => tag.tag_name));
       setContent(initialData.content);
     }
   }, [initialData]);

@@ -7,7 +7,7 @@ export const PostQuestionSchema = z.object({
     correction: z.string().optional(),
     materia: z.number().nullable(),
     type: z.enum(["Multipla", "VerdadeiroFalso", "Aberta"]),
-    status: z.enum(["active", "inactive"]).default("active"),
+    status: z.enum(["active", "inactive"]),
     alternatives: z
         .array(postAlternativeSchema)
         .optional(),
@@ -19,10 +19,9 @@ export const PostQuestionSchema = z.object({
         return true;
     },
     {
-        message: "Questões do tipo 'Aberta' não podem conter alternativas",
+        message: "Questões do tipo 'Multipla' e 'VerdadeiroFalso' devem ter alternativas",
         path: ["alternatives"],
     },
 );
 
 export type PostQuestionSchemaType = z.infer<typeof PostQuestionSchema>;
-

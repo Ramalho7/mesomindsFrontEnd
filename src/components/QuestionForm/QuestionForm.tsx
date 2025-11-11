@@ -31,27 +31,22 @@ export default function QuestionForm({
 
   const { register, handleSubmit, control, watch, reset, formState: { errors } } = useForm<PostQuestionSchemaType>({
     resolver: zodResolver(PostQuestionSchema),
-    defaultValues: isEditMode && initialData ? {
-      title: initialData.title,
-      content: initialData.content,
-      correction: initialData.correction || "",
-      materia: initialData.materia,
-      type: initialData.type,
-      alternatives: initialData.alternatives && initialData.alternatives.length > 0
+    mode: "onBlur",
+    defaultValues: {
+      title: initialData?.title || "",
+      content: initialData?.content || "",
+      correction: initialData?.correction || "",
+      materia: initialData?.materia || null,
+      type: initialData?.type || "Multipla",
+      status: "active",
+      alternatives: isEditMode && initialData?.alternatives && initialData.alternatives.length > 0
         ? initialData.alternatives.map(alt => ({
           content: alt.content,
           correct: typeof alt.correct === 'number' ? alt.correct === 1 : alt.correct
         }))
-        : initialData.type === "Aberta"
+        : initialData?.type === "Aberta"
           ? []
           : [{ content: "", correct: false }]
-    } : {
-      title: "",
-      content: "",
-      correction: "",
-      materia: null,
-      type: "Multipla",
-      alternatives: [{ content: "", correct: false }]
     }
   })
 
@@ -76,6 +71,7 @@ export default function QuestionForm({
         correction: initialData.correction || "",
         materia: initialData.materia,
         type: initialData.type,
+        status: "active",
         alternatives: initialData.alternatives && initialData.alternatives.length > 0
           ? initialData.alternatives.map(alt => ({
             content: alt.content,
@@ -127,6 +123,7 @@ export default function QuestionForm({
       correction: data.correction || "",
       materia: data.materia,
       type: data.type,
+      status: data.status,
       alternatives: questionType === "Aberta" ? undefined : data.alternatives,
     };
 

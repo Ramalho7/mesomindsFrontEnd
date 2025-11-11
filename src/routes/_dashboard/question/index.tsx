@@ -261,9 +261,12 @@ function RouteComponent() {
               <div className="flex flex-row justify-between items-center">
                 <div className="flex justify-between items-start mb-[16px]">
                   <div>
-                    <h2 className="font-bold text-lg text-secondary">
-                      {question.title}
-                    </h2>
+                    <Link to="/question/$question"
+                      params={{ question: question.id.toString() }}>
+                      <h2 className="font-bold text-lg text-secondary">
+                        {question.title}
+                      </h2>
+                    </Link>
                     <p className="text-sm text-gray-600 mt-2">
                       {question.content.substring(0, 100)}...
                     </p>
