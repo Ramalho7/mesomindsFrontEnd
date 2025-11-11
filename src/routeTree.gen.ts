@@ -26,13 +26,17 @@ import { Route as DashboardDashboardRouteImport } from './routes/_dashboard/dash
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as PublicQuestoesIndexRouteImport } from './routes/_public/questoes/index'
 import { Route as PublicConteudosIndexRouteImport } from './routes/_public/conteudos/index'
+import { Route as DashboardQuestionCollectionIndexRouteImport } from './routes/_dashboard/questionCollection/index'
 import { Route as DashboardQuestionIndexRouteImport } from './routes/_dashboard/question/index'
 import { Route as PublicConteudosConteudoIdRouteImport } from './routes/_public/conteudos/$conteudoId'
+import { Route as DashboardQuestionCollectionCreateQuestionCollectionRouteImport } from './routes/_dashboard/questionCollection/createQuestionCollection'
+import { Route as DashboardQuestionCollectionQuestionCollectionRouteImport } from './routes/_dashboard/questionCollection/$questionCollection'
 import { Route as DashboardQuestionCreateQuestionRouteImport } from './routes/_dashboard/question/createQuestion'
 import { Route as DashboardQuestionQuestionRouteImport } from './routes/_dashboard/question/$question'
 import { Route as DashboardContentCreatecontentRouteImport } from './routes/_dashboard/content/createcontent'
 import { Route as DashboardContentContentsRouteImport } from './routes/_dashboard/content/contents'
 import { Route as DashboardContentContentIdRouteImport } from './routes/_dashboard/content/$contentId'
+import { Route as DashboardQuestionCollectionEdiQuestionCollectionEditRouteImport } from './routes/_dashboard/questionCollection/$ediQuestionCollection.edit'
 import { Route as DashboardQuestionEditQuestionEditRouteImport } from './routes/_dashboard/question/$editQuestion.edit'
 import { Route as DashboardContentEditContentEditRouteImport } from './routes/_dashboard/content/$editContent.edit'
 
@@ -118,6 +122,12 @@ const PublicConteudosIndexRoute = PublicConteudosIndexRouteImport.update({
   path: '/conteudos/',
   getParentRoute: () => PublicRoute,
 } as any)
+const DashboardQuestionCollectionIndexRoute =
+  DashboardQuestionCollectionIndexRouteImport.update({
+    id: '/questionCollection/',
+    path: '/questionCollection/',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardQuestionIndexRoute = DashboardQuestionIndexRouteImport.update({
   id: '/question/',
   path: '/question/',
@@ -128,6 +138,18 @@ const PublicConteudosConteudoIdRoute =
     id: '/conteudos/$conteudoId',
     path: '/conteudos/$conteudoId',
     getParentRoute: () => PublicRoute,
+  } as any)
+const DashboardQuestionCollectionCreateQuestionCollectionRoute =
+  DashboardQuestionCollectionCreateQuestionCollectionRouteImport.update({
+    id: '/questionCollection/createQuestionCollection',
+    path: '/questionCollection/createQuestionCollection',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardQuestionCollectionQuestionCollectionRoute =
+  DashboardQuestionCollectionQuestionCollectionRouteImport.update({
+    id: '/questionCollection/$questionCollection',
+    path: '/questionCollection/$questionCollection',
+    getParentRoute: () => DashboardRoute,
   } as any)
 const DashboardQuestionCreateQuestionRoute =
   DashboardQuestionCreateQuestionRouteImport.update({
@@ -157,6 +179,12 @@ const DashboardContentContentIdRoute =
   DashboardContentContentIdRouteImport.update({
     id: '/content/$contentId',
     path: '/content/$contentId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardQuestionCollectionEdiQuestionCollectionEditRoute =
+  DashboardQuestionCollectionEdiQuestionCollectionEditRouteImport.update({
+    id: '/questionCollection/$ediQuestionCollection/edit',
+    path: '/questionCollection/$ediQuestionCollection/edit',
     getParentRoute: () => DashboardRoute,
   } as any)
 const DashboardQuestionEditQuestionEditRoute =
@@ -190,12 +218,16 @@ export interface FileRoutesByFullPath {
   '/content/createcontent': typeof DashboardContentCreatecontentRoute
   '/question/$question': typeof DashboardQuestionQuestionRoute
   '/question/createQuestion': typeof DashboardQuestionCreateQuestionRoute
+  '/questionCollection/$questionCollection': typeof DashboardQuestionCollectionQuestionCollectionRoute
+  '/questionCollection/createQuestionCollection': typeof DashboardQuestionCollectionCreateQuestionCollectionRoute
   '/conteudos/$conteudoId': typeof PublicConteudosConteudoIdRoute
   '/question': typeof DashboardQuestionIndexRoute
+  '/questionCollection': typeof DashboardQuestionCollectionIndexRoute
   '/conteudos': typeof PublicConteudosIndexRoute
   '/questoes': typeof PublicQuestoesIndexRoute
   '/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
   '/question/$editQuestion/edit': typeof DashboardQuestionEditQuestionEditRoute
+  '/questionCollection/$ediQuestionCollection/edit': typeof DashboardQuestionCollectionEdiQuestionCollectionEditRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -215,12 +247,16 @@ export interface FileRoutesByTo {
   '/content/createcontent': typeof DashboardContentCreatecontentRoute
   '/question/$question': typeof DashboardQuestionQuestionRoute
   '/question/createQuestion': typeof DashboardQuestionCreateQuestionRoute
+  '/questionCollection/$questionCollection': typeof DashboardQuestionCollectionQuestionCollectionRoute
+  '/questionCollection/createQuestionCollection': typeof DashboardQuestionCollectionCreateQuestionCollectionRoute
   '/conteudos/$conteudoId': typeof PublicConteudosConteudoIdRoute
   '/question': typeof DashboardQuestionIndexRoute
+  '/questionCollection': typeof DashboardQuestionCollectionIndexRoute
   '/conteudos': typeof PublicConteudosIndexRoute
   '/questoes': typeof PublicQuestoesIndexRoute
   '/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
   '/question/$editQuestion/edit': typeof DashboardQuestionEditQuestionEditRoute
+  '/questionCollection/$ediQuestionCollection/edit': typeof DashboardQuestionCollectionEdiQuestionCollectionEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -244,12 +280,16 @@ export interface FileRoutesById {
   '/_dashboard/content/createcontent': typeof DashboardContentCreatecontentRoute
   '/_dashboard/question/$question': typeof DashboardQuestionQuestionRoute
   '/_dashboard/question/createQuestion': typeof DashboardQuestionCreateQuestionRoute
+  '/_dashboard/questionCollection/$questionCollection': typeof DashboardQuestionCollectionQuestionCollectionRoute
+  '/_dashboard/questionCollection/createQuestionCollection': typeof DashboardQuestionCollectionCreateQuestionCollectionRoute
   '/_public/conteudos/$conteudoId': typeof PublicConteudosConteudoIdRoute
   '/_dashboard/question/': typeof DashboardQuestionIndexRoute
+  '/_dashboard/questionCollection/': typeof DashboardQuestionCollectionIndexRoute
   '/_public/conteudos/': typeof PublicConteudosIndexRoute
   '/_public/questoes/': typeof PublicQuestoesIndexRoute
   '/_dashboard/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
   '/_dashboard/question/$editQuestion/edit': typeof DashboardQuestionEditQuestionEditRoute
+  '/_dashboard/questionCollection/$ediQuestionCollection/edit': typeof DashboardQuestionCollectionEdiQuestionCollectionEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -271,12 +311,16 @@ export interface FileRouteTypes {
     | '/content/createcontent'
     | '/question/$question'
     | '/question/createQuestion'
+    | '/questionCollection/$questionCollection'
+    | '/questionCollection/createQuestionCollection'
     | '/conteudos/$conteudoId'
     | '/question'
+    | '/questionCollection'
     | '/conteudos'
     | '/questoes'
     | '/content/$editContent/edit'
     | '/question/$editQuestion/edit'
+    | '/questionCollection/$ediQuestionCollection/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -296,12 +340,16 @@ export interface FileRouteTypes {
     | '/content/createcontent'
     | '/question/$question'
     | '/question/createQuestion'
+    | '/questionCollection/$questionCollection'
+    | '/questionCollection/createQuestionCollection'
     | '/conteudos/$conteudoId'
     | '/question'
+    | '/questionCollection'
     | '/conteudos'
     | '/questoes'
     | '/content/$editContent/edit'
     | '/question/$editQuestion/edit'
+    | '/questionCollection/$ediQuestionCollection/edit'
   id:
     | '__root__'
     | '/_authenticated'
@@ -324,12 +372,16 @@ export interface FileRouteTypes {
     | '/_dashboard/content/createcontent'
     | '/_dashboard/question/$question'
     | '/_dashboard/question/createQuestion'
+    | '/_dashboard/questionCollection/$questionCollection'
+    | '/_dashboard/questionCollection/createQuestionCollection'
     | '/_public/conteudos/$conteudoId'
     | '/_dashboard/question/'
+    | '/_dashboard/questionCollection/'
     | '/_public/conteudos/'
     | '/_public/questoes/'
     | '/_dashboard/content/$editContent/edit'
     | '/_dashboard/question/$editQuestion/edit'
+    | '/_dashboard/questionCollection/$ediQuestionCollection/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -461,6 +513,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicConteudosIndexRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_dashboard/questionCollection/': {
+      id: '/_dashboard/questionCollection/'
+      path: '/questionCollection'
+      fullPath: '/questionCollection'
+      preLoaderRoute: typeof DashboardQuestionCollectionIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/_dashboard/question/': {
       id: '/_dashboard/question/'
       path: '/question'
@@ -474,6 +533,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/conteudos/$conteudoId'
       preLoaderRoute: typeof PublicConteudosConteudoIdRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/_dashboard/questionCollection/createQuestionCollection': {
+      id: '/_dashboard/questionCollection/createQuestionCollection'
+      path: '/questionCollection/createQuestionCollection'
+      fullPath: '/questionCollection/createQuestionCollection'
+      preLoaderRoute: typeof DashboardQuestionCollectionCreateQuestionCollectionRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/questionCollection/$questionCollection': {
+      id: '/_dashboard/questionCollection/$questionCollection'
+      path: '/questionCollection/$questionCollection'
+      fullPath: '/questionCollection/$questionCollection'
+      preLoaderRoute: typeof DashboardQuestionCollectionQuestionCollectionRouteImport
+      parentRoute: typeof DashboardRoute
     }
     '/_dashboard/question/createQuestion': {
       id: '/_dashboard/question/createQuestion'
@@ -508,6 +581,13 @@ declare module '@tanstack/react-router' {
       path: '/content/$contentId'
       fullPath: '/content/$contentId'
       preLoaderRoute: typeof DashboardContentContentIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/questionCollection/$ediQuestionCollection/edit': {
+      id: '/_dashboard/questionCollection/$ediQuestionCollection/edit'
+      path: '/questionCollection/$ediQuestionCollection/edit'
+      fullPath: '/questionCollection/$ediQuestionCollection/edit'
+      preLoaderRoute: typeof DashboardQuestionCollectionEdiQuestionCollectionEditRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/_dashboard/question/$editQuestion/edit': {
@@ -546,9 +626,13 @@ interface DashboardRouteChildren {
   DashboardContentCreatecontentRoute: typeof DashboardContentCreatecontentRoute
   DashboardQuestionQuestionRoute: typeof DashboardQuestionQuestionRoute
   DashboardQuestionCreateQuestionRoute: typeof DashboardQuestionCreateQuestionRoute
+  DashboardQuestionCollectionQuestionCollectionRoute: typeof DashboardQuestionCollectionQuestionCollectionRoute
+  DashboardQuestionCollectionCreateQuestionCollectionRoute: typeof DashboardQuestionCollectionCreateQuestionCollectionRoute
   DashboardQuestionIndexRoute: typeof DashboardQuestionIndexRoute
+  DashboardQuestionCollectionIndexRoute: typeof DashboardQuestionCollectionIndexRoute
   DashboardContentEditContentEditRoute: typeof DashboardContentEditContentEditRoute
   DashboardQuestionEditQuestionEditRoute: typeof DashboardQuestionEditQuestionEditRoute
+  DashboardQuestionCollectionEdiQuestionCollectionEditRoute: typeof DashboardQuestionCollectionEdiQuestionCollectionEditRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
@@ -558,10 +642,17 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardContentCreatecontentRoute: DashboardContentCreatecontentRoute,
   DashboardQuestionQuestionRoute: DashboardQuestionQuestionRoute,
   DashboardQuestionCreateQuestionRoute: DashboardQuestionCreateQuestionRoute,
+  DashboardQuestionCollectionQuestionCollectionRoute:
+    DashboardQuestionCollectionQuestionCollectionRoute,
+  DashboardQuestionCollectionCreateQuestionCollectionRoute:
+    DashboardQuestionCollectionCreateQuestionCollectionRoute,
   DashboardQuestionIndexRoute: DashboardQuestionIndexRoute,
+  DashboardQuestionCollectionIndexRoute: DashboardQuestionCollectionIndexRoute,
   DashboardContentEditContentEditRoute: DashboardContentEditContentEditRoute,
   DashboardQuestionEditQuestionEditRoute:
     DashboardQuestionEditQuestionEditRoute,
+  DashboardQuestionCollectionEdiQuestionCollectionEditRoute:
+    DashboardQuestionCollectionEdiQuestionCollectionEditRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(

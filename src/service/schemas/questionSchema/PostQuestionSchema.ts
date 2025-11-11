@@ -7,7 +7,7 @@ export const PostQuestionSchema = z.object({
     correction: z.string().optional(),
     materia: z.number().nullable(),
     type: z.enum(["Multipla", "VerdadeiroFalso", "Aberta"]),
-    status: z.enum(["active", "inactive"]),
+    status: z.enum(["Active", "Inactive"]),
     alternatives: z
         .array(postAlternativeSchema)
         .optional(),

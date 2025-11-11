@@ -24,7 +24,7 @@ function RouteComponent() {
   const [enable, setEnabled] = useState(true);
   const [search, setSearch] = useState("");
   const [type, setType] = useState<"Multipla" | "VerdadeiroFalso" | "Aberta" | undefined>(undefined);
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number | boolean | string>>({});
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string | number, number | boolean | string>>({});
   const [submittedAnswers, setSubmittedAnswers] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function RouteComponent() {
     enable,
   );
 
-  const handleSelectAnswer = (questionId: number, answerId: number | boolean | string) => {
+  const handleSelectAnswer = (questionId: number | string, answerId: number | boolean | string) => {
     setSelectedAnswers(prev => ({
       ...prev,
       [questionId]: answerId
@@ -59,6 +59,15 @@ function RouteComponent() {
       ...prev,
       [questionId]: true
     }));
+  };
+
+  const isQuestionAnswered = (question: QuestionDataType) => {
+    if (question.type === "VerdadeiroFalso" && question.alternatives) {
+      return question.alternatives.every(alt => 
+        selectedAnswers[`${question.id}-${alt.id}`] !== undefined
+      );
+    }
+    return selectedAnswers[question.id] !== undefined;
   };
 
   return (
@@ -88,7 +97,7 @@ function RouteComponent() {
           }}
           className="w-full p-2 border rounded-md"
         >
-          <option value="">Todos os tipos</option>
+          <option value="">Selecione o tipo de questão</option>
           <option value="Multipla">Múltipla Escolha</option>
           <option value="VerdadeiroFalso">Verdadeiro ou Falso</option>
           <option value="Aberta">Aberta</option>
@@ -154,39 +163,49 @@ function RouteComponent() {
                 </div>
               )}
 
-              {question.type === "VerdadeiroFalso" && (
+              {question.type === "VerdadeiroFalso" && question.alternatives && (
                 <div className="space-y-3 mb-6">
-                  <p className="font-bold text-secondary text-lg">Resposta:</p>
-                  <label
-                    className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer hover:bg-secondary/10 transition-colors ${
-                      selectedAnswers[question.id] === true ? 'border-secondary bg-secondary/20' : 'border-gray-300'
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name={`question-${question.id}`}
-                      value="true"
-                      checked={selectedAnswers[question.id] === true}
-                      onChange={() => handleSelectAnswer(question.id, true)}
-                      disabled={submittedAnswers[question.id]}
-                    />
-                    <span>Verdadeiro</span>
-                  </label>
-                  <label
-                    className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer hover:bg-secondary/10 transition-colors ${
-                      selectedAnswers[question.id] === false ? 'border-secondary bg-secondary/20' : 'border-gray-300'
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name={`question-${question.id}`}
-                      value="false"
-                      checked={selectedAnswers[question.id] === false}
-                      onChange={() => handleSelectAnswer(question.id, false)}
-                      disabled={submittedAnswers[question.id]}
-                    />
-                    <span>Falso</span>
-                  </label>
+                  <p className="font-bold text-secondary text-lg">Avalie cada afirmação:</p>
+                  {question.alternatives.map((alt) => (
+                    <div key={alt.id} className="border-2 border-gray-300 rounded-lg p-4">
+                      <div 
+                        className="mb-3 font-medium"
+                        dangerouslySetInnerHTML={{ __html: alt.content }}
+                      />
+                      <div className="flex gap-4">
+                        <label
+                          className={`flex items-center gap-2 p-3 border-2 rounded-lg cursor-pointer hover:bg-secondary/10 transition-colors flex-1 ${
+                            selectedAnswers[`${question.id}-${alt.id}`] === true ? 'border-secondary bg-secondary/20' : 'border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name={`question-${question.id}-alt-${alt.id}`}
+                            value="true"
+                            checked={selectedAnswers[`${question.id}-${alt.id}`] === true}
+                            onChange={() => handleSelectAnswer(`${question.id}-${alt.id}`, true)}
+                            disabled={submittedAnswers[question.id]}
+                          />
+                          <span>Verdadeiro</span>
+                        </label>
+                        <label
+                          className={`flex items-center gap-2 p-3 border-2 rounded-lg cursor-pointer hover:bg-secondary/10 transition-colors flex-1 ${
+                            selectedAnswers[`${question.id}-${alt.id}`] === false ? 'border-secondary bg-secondary/20' : 'border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name={`question-${question.id}-alt-${alt.id}`}
+                            value="false"
+                            checked={selectedAnswers[`${question.id}-${alt.id}`] === false}
+                            onChange={() => handleSelectAnswer(`${question.id}-${alt.id}`, false)}
+                            disabled={submittedAnswers[question.id]}
+                          />
+                          <span>Falso</span>
+                        </label>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
 
@@ -206,7 +225,7 @@ function RouteComponent() {
               {!submittedAnswers[question.id] && (
                 <Button
                   onClick={() => handleSubmitAnswer(question.id)}
-                  disabled={!selectedAnswers[question.id]}
+                  disabled={!isQuestionAnswered(question)}
                   className="mb-4"
                 >
                   Enviar Resposta

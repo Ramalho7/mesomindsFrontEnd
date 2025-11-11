@@ -22,6 +22,7 @@ export function useNavigationLinks() {
     { to: "/question", label: "Questões" },
     { to: "/content/contents", label: "Conteúdos" },
     { to: "/usuarios", label: "Usuários" },
+    { to: "/questionCollection/", label: "Coleção de questões"}
   ];
 
   const links: NavigationLink[] = isDashboard ? dashboardLinks : publicLinks;
