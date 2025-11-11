@@ -12,12 +12,26 @@ export async function GetQuestionCollectionByIdApi(id: number): Promise<Question
 
     try {
         const response = await api.get<GetQuestionCollectionByIdResponse>(
-            `/api/questoescolecao/${id}`
+            `/api/questoescolecao/${id}`,
+            {
+                params: {
+                    include: 'alternatives'
+                }
+            }
         );
 
         console.log("Resposta do servidor:", response.data);
+        console.log("Dados da coleção:", response.data.data);
+        console.log("Questões:", response.data.data.questions);
+        if (response.data.data.questions && response.data.data.questions.length > 0) {
+            console.log("Primeira questão:", response.data.data.questions[0]);
+            console.log("Alternativas da primeira questão:", response.data.data.questions[0].alternatives);
+        }
         
         const parsedData = QuestionCollectionDataSchema.parse(response.data.data);
+        
+        console.log("Dados parseados:", parsedData);
+        console.log("Questões parseadas:", parsedData.questions);
         
         return parsedData;
     } catch (error: unknown) {
