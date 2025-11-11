@@ -181,8 +181,8 @@ function RouteComponent() {
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Ativo">Ativo</SelectItem>
-                      <SelectItem value="Inativo">Inativo</SelectItem>
+                      <SelectItem value="Active">Ativo</SelectItem>
+                      <SelectItem value="Inactive">Inativo</SelectItem>
                     </SelectContent>
                   </Select>
                 )}
@@ -271,6 +271,10 @@ function RouteComponent() {
                 </div>
 
                 <div className="flex flex-row items-center gap-[16px]">
+                  <span
+                    className="bg-secondary/30 py-[8px] px-[12px] rounded-[8px] text-sm font-semibold">
+                    {question.status === "Active" ? "Ativo" : "Inativo"}
+                  </span>
                   <span className="bg-secondary/30 py-[8px] px-[12px] rounded-[8px] text-sm font-semibold">
                     {question.type}
                   </span>

@@ -5,7 +5,6 @@ export const ResponseAlternativeSchema = z.object({
     question_id: z.number(),
     content: z.string(),
     correct: z.union([z.boolean(), z.number()]), 
-    status: z.enum(["Ativo", "Inativo"]),
     created_at: z.string().refine((v) => !Number.isNaN(Date.parse(v)), {
         message: "created_at deve ser uma data válida",
     }),
