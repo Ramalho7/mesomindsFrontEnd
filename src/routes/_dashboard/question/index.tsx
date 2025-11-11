@@ -29,7 +29,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CheckIcon, ChevronsUpDown, Plus, X } from "lucide-react";
+import { CheckIcon, ChevronsUpDown, Delete, Plus, SquarePen, X } from "lucide-react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -37,6 +37,8 @@ import { z } from "zod";
 import { useGetQuestions } from "@/hooks/question/useGetQuestions";
 import { useGetMaterias } from "@/hooks/materia/useGetMateria";
 import type { QuestionDataType } from "@/service/schemas/questionSchema/ResponseQuestionSchema";
+import { useAuth } from "@/auth";
+import { useDeleteQuestion } from "@/hooks/question/useDeleteQuestion";
 
 export const Route = createFileRoute("/_dashboard/question/")({
   component: RouteComponent,
@@ -109,7 +111,23 @@ function RouteComponent() {
     enable,
   );
 
-  const { data: materias } = useGetMaterias();
+  const { data: materias } = useGetMaterias(); // TODO: preciso melhorar o relacionamento no back-end para poder realizar o filtro de forma decente
+
+  const { mutate: mutateDeleteQuestion } = useDeleteQuestion();
+
+  const { user } = useAuth();
+
+  const handleDelete = (questionId: number) => {
+    console.log("User tipo:", user?.tipo);
+    console.log("User tipo trimmed:", user?.tipo?.trim());
+    if (user?.tipo !== "ADM") {
+      alert("Você não possui permissão para deletar conteúdos");
+      return;
+    }
+    if (window.confirm(`Deseja remover a questão id: "${questionId}`)) {
+      mutateDeleteQuestion({ id: questionId });
+    }
+  };
 
   const questionTypes = ["Multipla", "VerdadeiroFalso", "Aberta"] as const;
 
@@ -240,20 +258,34 @@ function RouteComponent() {
               key={question.id}
               className="border border-2 rounded-lg py-[24px] px-[24px] shadow-md hover:shadow-lg transition-shadow"
             >
-              <div className="flex justify-between items-start mb-[16px]">
-                <div>
-                  <h2 className="font-bold text-lg text-secondary">
-                    {question.title}
-                  </h2>
-                  <p className="text-sm text-gray-600 mt-2">
-                    {question.content.substring(0, 100)}...
-                  </p>
+              <div className="flex flex-row justify-between items-center">
+                <div className="flex justify-between items-start mb-[16px]">
+                  <div>
+                    <h2 className="font-bold text-lg text-secondary">
+                      {question.title}
+                    </h2>
+                    <p className="text-sm text-gray-600 mt-2">
+                      {question.content.substring(0, 100)}...
+                    </p>
+                  </div>
                 </div>
-                <span className="bg-secondary/30 py-[8px] px-[12px] rounded-[8px] text-sm font-semibold">
-                  {question.type}
-                </span>
-              </div>
 
+                <div className="flex flex-row items-center gap-[16px]">
+                  <span className="bg-secondary/30 py-[8px] px-[12px] rounded-[8px] text-sm font-semibold">
+                    {question.type}
+                  </span>
+                  <Link
+                    to="/question/$editQuestion/edit"
+                    params={{ editQuestion: question.id.toString() }}
+                  >
+                    <SquarePen className="text-accent" />
+                  </Link>
+                  <Delete
+                    className="text-accent cursor-pointer"
+                    onClick={() => handleDelete(question.id)}
+                  />
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-gray-600">Criador:</p>

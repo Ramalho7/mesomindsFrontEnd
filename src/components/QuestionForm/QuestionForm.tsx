@@ -1,19 +1,27 @@
 import { useRouter } from "@tanstack/react-router";
 import { useForm, Controller, useFieldArray, type SubmitHandler } from "react-hook-form";
 import { Input } from "../ui/input";
-import { postQuestion } from "@/service/question/PostQuestion";
 import { PostQuestionSchema, type PostQuestionSchemaType } from "@/service/schemas/questionSchema/PostQuestionSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
 import { useCreateQuestion } from "@/hooks/question/useCreateQuestion";
+import { useEditQuestion } from "@/hooks/question/useEditQuestion";
 import Tiptap from "../TipTap/Tiptap";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import { useGetMaterias } from "@/hooks/materia/useGetMateria";
 import { useEffect } from "react";
+import type { QuestionDataType } from "@/service/schemas/questionSchema/ResponseQuestionSchema";
 
+interface QuestionFormProps {
+  initialData?: QuestionDataType;
+  isEditMode?: boolean;
+}
 
-export default function QuestionForm() {
+export default function QuestionForm({
+  initialData,
+  isEditMode = false,
+}: QuestionFormProps) {
 
   const router = useRouter();
 
@@ -21,9 +29,23 @@ export default function QuestionForm() {
     router.history.back();
   }
 
-  const { register, handleSubmit, control, watch, formState: { errors } } = useForm<PostQuestionSchemaType>({
+  const { register, handleSubmit, control, watch, reset, formState: { errors } } = useForm<PostQuestionSchemaType>({
     resolver: zodResolver(PostQuestionSchema),
-    defaultValues: {
+    defaultValues: isEditMode && initialData ? {
+      title: initialData.title,
+      content: initialData.content,
+      correction: initialData.correction || "",
+      materia: initialData.materia,
+      type: initialData.type,
+      alternatives: initialData.alternatives && initialData.alternatives.length > 0
+        ? initialData.alternatives.map(alt => ({
+          content: alt.content,
+          correct: typeof alt.correct === 'number' ? alt.correct === 1 : alt.correct
+        }))
+        : initialData.type === "Aberta"
+          ? []
+          : [{ content: "", correct: false }]
+    } : {
       title: "",
       content: "",
       correction: "",
@@ -42,6 +64,29 @@ export default function QuestionForm() {
       alert("Erro ao criar questão. Verifique o console para mais detalhes.");
     }
   });
+
+  const { mutate: editQuestionMutate, isPending: isPendingEditQuestion } = useEditQuestion();
+
+  useEffect(() => {
+    if (initialData && isEditMode) {
+      console.log("Resetando formulário com dados:", initialData);
+      reset({
+        title: initialData.title,
+        content: initialData.content,
+        correction: initialData.correction || "",
+        materia: initialData.materia,
+        type: initialData.type,
+        alternatives: initialData.alternatives && initialData.alternatives.length > 0
+          ? initialData.alternatives.map(alt => ({
+            content: alt.content,
+            correct: typeof alt.correct === 'number' ? alt.correct === 1 : alt.correct
+          }))
+          : initialData.type === "Aberta"
+            ? []
+            : [{ content: "", correct: false }]
+      });
+    }
+  }, [initialData, isEditMode, reset]);
 
   const { data: materiaData } = useGetMaterias()
 
@@ -87,8 +132,16 @@ export default function QuestionForm() {
 
     console.log("Payload a ser enviado:", payload);
     console.log("Tipo de questão:", questionType);
+    console.log("Modo de edição:", isEditMode);
 
-    createQuestionMutate(payload);
+    if (isEditMode && initialData?.id) {
+      editQuestionMutate({
+        id: initialData.id,
+        ...payload
+      });
+    } else {
+      createQuestionMutate(payload);
+    }
   };
 
   useEffect(() => {
@@ -98,13 +151,15 @@ export default function QuestionForm() {
 
   useEffect(() => {
     if (questionType === "Aberta") {
-      fields.forEach((_, index) => {
-        remove(index);
-      });
+      while (fields.length > 0) {
+        remove(0);
+      }
     } else if (fields.length === 0) {
       append({ content: "", correct: false });
     }
-  }, [questionType]);
+  }, [questionType, fields.length, append, remove]);
+
+  const isPending = isPendingCreateQuestion || isPendingEditQuestion;
 
   return (
     <div className="mt-5 mb-5">
@@ -128,28 +183,33 @@ export default function QuestionForm() {
               <Controller
                 control={control}
                 name="materia"
-                render={({ field }) => (
-                  <Select
-                    value={field.value ? String(field.value) : ""}
-                    onValueChange={(value) => {
-                      field.onChange(value ? Number(value) : null);
-                    }}
-                    disabled={isPendingCreateQuestion}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Selecione a matéria" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {materiaData?.data?.data?.map((materia) => (
-                          <SelectItem key={materia.id} value={String(materia.id)}>
-                            {materia.nome}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                )}
+                render={({ field }) => {
+                  console.log("Valor do campo materia:", field.value);
+                  return (
+                    <Select
+                      value={field.value !== null ? String(field.value) : ""}
+                      onValueChange={(value) => {
+                        const numValue = value ? Number(value) : null;
+                        console.log("Mudando materia para:", numValue);
+                        field.onChange(numValue);
+                      }}
+                      disabled={isPending}
+                    >
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="Selecione a matéria" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {materiaData?.data?.data?.map((materia) => (
+                            <SelectItem key={materia.id} value={String(materia.id)}>
+                              {materia.nome}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  );
+                }}
               />
               {errors.materia && (
                 <span className="text-red-500 text-sm">{errors.materia.message}</span>
@@ -159,27 +219,31 @@ export default function QuestionForm() {
               <Controller
                 control={control}
                 name="type"
-                render={({ field }) => (
-                  <Select
-                    value={field.value}
-                    onValueChange={(value) => {
-                      field.onChange(value);
-                    }}
-                    disabled={isPendingCreateQuestion}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o tipo da questão" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Tipos</SelectLabel>
-                        <SelectItem value="Multipla">Múltipla escolha</SelectItem>
-                        <SelectItem value="VerdadeiroFalso">Verdadeiro ou falso</SelectItem>
-                        <SelectItem value="Aberta">Aberta</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                )}
+                render={({ field }) => {
+                  console.log("Valor do campo type:", field.value);
+                  return (
+                    <Select
+                      value={field.value || ""}
+                      onValueChange={(value) => {
+                        console.log("Mudando type para:", value);
+                        field.onChange(value);
+                      }}
+                      disabled={isPending}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o tipo da questão" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Tipos</SelectLabel>
+                          <SelectItem value="Multipla">Múltipla escolha</SelectItem>
+                          <SelectItem value="VerdadeiroFalso">Verdadeiro ou falso</SelectItem>
+                          <SelectItem value="Aberta">Aberta</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  );
+                }}
               />
               {errors.type && (
                 <span className="text-red-500 text-sm">{errors.type.message}</span>
@@ -211,20 +275,20 @@ export default function QuestionForm() {
                       type="checkbox"
                       checked={field.correct}
                       onChange={() => handleToggleCorrect(index)}
-                      disabled={isPendingCreateQuestion}
+                      disabled={isPending}
                       className="h-[24px] w-[24px]"
                     />
                     <Input
                       {...register(`alternatives.${index}.content` as const)}
                       placeholder={`Alternativa ${index + 1}`}
-                      disabled={isPendingCreateQuestion}
+                      disabled={isPending}
                     />
                     <Button
                       type="button"
                       variant="destructive"
                       size="sm"
                       onClick={() => handleRemoveAlternative(index)}
-                      disabled={isPendingCreateQuestion}
+                      disabled={isPending}
                     >Remover
                     </Button>
                   </div>
@@ -235,7 +299,7 @@ export default function QuestionForm() {
                 variant="outline"
                 onClick={handleAddAlternative}
                 className="mt-4"
-                disabled={isPendingCreateQuestion}
+                disabled={isPending}
               >
                 <Plus className="text-accent" /> Adicionar Alternativa
               </Button>
@@ -260,20 +324,22 @@ export default function QuestionForm() {
               type="button"
               variant={"outline"}
               onClick={handleBack}
-              disabled={isPendingCreateQuestion}>
+              disabled={isPending}>
               Voltar
             </Button>
             <Button
               type="submit"
               variant={"default"}
-              disabled={isPendingCreateQuestion}
+              disabled={isPending}
             >
-              {isPendingCreateQuestion ? "Criando..." : "Criar questões"}
+              {isPending
+                ? (isEditMode ? "Editando..." : "Criando...")
+                : (isEditMode ? "Salvar alterações" : "Criar questão")
+              }
             </Button>
           </div>
         </div>
       </form>
     </div>
   )
-
 }

@@ -32,6 +32,7 @@ import { Route as DashboardQuestionCreateQuestionRouteImport } from './routes/_d
 import { Route as DashboardContentCreatecontentRouteImport } from './routes/_dashboard/content/createcontent'
 import { Route as DashboardContentContentsRouteImport } from './routes/_dashboard/content/contents'
 import { Route as DashboardContentContentIdRouteImport } from './routes/_dashboard/content/$contentId'
+import { Route as DashboardQuestionEditQuestionEditRouteImport } from './routes/_dashboard/question/$editQuestion.edit'
 import { Route as DashboardContentEditContentEditRouteImport } from './routes/_dashboard/content/$editContent.edit'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -151,6 +152,12 @@ const DashboardContentContentIdRoute =
     path: '/content/$contentId',
     getParentRoute: () => DashboardRoute,
   } as any)
+const DashboardQuestionEditQuestionEditRoute =
+  DashboardQuestionEditQuestionEditRouteImport.update({
+    id: '/question/$editQuestion/edit',
+    path: '/question/$editQuestion/edit',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardContentEditContentEditRoute =
   DashboardContentEditContentEditRouteImport.update({
     id: '/content/$editContent/edit',
@@ -180,6 +187,7 @@ export interface FileRoutesByFullPath {
   '/question': typeof DashboardQuestionIndexRoute
   '/conteudos': typeof PublicConteudosIndexRoute
   '/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
+  '/question/$editQuestion/edit': typeof DashboardQuestionEditQuestionEditRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -203,6 +211,7 @@ export interface FileRoutesByTo {
   '/question': typeof DashboardQuestionIndexRoute
   '/conteudos': typeof PublicConteudosIndexRoute
   '/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
+  '/question/$editQuestion/edit': typeof DashboardQuestionEditQuestionEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -230,6 +239,7 @@ export interface FileRoutesById {
   '/_dashboard/question/': typeof DashboardQuestionIndexRoute
   '/_public/conteudos/': typeof PublicConteudosIndexRoute
   '/_dashboard/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
+  '/_dashboard/question/$editQuestion/edit': typeof DashboardQuestionEditQuestionEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/question'
     | '/conteudos'
     | '/content/$editContent/edit'
+    | '/question/$editQuestion/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -278,6 +289,7 @@ export interface FileRouteTypes {
     | '/question'
     | '/conteudos'
     | '/content/$editContent/edit'
+    | '/question/$editQuestion/edit'
   id:
     | '__root__'
     | '/_authenticated'
@@ -304,6 +316,7 @@ export interface FileRouteTypes {
     | '/_dashboard/question/'
     | '/_public/conteudos/'
     | '/_dashboard/content/$editContent/edit'
+    | '/_dashboard/question/$editQuestion/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -477,6 +490,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardContentContentIdRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/_dashboard/question/$editQuestion/edit': {
+      id: '/_dashboard/question/$editQuestion/edit'
+      path: '/question/$editQuestion/edit'
+      fullPath: '/question/$editQuestion/edit'
+      preLoaderRoute: typeof DashboardQuestionEditQuestionEditRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/_dashboard/content/$editContent/edit': {
       id: '/_dashboard/content/$editContent/edit'
       path: '/content/$editContent/edit'
@@ -507,6 +527,7 @@ interface DashboardRouteChildren {
   DashboardQuestionCreateQuestionRoute: typeof DashboardQuestionCreateQuestionRoute
   DashboardQuestionIndexRoute: typeof DashboardQuestionIndexRoute
   DashboardContentEditContentEditRoute: typeof DashboardContentEditContentEditRoute
+  DashboardQuestionEditQuestionEditRoute: typeof DashboardQuestionEditQuestionEditRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
@@ -517,6 +538,8 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardQuestionCreateQuestionRoute: DashboardQuestionCreateQuestionRoute,
   DashboardQuestionIndexRoute: DashboardQuestionIndexRoute,
   DashboardContentEditContentEditRoute: DashboardContentEditContentEditRoute,
+  DashboardQuestionEditQuestionEditRoute:
+    DashboardQuestionEditQuestionEditRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
