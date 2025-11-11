@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_public/questoes/')({
 
 function RouteComponent() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [enable, setEnabled] = useState(false);
+  const [enable, setEnabled] = useState(true);
   const [search, setSearch] = useState("");
   const [type, setType] = useState<"Multipla" | "VerdadeiroFalso" | "Aberta" | undefined>(undefined);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number | boolean | string>>({});
@@ -110,7 +110,6 @@ function RouteComponent() {
                 </p>
               </div>
 
-              {/* Enunciado com HTML e imagens */}
               <div 
                 className="prose max-w-none mb-6"
                 dangerouslySetInnerHTML={{ __html: question.content }}
@@ -127,7 +126,6 @@ function RouteComponent() {
                 </p>
               </div>
 
-              {/* Renderizar alternativas baseado no tipo */}
               {question.type === "Multipla" && question.alternatives && (
                 <div className="space-y-3 mb-6">
                   <p className="font-bold text-secondary text-lg">Alternativas:</p>
@@ -205,7 +203,6 @@ function RouteComponent() {
                 </div>
               )}
 
-              {/* Botão de enviar resposta */}
               {!submittedAnswers[question.id] && (
                 <Button
                   onClick={() => handleSubmitAnswer(question.id)}
@@ -216,7 +213,6 @@ function RouteComponent() {
                 </Button>
               )}
 
-              {/* Campo de correção (aparece após enviar) */}
               {submittedAnswers[question.id] && question.correction && (
                 <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-6 mt-4">
                   <p className="font-bold text-blue-900 text-lg mb-3">Correção:</p>
