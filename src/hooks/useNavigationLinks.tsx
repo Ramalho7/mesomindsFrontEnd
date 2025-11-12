@@ -15,13 +15,11 @@ export function useNavigationLinks() {
     { to: "/questoes", label: "Questões" },
     { to: "/conteudos", label: "Conteúdos" },
     { to: "/provas", label: "Provas" },
-    { to: "/turmas", label: "Turmas" },
   ];
 
   const dashboardLinks: NavigationLink[] = [
     { to: "/question", label: "Questões" },
     { to: "/content/contents", label: "Conteúdos" },
-    { to: "/usuarios", label: "Usuários" },
     { to: "/questionCollection/", label: "Coleção de questões"}
   ];
 

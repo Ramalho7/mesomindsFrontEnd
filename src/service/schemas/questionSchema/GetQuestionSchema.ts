@@ -14,7 +14,7 @@ export const GetQuestionsResponseSchema = z.object({
             z.object({
                 url: z.url().nullable(),
                 label: z.string(),
-                page: z.number().nullable(),
+                page: z.number().optional().nullable(),
                 active: z.boolean(),
             })
         ),

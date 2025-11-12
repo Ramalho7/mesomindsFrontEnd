@@ -8,11 +8,8 @@ export async function postQuestion(questionData: PostQuestionSchemaType): Promis
 
         const response = await api.post("/api/questoes", validatedData);
 
-        console.log("Resposta do servidor:", response.data);
-
         const validatedResponse = ResponseQuestionResponseSchema.parse(response.data);
 
-        console.log("Resposta validada com sucesso:", validatedResponse);
         return validatedResponse;
     } catch (error: unknown) {
         if (error instanceof Error) {

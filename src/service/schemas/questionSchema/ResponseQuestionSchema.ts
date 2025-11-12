@@ -10,7 +10,7 @@ export const QuestionDataSchema = z.object({
     type: z.enum(["Multipla", "VerdadeiroFalso", "Aberta"]),
     criador: z.number(),
     ultimo_editor: z.number(),
-    status: z.enum(["Active", "Inactive"]),
+    status: z.enum(["Active", "Inactive"]).optional(),
     updated_at: z.string().refine((v) => !Number.isNaN(Date.parse(v)), {
         message: "updated_at deve ser uma data válida",
     }),

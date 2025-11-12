@@ -38,7 +38,7 @@ export default function QuestionForm({
       correction: initialData?.correction || "",
       materia: initialData?.materia || null,
       type: initialData?.type || "Multipla",
-      status: "active",
+      status: "Active",
       alternatives: isEditMode && initialData?.alternatives && initialData.alternatives.length > 0
         ? initialData.alternatives.map(alt => ({
           content: alt.content,
@@ -71,7 +71,7 @@ export default function QuestionForm({
         correction: initialData.correction || "",
         materia: initialData.materia,
         type: initialData.type,
-        status: "active",
+        status: "Active",
         alternatives: initialData.alternatives && initialData.alternatives.length > 0
           ? initialData.alternatives.map(alt => ({
             content: alt.content,
@@ -126,10 +126,6 @@ export default function QuestionForm({
       status: data.status,
       alternatives: questionType === "Aberta" ? undefined : data.alternatives,
     };
-
-    console.log("Payload a ser enviado:", payload);
-    console.log("Tipo de questão:", questionType);
-    console.log("Modo de edição:", isEditMode);
 
     if (isEditMode && initialData?.id) {
       editQuestionMutate({
