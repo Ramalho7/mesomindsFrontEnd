@@ -1,168 +1,164 @@
-import { createFileRoute } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  useNavigate,
+} from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
+import { Select } from "@radix-ui/react-select";
+import {
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import type { PayloadRegisterSchemaType } from "@/service/schemas/registerSchema";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+import { email } from "zod";
 
-export const Route = createFileRoute('/register')({
+export const Route = createFileRoute("/register")({
+  validateSearch: (search) => ({
+    redirect: (search.redirect as string) || "/perfil",
+  }),
+  beforeLoad: ({ context, search }) => {
+    // Redirect if already authenticated
+    if (context.auth.isAuthenticated) {
+      throw redirect({ to: search.redirect });
+    }
+  },
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/register"!</div>
-}
+  const { auth } = Route.useRouteContext();
 
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-white-50 py-12">
-            <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
-                {/* Cabeçalho */}
-                <div className="text-center">
-                    <h1 className="text-3xl font-black text-black-900">Crie sua conta</h1>
-                    <h2 className="text-lg font-medium text-black-600 mt-2">
-                        Destrave na matemática agora mesmo
-                    </h2>
-                </div>
+  const [isLoading, setIsLoading] = useState(false);
 
-                {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                        {error}
-                    </div>
-                )}
+  const navigate = useNavigate();
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Nome */}
-                    <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-black-700 mb-1">
-                            Nome
-                        </label>
-                        <Input
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={formData.name}
-                            onChange={handleChange}
-                            placeholder="Seu nome completo"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
-                    </div>
+  const { register, handleSubmit, control } =
+    useForm<PayloadRegisterSchemaType>();
 
-                    {/* E-mail */}
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-black-700 mb-1">
-                            E-mail
-                        </label>
-                        <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="seu@email.com"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
-                    </div>
+  const onSubmit: SubmitHandler<PayloadRegisterSchemaType> = async (
+    data: any,
+  ) => {
+    setIsLoading(true);
 
-                    {/* Senha */}
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-black-700 mb-1">
-                            Senha
-                        </label>
-                        <Input
-                            id="password"
-                            name="password"
-                            type="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            placeholder="Crie uma senha segura"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
-                    </div>
+    try {
+      await auth.register(data);
+      navigate({ to: "/perfil" });
+    } catch (err) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-                    {/* Confirmar Senha */}
-                    <div>
-                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-black-700 mb-1">
-                            Confirme sua senha
-                        </label>
-                        <Input
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            type="password"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            placeholder="Digite a senha novamente"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
-                    </div>
+  return (
+    <div className="min-h-screen flex items-center justify-center  flex flex-col gap-[8px]">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-w-md w-full space-y-4 p-6 border rounded-lg items-center justify-center"
+      >
+        <h1 className="text-2xl font-black text-center">Crie sua conta</h1>
+        <h2 className="text-lg font-medium text-center">
+          Destrave na matemática agora mesmo
+        </h2>
+        <div>
+          <div>
+            <label htmlFor="nome" className="block text-sm font-medium mb-1">
+              Nome
+            </label>
+            <Input
+              id="nome"
+              type="text"
+              {...register("nome")}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-[16px]"
+              required
+            />
+          </div>
 
-                    {/* Tipo de Usuário */}
-                    <div>
-                        <label htmlFor="userType" className="block text-sm font-medium text-black-700 mb-1">
-                            Tipo de usuário
-                        </label>
-                        <select
-                            id="userType"
-                            name="userType"
-                            value={formData.userType}
-                            onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                            required
-                        >
-                            <option value="">Selecione o tipo </option>
-                            <option value="student">Estudante</option>
-                            <option value="teacher">Professor</option>
-                            
-                        </select>
-                    </div>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-1">
+              Email
+            </label>
+            <Input
+              id="email"
+              type="text"
+              {...register("email")}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-[16px]"
+              required
+            />
+          </div>
 
-                    {/* Botão Registrar */}
-                    <Button
-                        type="submit"
-                        disabled={isLoading}
-                        className="w-full disabled:opacity-50 disabled:cursor-not-allowed bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
-                    >
-                        {isLoading ? 'Criando conta...' : 'Registrar'}
-                    </Button>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium mb-1"
+            >
+              Senha
+            </label>
+            <Input
+              id="password"
+              type="password"
+              {...register("password")}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-[16px]"
+              required
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password_confirmation"
+              className="block text-sm font-medium mb-1"
+            >
+              Confirme a senha
+            </label>
+            <Input
+              id="password_confirmation"
+              type="password"
+              {...register("password_confirmation")}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-[16px]"
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="nome" className="block text-sm font-medium mb-1">
+              Tipo de usuário
+            </label>
+            <Controller
+              control={control}
+              name="tipo"
+              render={({ field }) => (
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecione o tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Aluno">Aluno</SelectItem>
+                    <SelectItem value="Professor">Professor</SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </div>
+        </div>
 
-                    {/* Link para Login */}
-                    <div className="text-center">
-                        <p className="text-sm text-gray-600">
-                            Já possui conta?{' '}
-                            <button
-                                type="button"
-                                onClick={() => navigate({ to: "/login" })}
-                                className="text-blue-600 hover:text-blue-800 font-medium"
-                            >
-                                Faça login agora!
-                            </button>
-                        </p>
-                    </div>
-                </form>
-
-                {/* Divisor */}
-                <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-gray-300" />
-                    </div>
-                    <div className="relative flex justify-center text-sm">
-                        <span className="px-2 bg-white text-gray-500">Ou entre com</span>
-                    </div>
-                </div>
-
-                {/* Botão Google */}
-                <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full flex items-center justify-center gap-2 border border-gray-300 hover:bg-gray-100"
-                >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                    </svg>
-                    Google
-                </Button>
-           </div>
-       </div>
-    )
+        <Button
+          type="submit"
+          disabled={isLoading}
+          variant={"action"}
+          className="w-full disable:opacity-50 disable:cursor-not-allowed"
+        >
+          Registrar-se
+        </Button>
+        <Link to={"/login"} search={{ redirect: "/perfil" }}>
+          <p>
+            Já possui conta?{" "}
+            <span className="underline decoration-accent">Acesse agora.</span>
+          </p>
+        </Link>
+      </form>
+    </div>
+  );
 }
