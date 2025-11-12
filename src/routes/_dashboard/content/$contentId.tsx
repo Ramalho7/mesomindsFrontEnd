@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import TiptapReadOnly from "@/components/TipTap/TiptapReadOnly";
 import { useGetContentById } from "@/hooks/content/useGetContentById";
 import { createFileRoute, useParams, useRouter } from "@tanstack/react-router";
 
@@ -41,10 +42,7 @@ function RouteComponent() {
       <p>Título: {content.title}</p>
       <p>Corpo do conteúdo:</p>
       <div className="border rounded-2xl px-[24px] py-[24px]">
-        <div
-          dangerouslySetInnerHTML={{ __html: content.content }}
-          className="prose prose-sm max-w-none"
-        />
+        <TiptapReadOnly content={content.content} />
       </div>
       <Button type="submit" variant={"default"} onClick={handleBack}>
         Voltar

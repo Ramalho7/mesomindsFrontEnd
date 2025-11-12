@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import TiptapReadOnly from '@/components/TipTap/TiptapReadOnly';
 import { useGetQuestionCollectionById } from '@/hooks/questionCollection/useGetQuestionsCollectionById';
 import { createFileRoute, useParams, useRouter } from '@tanstack/react-router'
 
@@ -75,7 +76,7 @@ function RouteComponent() {
 
       <div className="border-t pt-4 mt-4">
         <p className="text-gray-600">Descrição:</p>
-        <p className="mt-2">{collectionData.description}</p>
+        <p className="mt-2"> <TiptapReadOnly content={collectionData.description}/> </p>
       </div>
 
       <div className="border-t pt-4 mt-4">
@@ -110,11 +111,8 @@ function RouteComponent() {
                     <h3 className="font-semibold text-lg mt-2">
                       {question.title}
                     </h3>
-                    <div className="mt-3 text-sm prose prose-sm max-w-none">
-                      <div
-                        dangerouslySetInnerHTML={{ __html: question.content }}
-                        className="text-gray-700"
-                      />
+                    <div className="mt-3 text-sm">
+                      <TiptapReadOnly content={question.content} />
                     </div>
                   </div>
                   <div className="flex gap-2">

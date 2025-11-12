@@ -3,6 +3,7 @@ import { useGetQuestionCollectionById } from '@/hooks/questionCollection/useGetQ
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import type { QuestionInCollectionType } from '@/service/schemas/questionCollection/QuestionInCollection'
+import TiptapReadOnly from '@/components/TipTap/TiptapReadOnly'
 
 export const Route = createFileRoute('/_public/provas/$prova')({
   component: RouteComponent,
@@ -173,10 +174,9 @@ function RouteComponent() {
             </span>
           </div>
 
-          <div 
-            className="prose max-w-none mb-6"
-            dangerouslySetInnerHTML={{ __html: currentQuestion.content }}
-          />
+          <div className="mb-6">
+            <TiptapReadOnly content={currentQuestion.content} />
+          </div>
 
           <div className="mb-4">
             <span className="font-bold text-secondary">Tipo: </span>
@@ -203,10 +203,9 @@ function RouteComponent() {
                     disabled={submittedAnswers[currentQuestion.id]}
                     className="mt-1"
                   />
-                  <div 
-                    className="flex-1"
-                    dangerouslySetInnerHTML={{ __html: alt.content }}
-                  />
+                  <div className="flex-1">
+                    <TiptapReadOnly content={alt.content} />
+                  </div>
                   {submittedAnswers[currentQuestion.id] && (
                     <span className={`ml-2 ${
                       (typeof alt.correct === 'number' ? alt.correct === 1 : alt.correct) 
@@ -227,10 +226,9 @@ function RouteComponent() {
               <p className="font-bold text-secondary text-lg">Avalie cada afirmação:</p>
               {currentQuestion.alternatives.map((alt) => (
                 <div key={alt.id} className="border-2 border-gray-300 rounded-lg p-4">
-                  <div 
-                    className="mb-3 font-medium"
-                    dangerouslySetInnerHTML={{ __html: alt.content }}
-                  />
+                  <div className="mb-3 font-medium">
+                    <TiptapReadOnly content={alt.content} />
+                  </div>
                   <div className="flex gap-4">
                     <label
                       className={`flex items-center gap-2 p-3 border-2 rounded-lg cursor-pointer hover:bg-secondary/10 transition-colors flex-1 ${
@@ -304,19 +302,16 @@ function RouteComponent() {
             </Button>
           )}
 
-          {/* Correction */}
           {submittedAnswers[currentQuestion.id] && currentQuestion.correction && (
             <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-6 mt-4">
               <p className="font-bold text-blue-900 text-lg mb-3">Correção:</p>
-              <div 
-                className="prose max-w-none text-blue-800"
-                dangerouslySetInnerHTML={{ __html: currentQuestion.correction }}
-              />
+              <div className="prose max-w-none text-blue-800"> 
+                <TiptapReadOnly content={currentQuestion.correction }/>
+              </div>
             </div>
           )}
         </div>
 
-        {/* Navigation */}
         <div className="flex justify-between items-center">
           <Button
             onClick={handlePreviousQuestion}

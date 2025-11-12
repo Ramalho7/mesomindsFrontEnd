@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useGetQuestionsCollections } from '@/hooks/questionCollection/useGetQuestionsCollections'
 import { formatDate } from '@/utils/formatDate'
+import TiptapReadOnly from '@/components/TipTap/TiptapReadOnly';
 import {
   Pagination,
   PaginationContent,
@@ -86,10 +87,9 @@ function RouteComponent() {
               <div className="flex justify-between items-start mb-4">
                 <div className="flex-1">
                   <h2 className="text-xl font-bold text-secondary mb-2">{simulado.title}</h2>
-                  <div 
-                    className="prose max-w-none text-gray-700 line-clamp-2"
-                    dangerouslySetInnerHTML={{ __html: simulado.description }}
-                  />
+                  <div className="line-clamp-2">
+                    <TiptapReadOnly content={simulado.description} />
+                  </div>
                 </div>
                 <span className="bg-secondary/30 py-2 px-4 rounded-lg text-sm font-semibold whitespace-nowrap ml-4">
                   {simulado.questions?.length || 0} questões

@@ -146,3 +146,51 @@ code {
     @apply bg-background text-foreground;
   }
 }
+
+/* TipTap Read Only Styles */
+.tiptap-readonly .tiptap {
+  @apply prose prose-sm max-w-none;
+}
+
+.tiptap-readonly .tiptap p {
+  @apply mb-2;
+}
+
+.tiptap-readonly .tiptap img {
+  @apply max-w-full h-auto rounded-lg my-2;
+}
+
+.tiptap-readonly .tiptap code {
+  @apply bg-gray-100 px-1 py-0.5 rounded text-sm;
+}
+
+.tiptap-readonly .tiptap pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-2;
+}
+
+.tiptap-readonly .tiptap h1,
+.tiptap-readonly .tiptap h2,
+.tiptap-readonly .tiptap h3 {
+  @apply font-bold mt-4 mb-2;
+}
+
+.tiptap-readonly .tiptap h1 {
+  @apply text-2xl;
+}
+
+.tiptap-readonly .tiptap h2 {
+  @apply text-xl;
+}
+
+.tiptap-readonly .tiptap h3 {
+  @apply text-lg;
+}
+
+.tiptap-readonly .tiptap ul,
+.tiptap-readonly .tiptap ol {
+  @apply ml-4 my-2;
+}
+
+.tiptap-readonly .tiptap a {
+  @apply text-blue-600 underline hover:text-blue-800;
+}

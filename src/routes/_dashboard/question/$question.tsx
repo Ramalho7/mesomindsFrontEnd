@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import TiptapReadOnly from '@/components/TipTap/TiptapReadOnly';
 import { useGetQuestionById } from '@/hooks/question/useGetQuestionById';
 import { createFileRoute, useParams, useRouter } from '@tanstack/react-router'
 
@@ -59,11 +60,18 @@ function RouteComponent() {
 
       <p>Enunciado:</p>
       <div className="border rounded-2xl px-[24px] py-[24px]">
-        <div
-          dangerouslySetInnerHTML={{ __html: QuestionData?.data.content || "" }}
-          className="prose prose-sm max-w-none"
-        />
+        <TiptapReadOnly content={QuestionData?.data.content || ""} />
       </div>
+
+      {QuestionData?.data.correction && (
+        <>
+          <p>Correção/Gabarito:</p>
+          <div className="border rounded-2xl px-[24px] py-[24px]">
+            <TiptapReadOnly content={QuestionData.data.correction} />
+          </div>
+        </>
+      )}
+
       <Button type="submit" variant={"default"} onClick={handleBack}>
         Voltar
       </Button>

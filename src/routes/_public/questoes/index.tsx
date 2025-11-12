@@ -1,6 +1,7 @@
 import { useGetQuestions } from '@/hooks/question/useGetQuestions';
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useState } from 'react';
+import TiptapReadOnly from '@/components/TipTap/TiptapReadOnly';
 import {
   Pagination,
   PaginationContent,
@@ -119,10 +120,9 @@ function RouteComponent() {
                 </p>
               </div>
 
-              <div 
-                className="prose max-w-none mb-6"
-                dangerouslySetInnerHTML={{ __html: question.content }}
-              />
+              <div className="mb-6">
+                <TiptapReadOnly content={question.content} />
+              </div>
 
               <div className="mb-4">
                 <p className="flex gap-2 items-center mb-2">
@@ -154,10 +154,9 @@ function RouteComponent() {
                         disabled={submittedAnswers[question.id]}
                         className="mt-1"
                       />
-                      <div 
-                        className="flex-1"
-                        dangerouslySetInnerHTML={{ __html: alt.content }}
-                      />
+                      <div className="flex-1">
+                        <TiptapReadOnly content={alt.content} />
+                      </div>
                     </label>
                   ))}
                 </div>
@@ -168,10 +167,9 @@ function RouteComponent() {
                   <p className="font-bold text-secondary text-lg">Avalie cada afirmação:</p>
                   {question.alternatives.map((alt) => (
                     <div key={alt.id} className="border-2 border-gray-300 rounded-lg p-4">
-                      <div 
-                        className="mb-3 font-medium"
-                        dangerouslySetInnerHTML={{ __html: alt.content }}
-                      />
+                      <div className="mb-3 font-medium">
+                        <TiptapReadOnly content={alt.content} />
+                      </div>
                       <div className="flex gap-4">
                         <label
                           className={`flex items-center gap-2 p-3 border-2 rounded-lg cursor-pointer hover:bg-secondary/10 transition-colors flex-1 ${
@@ -235,10 +233,9 @@ function RouteComponent() {
               {submittedAnswers[question.id] && question.correction && (
                 <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-6 mt-4">
                   <p className="font-bold text-blue-900 text-lg mb-3">Correção:</p>
-                  <div 
-                    className="prose max-w-none text-blue-800"
-                    dangerouslySetInnerHTML={{ __html: question.correction }}
-                  />
+                  <div className="text-blue-800">
+                    <TiptapReadOnly content={question.correction} />
+                  </div>
                 </div>
               )}
 
