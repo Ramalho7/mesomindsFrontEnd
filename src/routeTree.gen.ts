@@ -15,21 +15,30 @@ import { Route as PublicRouteImport } from './routes/_public'
 import { Route as DashboardRouteImport } from './routes/_dashboard'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
-import { Route as PublicTurmasRouteImport } from './routes/_public/turmas'
 import { Route as PublicSobreRouteImport } from './routes/_public/sobre'
-import { Route as PublicSimuladosRouteImport } from './routes/_public/simulados'
-import { Route as PublicQuestoesRouteImport } from './routes/_public/questoes'
-import { Route as PublicProvasRouteImport } from './routes/_public/provas'
 import { Route as PublicFlashcardsRouteImport } from './routes/_public/flashcards'
 import { Route as PublicConfiguracoesRouteImport } from './routes/_public/configuracoes'
 import { Route as PublicAbordagemRouteImport } from './routes/_public/abordagem'
 import { Route as DashboardDashboardRouteImport } from './routes/_dashboard/dashboard'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
+import { Route as PublicSimuladosIndexRouteImport } from './routes/_public/simulados/index'
+import { Route as PublicQuestoesIndexRouteImport } from './routes/_public/questoes/index'
+import { Route as PublicProvasIndexRouteImport } from './routes/_public/provas/index'
 import { Route as PublicConteudosIndexRouteImport } from './routes/_public/conteudos/index'
+import { Route as DashboardQuestionCollectionIndexRouteImport } from './routes/_dashboard/questionCollection/index'
+import { Route as DashboardQuestionIndexRouteImport } from './routes/_dashboard/question/index'
+import { Route as DashboardContentIndexRouteImport } from './routes/_dashboard/content/index'
+import { Route as PublicSimuladosSimuladoRouteImport } from './routes/_public/simulados/$simulado'
+import { Route as PublicProvasProvaRouteImport } from './routes/_public/provas/$prova'
 import { Route as PublicConteudosConteudoIdRouteImport } from './routes/_public/conteudos/$conteudoId'
+import { Route as DashboardQuestionCollectionCreateQuestionCollectionRouteImport } from './routes/_dashboard/questionCollection/createQuestionCollection'
+import { Route as DashboardQuestionCollectionQuestionCollectionRouteImport } from './routes/_dashboard/questionCollection/$questionCollection'
+import { Route as DashboardQuestionCreateQuestionRouteImport } from './routes/_dashboard/question/createQuestion'
+import { Route as DashboardQuestionQuestionRouteImport } from './routes/_dashboard/question/$question'
 import { Route as DashboardContentCreatecontentRouteImport } from './routes/_dashboard/content/createcontent'
-import { Route as DashboardContentContentsRouteImport } from './routes/_dashboard/content/contents'
 import { Route as DashboardContentContentIdRouteImport } from './routes/_dashboard/content/$contentId'
+import { Route as DashboardQuestionCollectionEdiQuestionCollectionEditRouteImport } from './routes/_dashboard/questionCollection/$ediQuestionCollection.edit'
+import { Route as DashboardQuestionEditQuestionEditRouteImport } from './routes/_dashboard/question/$editQuestion.edit'
 import { Route as DashboardContentEditContentEditRouteImport } from './routes/_dashboard/content/$editContent.edit'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -59,29 +68,9 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PublicRoute,
 } as any)
-const PublicTurmasRoute = PublicTurmasRouteImport.update({
-  id: '/turmas',
-  path: '/turmas',
-  getParentRoute: () => PublicRoute,
-} as any)
 const PublicSobreRoute = PublicSobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicSimuladosRoute = PublicSimuladosRouteImport.update({
-  id: '/simulados',
-  path: '/simulados',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicQuestoesRoute = PublicQuestoesRouteImport.update({
-  id: '/questoes',
-  path: '/questoes',
-  getParentRoute: () => PublicRoute,
-} as any)
-const PublicProvasRoute = PublicProvasRouteImport.update({
-  id: '/provas',
-  path: '/provas',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicFlashcardsRoute = PublicFlashcardsRouteImport.update({
@@ -109,9 +98,50 @@ const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
   path: '/perfil',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const PublicSimuladosIndexRoute = PublicSimuladosIndexRouteImport.update({
+  id: '/simulados/',
+  path: '/simulados/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicQuestoesIndexRoute = PublicQuestoesIndexRouteImport.update({
+  id: '/questoes/',
+  path: '/questoes/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicProvasIndexRoute = PublicProvasIndexRouteImport.update({
+  id: '/provas/',
+  path: '/provas/',
+  getParentRoute: () => PublicRoute,
+} as any)
 const PublicConteudosIndexRoute = PublicConteudosIndexRouteImport.update({
   id: '/conteudos/',
   path: '/conteudos/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const DashboardQuestionCollectionIndexRoute =
+  DashboardQuestionCollectionIndexRouteImport.update({
+    id: '/questionCollection/',
+    path: '/questionCollection/',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardQuestionIndexRoute = DashboardQuestionIndexRouteImport.update({
+  id: '/question/',
+  path: '/question/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardContentIndexRoute = DashboardContentIndexRouteImport.update({
+  id: '/content/',
+  path: '/content/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const PublicSimuladosSimuladoRoute = PublicSimuladosSimuladoRouteImport.update({
+  id: '/simulados/$simulado',
+  path: '/simulados/$simulado',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicProvasProvaRoute = PublicProvasProvaRouteImport.update({
+  id: '/provas/$prova',
+  path: '/provas/$prova',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicConteudosConteudoIdRoute =
@@ -120,22 +150,52 @@ const PublicConteudosConteudoIdRoute =
     path: '/conteudos/$conteudoId',
     getParentRoute: () => PublicRoute,
   } as any)
+const DashboardQuestionCollectionCreateQuestionCollectionRoute =
+  DashboardQuestionCollectionCreateQuestionCollectionRouteImport.update({
+    id: '/questionCollection/createQuestionCollection',
+    path: '/questionCollection/createQuestionCollection',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardQuestionCollectionQuestionCollectionRoute =
+  DashboardQuestionCollectionQuestionCollectionRouteImport.update({
+    id: '/questionCollection/$questionCollection',
+    path: '/questionCollection/$questionCollection',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardQuestionCreateQuestionRoute =
+  DashboardQuestionCreateQuestionRouteImport.update({
+    id: '/question/createQuestion',
+    path: '/question/createQuestion',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardQuestionQuestionRoute =
+  DashboardQuestionQuestionRouteImport.update({
+    id: '/question/$question',
+    path: '/question/$question',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardContentCreatecontentRoute =
   DashboardContentCreatecontentRouteImport.update({
     id: '/content/createcontent',
     path: '/content/createcontent',
     getParentRoute: () => DashboardRoute,
   } as any)
-const DashboardContentContentsRoute =
-  DashboardContentContentsRouteImport.update({
-    id: '/content/contents',
-    path: '/content/contents',
-    getParentRoute: () => DashboardRoute,
-  } as any)
 const DashboardContentContentIdRoute =
   DashboardContentContentIdRouteImport.update({
     id: '/content/$contentId',
     path: '/content/$contentId',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardQuestionCollectionEdiQuestionCollectionEditRoute =
+  DashboardQuestionCollectionEdiQuestionCollectionEditRouteImport.update({
+    id: '/questionCollection/$ediQuestionCollection/edit',
+    path: '/questionCollection/$ediQuestionCollection/edit',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardQuestionEditQuestionEditRoute =
+  DashboardQuestionEditQuestionEditRouteImport.update({
+    id: '/question/$editQuestion/edit',
+    path: '/question/$editQuestion/edit',
     getParentRoute: () => DashboardRoute,
   } as any)
 const DashboardContentEditContentEditRoute =
@@ -153,18 +213,27 @@ export interface FileRoutesByFullPath {
   '/abordagem': typeof PublicAbordagemRoute
   '/configuracoes': typeof PublicConfiguracoesRoute
   '/flashcards': typeof PublicFlashcardsRoute
-  '/provas': typeof PublicProvasRoute
-  '/questoes': typeof PublicQuestoesRoute
-  '/simulados': typeof PublicSimuladosRoute
   '/sobre': typeof PublicSobreRoute
-  '/turmas': typeof PublicTurmasRoute
   '/': typeof PublicIndexRoute
   '/content/$contentId': typeof DashboardContentContentIdRoute
-  '/content/contents': typeof DashboardContentContentsRoute
   '/content/createcontent': typeof DashboardContentCreatecontentRoute
+  '/question/$question': typeof DashboardQuestionQuestionRoute
+  '/question/createQuestion': typeof DashboardQuestionCreateQuestionRoute
+  '/questionCollection/$questionCollection': typeof DashboardQuestionCollectionQuestionCollectionRoute
+  '/questionCollection/createQuestionCollection': typeof DashboardQuestionCollectionCreateQuestionCollectionRoute
   '/conteudos/$conteudoId': typeof PublicConteudosConteudoIdRoute
+  '/provas/$prova': typeof PublicProvasProvaRoute
+  '/simulados/$simulado': typeof PublicSimuladosSimuladoRoute
+  '/content': typeof DashboardContentIndexRoute
+  '/question': typeof DashboardQuestionIndexRoute
+  '/questionCollection': typeof DashboardQuestionCollectionIndexRoute
   '/conteudos': typeof PublicConteudosIndexRoute
+  '/provas': typeof PublicProvasIndexRoute
+  '/questoes': typeof PublicQuestoesIndexRoute
+  '/simulados': typeof PublicSimuladosIndexRoute
   '/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
+  '/question/$editQuestion/edit': typeof DashboardQuestionEditQuestionEditRoute
+  '/questionCollection/$ediQuestionCollection/edit': typeof DashboardQuestionCollectionEdiQuestionCollectionEditRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -174,18 +243,27 @@ export interface FileRoutesByTo {
   '/abordagem': typeof PublicAbordagemRoute
   '/configuracoes': typeof PublicConfiguracoesRoute
   '/flashcards': typeof PublicFlashcardsRoute
-  '/provas': typeof PublicProvasRoute
-  '/questoes': typeof PublicQuestoesRoute
-  '/simulados': typeof PublicSimuladosRoute
   '/sobre': typeof PublicSobreRoute
-  '/turmas': typeof PublicTurmasRoute
   '/': typeof PublicIndexRoute
   '/content/$contentId': typeof DashboardContentContentIdRoute
-  '/content/contents': typeof DashboardContentContentsRoute
   '/content/createcontent': typeof DashboardContentCreatecontentRoute
+  '/question/$question': typeof DashboardQuestionQuestionRoute
+  '/question/createQuestion': typeof DashboardQuestionCreateQuestionRoute
+  '/questionCollection/$questionCollection': typeof DashboardQuestionCollectionQuestionCollectionRoute
+  '/questionCollection/createQuestionCollection': typeof DashboardQuestionCollectionCreateQuestionCollectionRoute
   '/conteudos/$conteudoId': typeof PublicConteudosConteudoIdRoute
+  '/provas/$prova': typeof PublicProvasProvaRoute
+  '/simulados/$simulado': typeof PublicSimuladosSimuladoRoute
+  '/content': typeof DashboardContentIndexRoute
+  '/question': typeof DashboardQuestionIndexRoute
+  '/questionCollection': typeof DashboardQuestionCollectionIndexRoute
   '/conteudos': typeof PublicConteudosIndexRoute
+  '/provas': typeof PublicProvasIndexRoute
+  '/questoes': typeof PublicQuestoesIndexRoute
+  '/simulados': typeof PublicSimuladosIndexRoute
   '/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
+  '/question/$editQuestion/edit': typeof DashboardQuestionEditQuestionEditRoute
+  '/questionCollection/$ediQuestionCollection/edit': typeof DashboardQuestionCollectionEdiQuestionCollectionEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -199,18 +277,27 @@ export interface FileRoutesById {
   '/_public/abordagem': typeof PublicAbordagemRoute
   '/_public/configuracoes': typeof PublicConfiguracoesRoute
   '/_public/flashcards': typeof PublicFlashcardsRoute
-  '/_public/provas': typeof PublicProvasRoute
-  '/_public/questoes': typeof PublicQuestoesRoute
-  '/_public/simulados': typeof PublicSimuladosRoute
   '/_public/sobre': typeof PublicSobreRoute
-  '/_public/turmas': typeof PublicTurmasRoute
   '/_public/': typeof PublicIndexRoute
   '/_dashboard/content/$contentId': typeof DashboardContentContentIdRoute
-  '/_dashboard/content/contents': typeof DashboardContentContentsRoute
   '/_dashboard/content/createcontent': typeof DashboardContentCreatecontentRoute
+  '/_dashboard/question/$question': typeof DashboardQuestionQuestionRoute
+  '/_dashboard/question/createQuestion': typeof DashboardQuestionCreateQuestionRoute
+  '/_dashboard/questionCollection/$questionCollection': typeof DashboardQuestionCollectionQuestionCollectionRoute
+  '/_dashboard/questionCollection/createQuestionCollection': typeof DashboardQuestionCollectionCreateQuestionCollectionRoute
   '/_public/conteudos/$conteudoId': typeof PublicConteudosConteudoIdRoute
+  '/_public/provas/$prova': typeof PublicProvasProvaRoute
+  '/_public/simulados/$simulado': typeof PublicSimuladosSimuladoRoute
+  '/_dashboard/content/': typeof DashboardContentIndexRoute
+  '/_dashboard/question/': typeof DashboardQuestionIndexRoute
+  '/_dashboard/questionCollection/': typeof DashboardQuestionCollectionIndexRoute
   '/_public/conteudos/': typeof PublicConteudosIndexRoute
+  '/_public/provas/': typeof PublicProvasIndexRoute
+  '/_public/questoes/': typeof PublicQuestoesIndexRoute
+  '/_public/simulados/': typeof PublicSimuladosIndexRoute
   '/_dashboard/content/$editContent/edit': typeof DashboardContentEditContentEditRoute
+  '/_dashboard/question/$editQuestion/edit': typeof DashboardQuestionEditQuestionEditRoute
+  '/_dashboard/questionCollection/$ediQuestionCollection/edit': typeof DashboardQuestionCollectionEdiQuestionCollectionEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -222,18 +309,27 @@ export interface FileRouteTypes {
     | '/abordagem'
     | '/configuracoes'
     | '/flashcards'
+    | '/sobre'
+    | '/'
+    | '/content/$contentId'
+    | '/content/createcontent'
+    | '/question/$question'
+    | '/question/createQuestion'
+    | '/questionCollection/$questionCollection'
+    | '/questionCollection/createQuestionCollection'
+    | '/conteudos/$conteudoId'
+    | '/provas/$prova'
+    | '/simulados/$simulado'
+    | '/content'
+    | '/question'
+    | '/questionCollection'
+    | '/conteudos'
     | '/provas'
     | '/questoes'
     | '/simulados'
-    | '/sobre'
-    | '/turmas'
-    | '/'
-    | '/content/$contentId'
-    | '/content/contents'
-    | '/content/createcontent'
-    | '/conteudos/$conteudoId'
-    | '/conteudos'
     | '/content/$editContent/edit'
+    | '/question/$editQuestion/edit'
+    | '/questionCollection/$ediQuestionCollection/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -243,18 +339,27 @@ export interface FileRouteTypes {
     | '/abordagem'
     | '/configuracoes'
     | '/flashcards'
+    | '/sobre'
+    | '/'
+    | '/content/$contentId'
+    | '/content/createcontent'
+    | '/question/$question'
+    | '/question/createQuestion'
+    | '/questionCollection/$questionCollection'
+    | '/questionCollection/createQuestionCollection'
+    | '/conteudos/$conteudoId'
+    | '/provas/$prova'
+    | '/simulados/$simulado'
+    | '/content'
+    | '/question'
+    | '/questionCollection'
+    | '/conteudos'
     | '/provas'
     | '/questoes'
     | '/simulados'
-    | '/sobre'
-    | '/turmas'
-    | '/'
-    | '/content/$contentId'
-    | '/content/contents'
-    | '/content/createcontent'
-    | '/conteudos/$conteudoId'
-    | '/conteudos'
     | '/content/$editContent/edit'
+    | '/question/$editQuestion/edit'
+    | '/questionCollection/$ediQuestionCollection/edit'
   id:
     | '__root__'
     | '/_authenticated'
@@ -267,18 +372,27 @@ export interface FileRouteTypes {
     | '/_public/abordagem'
     | '/_public/configuracoes'
     | '/_public/flashcards'
-    | '/_public/provas'
-    | '/_public/questoes'
-    | '/_public/simulados'
     | '/_public/sobre'
-    | '/_public/turmas'
     | '/_public/'
     | '/_dashboard/content/$contentId'
-    | '/_dashboard/content/contents'
     | '/_dashboard/content/createcontent'
+    | '/_dashboard/question/$question'
+    | '/_dashboard/question/createQuestion'
+    | '/_dashboard/questionCollection/$questionCollection'
+    | '/_dashboard/questionCollection/createQuestionCollection'
     | '/_public/conteudos/$conteudoId'
+    | '/_public/provas/$prova'
+    | '/_public/simulados/$simulado'
+    | '/_dashboard/content/'
+    | '/_dashboard/question/'
+    | '/_dashboard/questionCollection/'
     | '/_public/conteudos/'
+    | '/_public/provas/'
+    | '/_public/questoes/'
+    | '/_public/simulados/'
     | '/_dashboard/content/$editContent/edit'
+    | '/_dashboard/question/$editQuestion/edit'
+    | '/_dashboard/questionCollection/$ediQuestionCollection/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -333,39 +447,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
     }
-    '/_public/turmas': {
-      id: '/_public/turmas'
-      path: '/turmas'
-      fullPath: '/turmas'
-      preLoaderRoute: typeof PublicTurmasRouteImport
-      parentRoute: typeof PublicRoute
-    }
     '/_public/sobre': {
       id: '/_public/sobre'
       path: '/sobre'
       fullPath: '/sobre'
       preLoaderRoute: typeof PublicSobreRouteImport
-      parentRoute: typeof PublicRoute
-    }
-    '/_public/simulados': {
-      id: '/_public/simulados'
-      path: '/simulados'
-      fullPath: '/simulados'
-      preLoaderRoute: typeof PublicSimuladosRouteImport
-      parentRoute: typeof PublicRoute
-    }
-    '/_public/questoes': {
-      id: '/_public/questoes'
-      path: '/questoes'
-      fullPath: '/questoes'
-      preLoaderRoute: typeof PublicQuestoesRouteImport
-      parentRoute: typeof PublicRoute
-    }
-    '/_public/provas': {
-      id: '/_public/provas'
-      path: '/provas'
-      fullPath: '/provas'
-      preLoaderRoute: typeof PublicProvasRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/flashcards': {
@@ -403,11 +489,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPerfilRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_public/simulados/': {
+      id: '/_public/simulados/'
+      path: '/simulados'
+      fullPath: '/simulados'
+      preLoaderRoute: typeof PublicSimuladosIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/questoes/': {
+      id: '/_public/questoes/'
+      path: '/questoes'
+      fullPath: '/questoes'
+      preLoaderRoute: typeof PublicQuestoesIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/provas/': {
+      id: '/_public/provas/'
+      path: '/provas'
+      fullPath: '/provas'
+      preLoaderRoute: typeof PublicProvasIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
     '/_public/conteudos/': {
       id: '/_public/conteudos/'
       path: '/conteudos'
       fullPath: '/conteudos'
       preLoaderRoute: typeof PublicConteudosIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_dashboard/questionCollection/': {
+      id: '/_dashboard/questionCollection/'
+      path: '/questionCollection'
+      fullPath: '/questionCollection'
+      preLoaderRoute: typeof DashboardQuestionCollectionIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/question/': {
+      id: '/_dashboard/question/'
+      path: '/question'
+      fullPath: '/question'
+      preLoaderRoute: typeof DashboardQuestionIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/content/': {
+      id: '/_dashboard/content/'
+      path: '/content'
+      fullPath: '/content'
+      preLoaderRoute: typeof DashboardContentIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_public/simulados/$simulado': {
+      id: '/_public/simulados/$simulado'
+      path: '/simulados/$simulado'
+      fullPath: '/simulados/$simulado'
+      preLoaderRoute: typeof PublicSimuladosSimuladoRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/provas/$prova': {
+      id: '/_public/provas/$prova'
+      path: '/provas/$prova'
+      fullPath: '/provas/$prova'
+      preLoaderRoute: typeof PublicProvasProvaRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/conteudos/$conteudoId': {
@@ -417,6 +559,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicConteudosConteudoIdRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_dashboard/questionCollection/createQuestionCollection': {
+      id: '/_dashboard/questionCollection/createQuestionCollection'
+      path: '/questionCollection/createQuestionCollection'
+      fullPath: '/questionCollection/createQuestionCollection'
+      preLoaderRoute: typeof DashboardQuestionCollectionCreateQuestionCollectionRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/questionCollection/$questionCollection': {
+      id: '/_dashboard/questionCollection/$questionCollection'
+      path: '/questionCollection/$questionCollection'
+      fullPath: '/questionCollection/$questionCollection'
+      preLoaderRoute: typeof DashboardQuestionCollectionQuestionCollectionRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/question/createQuestion': {
+      id: '/_dashboard/question/createQuestion'
+      path: '/question/createQuestion'
+      fullPath: '/question/createQuestion'
+      preLoaderRoute: typeof DashboardQuestionCreateQuestionRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/question/$question': {
+      id: '/_dashboard/question/$question'
+      path: '/question/$question'
+      fullPath: '/question/$question'
+      preLoaderRoute: typeof DashboardQuestionQuestionRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/_dashboard/content/createcontent': {
       id: '/_dashboard/content/createcontent'
       path: '/content/createcontent'
@@ -424,18 +594,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardContentCreatecontentRouteImport
       parentRoute: typeof DashboardRoute
     }
-    '/_dashboard/content/contents': {
-      id: '/_dashboard/content/contents'
-      path: '/content/contents'
-      fullPath: '/content/contents'
-      preLoaderRoute: typeof DashboardContentContentsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
     '/_dashboard/content/$contentId': {
       id: '/_dashboard/content/$contentId'
       path: '/content/$contentId'
       fullPath: '/content/$contentId'
       preLoaderRoute: typeof DashboardContentContentIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/questionCollection/$ediQuestionCollection/edit': {
+      id: '/_dashboard/questionCollection/$ediQuestionCollection/edit'
+      path: '/questionCollection/$ediQuestionCollection/edit'
+      fullPath: '/questionCollection/$ediQuestionCollection/edit'
+      preLoaderRoute: typeof DashboardQuestionCollectionEdiQuestionCollectionEditRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/question/$editQuestion/edit': {
+      id: '/_dashboard/question/$editQuestion/edit'
+      path: '/question/$editQuestion/edit'
+      fullPath: '/question/$editQuestion/edit'
+      preLoaderRoute: typeof DashboardQuestionEditQuestionEditRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/_dashboard/content/$editContent/edit': {
@@ -463,17 +640,37 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 interface DashboardRouteChildren {
   DashboardDashboardRoute: typeof DashboardDashboardRoute
   DashboardContentContentIdRoute: typeof DashboardContentContentIdRoute
-  DashboardContentContentsRoute: typeof DashboardContentContentsRoute
   DashboardContentCreatecontentRoute: typeof DashboardContentCreatecontentRoute
+  DashboardQuestionQuestionRoute: typeof DashboardQuestionQuestionRoute
+  DashboardQuestionCreateQuestionRoute: typeof DashboardQuestionCreateQuestionRoute
+  DashboardQuestionCollectionQuestionCollectionRoute: typeof DashboardQuestionCollectionQuestionCollectionRoute
+  DashboardQuestionCollectionCreateQuestionCollectionRoute: typeof DashboardQuestionCollectionCreateQuestionCollectionRoute
+  DashboardContentIndexRoute: typeof DashboardContentIndexRoute
+  DashboardQuestionIndexRoute: typeof DashboardQuestionIndexRoute
+  DashboardQuestionCollectionIndexRoute: typeof DashboardQuestionCollectionIndexRoute
   DashboardContentEditContentEditRoute: typeof DashboardContentEditContentEditRoute
+  DashboardQuestionEditQuestionEditRoute: typeof DashboardQuestionEditQuestionEditRoute
+  DashboardQuestionCollectionEdiQuestionCollectionEditRoute: typeof DashboardQuestionCollectionEdiQuestionCollectionEditRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardDashboardRoute: DashboardDashboardRoute,
   DashboardContentContentIdRoute: DashboardContentContentIdRoute,
-  DashboardContentContentsRoute: DashboardContentContentsRoute,
   DashboardContentCreatecontentRoute: DashboardContentCreatecontentRoute,
+  DashboardQuestionQuestionRoute: DashboardQuestionQuestionRoute,
+  DashboardQuestionCreateQuestionRoute: DashboardQuestionCreateQuestionRoute,
+  DashboardQuestionCollectionQuestionCollectionRoute:
+    DashboardQuestionCollectionQuestionCollectionRoute,
+  DashboardQuestionCollectionCreateQuestionCollectionRoute:
+    DashboardQuestionCollectionCreateQuestionCollectionRoute,
+  DashboardContentIndexRoute: DashboardContentIndexRoute,
+  DashboardQuestionIndexRoute: DashboardQuestionIndexRoute,
+  DashboardQuestionCollectionIndexRoute: DashboardQuestionCollectionIndexRoute,
   DashboardContentEditContentEditRoute: DashboardContentEditContentEditRoute,
+  DashboardQuestionEditQuestionEditRoute:
+    DashboardQuestionEditQuestionEditRoute,
+  DashboardQuestionCollectionEdiQuestionCollectionEditRoute:
+    DashboardQuestionCollectionEdiQuestionCollectionEditRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
@@ -484,28 +681,30 @@ interface PublicRouteChildren {
   PublicAbordagemRoute: typeof PublicAbordagemRoute
   PublicConfiguracoesRoute: typeof PublicConfiguracoesRoute
   PublicFlashcardsRoute: typeof PublicFlashcardsRoute
-  PublicProvasRoute: typeof PublicProvasRoute
-  PublicQuestoesRoute: typeof PublicQuestoesRoute
-  PublicSimuladosRoute: typeof PublicSimuladosRoute
   PublicSobreRoute: typeof PublicSobreRoute
-  PublicTurmasRoute: typeof PublicTurmasRoute
   PublicIndexRoute: typeof PublicIndexRoute
   PublicConteudosConteudoIdRoute: typeof PublicConteudosConteudoIdRoute
+  PublicProvasProvaRoute: typeof PublicProvasProvaRoute
+  PublicSimuladosSimuladoRoute: typeof PublicSimuladosSimuladoRoute
   PublicConteudosIndexRoute: typeof PublicConteudosIndexRoute
+  PublicProvasIndexRoute: typeof PublicProvasIndexRoute
+  PublicQuestoesIndexRoute: typeof PublicQuestoesIndexRoute
+  PublicSimuladosIndexRoute: typeof PublicSimuladosIndexRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAbordagemRoute: PublicAbordagemRoute,
   PublicConfiguracoesRoute: PublicConfiguracoesRoute,
   PublicFlashcardsRoute: PublicFlashcardsRoute,
-  PublicProvasRoute: PublicProvasRoute,
-  PublicQuestoesRoute: PublicQuestoesRoute,
-  PublicSimuladosRoute: PublicSimuladosRoute,
   PublicSobreRoute: PublicSobreRoute,
-  PublicTurmasRoute: PublicTurmasRoute,
   PublicIndexRoute: PublicIndexRoute,
   PublicConteudosConteudoIdRoute: PublicConteudosConteudoIdRoute,
+  PublicProvasProvaRoute: PublicProvasProvaRoute,
+  PublicSimuladosSimuladoRoute: PublicSimuladosSimuladoRoute,
   PublicConteudosIndexRoute: PublicConteudosIndexRoute,
+  PublicProvasIndexRoute: PublicProvasIndexRoute,
+  PublicQuestoesIndexRoute: PublicQuestoesIndexRoute,
+  PublicSimuladosIndexRoute: PublicSimuladosIndexRoute,
 }
 
 const PublicRouteWithChildren =

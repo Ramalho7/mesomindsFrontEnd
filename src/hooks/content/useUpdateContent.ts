@@ -1,7 +1,5 @@
-import {
-  EditContentApi,
-  type EditContentPayload,
-} from "@/service/content/editContent";
+import { EditContentApi } from "@/service/content/editContent";
+import type { EditContentPayload } from "@/service/schemas/contentSchema/EditContentSchema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useUpdateContent() {
