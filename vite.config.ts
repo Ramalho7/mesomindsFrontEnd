@@ -4,6 +4,7 @@ import viteReact from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import { resolve } from 'node:path';
+import { nitroV2Plugin } from '@tanstack/nitro-v2-vite-plugin'; 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
@@ -11,7 +12,9 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  base: "/mesominds",
   plugins: [
+    nitroV2Plugin(), 
     TanStackRouterVite({
       autoCodeSplitting: true,
     }),
@@ -65,6 +68,10 @@ export default defineConfig({
     include: ['react', 'react-dom', '@storybook/react'],
   },
   build: {
+    ssr: true,
+    rollupOptions: {
+      input: './src/main.tsx', 
+    },
     chunkSizeWarningLimit: 1000,
   },
 });
