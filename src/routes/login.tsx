@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import type { PayloadLoginShemaType } from "@/service/schemas/loginSchema";
+import { PayloadLoginShema, type PayloadLoginShemaType } from "@/service/schemas/loginSchema";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 export const Route = createFileRoute("/login")({
   validateSearch: (search) => ({
@@ -24,20 +26,30 @@ function LoginComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const { register, handleSubmit } = useForm<PayloadLoginShemaType>();
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors } 
+  } = useForm<PayloadLoginShemaType>({
+    resolver: zodResolver(PayloadLoginShema),
+  });
 
-  const onSubmit: SubmitHandler<PayloadLoginShemaType> = async (data: any) => {
+  const onSubmit: SubmitHandler<PayloadLoginShemaType> = async (data) => {
     setIsLoading(true);
     setError("");
 
     console.log(data);
 
     try {
-      await auth.login(data);
+      await auth.login(data.email, data.password);
       // Navigate to the redirect URL using router navigation
       navigate({ to: "/perfil" });
     } catch (err) {
-      setError("Invalid email or password");
+      if (err instanceof z.ZodError) {
+        setError(err.issues.map((e) => e.message).join(", "));
+      } else {
+        setError("Invalid email or password");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -64,11 +76,14 @@ function LoginComponent() {
             Email
           </label>
           <Input
-            type="text"
+            id="email"
+            type="email"
             {...register("email")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          )}
         </div>
 
         <div>
@@ -80,8 +95,10 @@ function LoginComponent() {
             type="password"
             {...register("password")}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
           />
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+          )}
         </div>
 
         <Button
@@ -99,4 +116,3 @@ function LoginComponent() {
     </div>
   );
 }
-

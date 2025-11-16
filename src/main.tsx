@@ -27,6 +27,8 @@ declare module "@tanstack/react-router" {
   }
 }
 
+export default router;
+
 function InnerApp() {
   const auth = useAuth();
 

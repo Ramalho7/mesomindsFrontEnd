@@ -5,13 +5,12 @@ import { z } from "zod";
 import api from "./service/axios";
 import {
   PayloadRegisterSchema,
-  ResponseRegisterShema,
 } from "./service/schemas/registerSchema";
 
 export interface AuthState {
   isAuthenticated: boolean;
   user: User | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   register: (
     email: string,
     password: string,
@@ -59,9 +58,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const login = async (data: any) => {
+  const login = async (email: string, password: string) => {
     try {
-      const validatedPayload = PayloadLoginShema.parse(data);
+      const validatedPayload = PayloadLoginShema.parse({ email, password});
 
       const response = await api.post("api/login", validatedPayload);
 

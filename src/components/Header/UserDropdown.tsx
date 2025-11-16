@@ -46,9 +46,6 @@ export function UserDropdown() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/turmas" className="!text-lg w-full h-full flex items-center">
-            Turmas
-          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

@@ -67,9 +67,9 @@ export default defineConfig({
     include: ['react', 'react-dom', '@storybook/react'],
   },
   build: {
-    ssr: true,
+    ssr: false,
     rollupOptions: {
-      input: './src/entry-server.tsx', 
+      input: './src/main.tsx', 
     },
     chunkSizeWarningLimit: 1000,
   },
