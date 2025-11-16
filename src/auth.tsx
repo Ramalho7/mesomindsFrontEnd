@@ -5,13 +5,12 @@ import { z } from "zod";
 import api from "./service/axios";
 import {
   PayloadRegisterSchema,
-  ResponseRegisterShema,
 } from "./service/schemas/registerSchema";
 
 export interface AuthState {
   isAuthenticated: boolean;
   user: User | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   register: (
     email: string,
     password: string,
@@ -59,9 +58,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const login = async (data: any) => {
+  const login = async (email: string, password: string) => {
     try {
-      const validatedPayload = PayloadLoginShema.parse(data);
+      const validatedPayload = PayloadLoginShema.parse({ email, password });
 
       const response = await api.post("api/login", validatedPayload);
 
@@ -83,21 +82,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     console.log("isAuthenticated atualizado:", isAuthenticated);
   }, [isAuthenticated]);
 
-  const register = async (data: any) => {
+  const register = async (
+    email: string,
+    password: string,
+    password_confirmation: string,
+    nome: string,
+    tipo: "Aluno" | "Professor"
+  ) => {
     try {
-      const validatedPayload = PayloadRegisterSchema.parse(data);
+      const validatedPayload = PayloadRegisterSchema.parse({
+        email,
+        password,
+        password_confirmation,
+        nome,
+        tipo,
+      });
 
       const response = await api.post("api/register", validatedPayload);
 
-      const userData = await response.data;
+      const userData = response.data;
       setIsAuthenticated(true);
       setUser(userData.user);
       localStorage.setItem("auth-token", userData.token);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        console.error("Validation errors:", error.issues);
+        const message = error.issues.map((issue) => issue.message).join(", ");
+        throw new Error(message);
+      } else if (error instanceof Error) {
+        throw error;
       } else {
-        console.error(error);
+        throw new Error("Erro ao registrar. Por favor, tente novamente.");
       }
     }
   };

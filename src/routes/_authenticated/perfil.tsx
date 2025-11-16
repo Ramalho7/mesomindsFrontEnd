@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 
 export const Route = createFileRoute("/_authenticated/perfil")({
   component: RouteComponent,
@@ -12,11 +13,6 @@ export const Route = createFileRoute("/_authenticated/perfil")({
 function RouteComponent() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate({ to: "/login", search: { redirect: "/" } });
-  };
 
   if (!user) {
     return <div>Carregando dados do usuário...</div>;
@@ -36,9 +32,26 @@ function RouteComponent() {
         <h1 className="text-3xl font-bold text-secondary">
           Olá, {user?.nome}, bem-vindo de volta!
         </h1>
-        <Button variant="outline" size="icon">
-          <Settings className="h-5 w-5" />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Settings className="h-5 w-5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end" className="rounded-lg py-[8px] px-[8px] bg-primary border-1 shadow-lg "
+          >
+            <DropdownMenuItem
+              onSelect={() => {
+                logout();
+                navigate({ to: "/login", search: { redirect: "/" } })
+              }}
+              className="px-4 py-2 rounded-md text-destructive focus:outline-none focus:ring-0 hover:bg-muted"
+            >
+              Sair
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

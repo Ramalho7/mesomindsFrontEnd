@@ -4,7 +4,6 @@ import viteReact from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import { resolve } from 'node:path';
-import { nitroV2Plugin } from '@tanstack/nitro-v2-vite-plugin'; // Reintroduzindo o plugin para SSR
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
@@ -13,7 +12,6 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 export default defineConfig({
   plugins: [
-    nitroV2Plugin(), 
     TanStackRouterVite({
       autoCodeSplitting: true,
     }),
@@ -67,10 +65,6 @@ export default defineConfig({
     include: ['react', 'react-dom', '@storybook/react'],
   },
   build: {
-    ssr: true,
-    rollupOptions: {
-      input: './src/entry-server.tsx', 
-    },
     chunkSizeWarningLimit: 1000,
   },
 });

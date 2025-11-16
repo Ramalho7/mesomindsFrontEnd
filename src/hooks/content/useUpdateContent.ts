@@ -7,7 +7,7 @@ export function useUpdateContent() {
 
   return useMutation({
     mutationFn: (payload: EditContentPayload) => EditContentApi(payload),
-    onSuccess: (data, variables) => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["content"] });
       queryClient.invalidateQueries({ queryKey: ["content", variables.id] });
     },

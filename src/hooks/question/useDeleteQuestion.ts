@@ -8,7 +8,7 @@ export function useDeleteQuestion() {
 
     return useMutation({
         mutationFn: (payload: DeleteQuestionPayload) => DeleteQuestionApi(payload),
-        onSuccess: (data, variables) => {
+        onSuccess: (_, variables) => {
             queryClient.invalidateQueries({ queryKey: ["questions"] });
             queryClient.invalidateQueries({ queryKey: ["question", variables.id] });
         },

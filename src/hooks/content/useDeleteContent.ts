@@ -1,7 +1,7 @@
 import {
   DeleteContentApi,
-  type DeleteContentPayload,
 } from "@/service/content/deleteContent";
+import type { DeleteContentPayload } from "@/service/schemas/contentSchema/DeleteContentSchema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useDeleteContent() {
@@ -9,7 +9,7 @@ export function useDeleteContent() {
 
   return useMutation({
     mutationFn: (payload: DeleteContentPayload) => DeleteContentApi(payload),
-    onSuccess: (data, variables) => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["content"] });
       queryClient.invalidateQueries({ queryKey: ["content", variables.id] });
     },

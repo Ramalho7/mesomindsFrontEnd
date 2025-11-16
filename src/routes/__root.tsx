@@ -1,7 +1,5 @@
 import { Outlet, createRootRouteWithContext } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { TanStackDevtools } from "@tanstack/react-devtools";
-import { useAuth, type AuthState } from "@/auth";
+import { type AuthState } from "@/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Header from "../components/Header/Header";
@@ -17,7 +15,6 @@ interface MyRouterContext {
 const queryClient = new QueryClient();
 
 function RootComponent() {
-  const { isAuthenticated } = useAuth();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -26,7 +23,7 @@ function RootComponent() {
           <AppSidebar />
           <div className="flex-1 w-full">
             <div className="min-h-screen flex flex-col">
-              <Header isLoggedIn={isAuthenticated} />
+              <Header />
 
               <div className="flex justify-center flex-1">
                 <div className="w-full px-2 sm:px-6 lg:px-8 max-w-[1140px]">

@@ -4,12 +4,12 @@ import { UserDropdown } from "./UserDropdown";
 import { Menu } from "lucide-react";
 
 interface StyledHeaderProps {
-  isLoggedIn: boolean;
+  isAuthenticated: boolean;
   links?: string[];
 }
 
 const StyledHeader: React.FC<StyledHeaderProps> = ({
-  isLoggedIn,
+  isAuthenticated,
   links = ['Simulados', 'Questões', 'Conteúdos', 'Provas', 'Turmas'],
 }) => {
   return (
@@ -27,7 +27,7 @@ const StyledHeader: React.FC<StyledHeaderProps> = ({
           ))}
         </nav>
 
-        {isLoggedIn ? (
+        {isAuthenticated ? (
           <UserDropdown />
         ) : (
           <Button variant="action">Entrar</Button>

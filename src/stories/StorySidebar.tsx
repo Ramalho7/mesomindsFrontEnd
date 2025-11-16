@@ -14,7 +14,7 @@ import {
 interface StorySidebarProps {
     links?: { to: string; label: string }[]
     username?: string
-    isLoggedIn: boolean
+    isAuthenticated: boolean
 }
 
 export function StorySidebar({
@@ -26,7 +26,7 @@ export function StorySidebar({
         { to: '/turmas', label: 'Turmas' },
     ],
     username = 'Nome usuário',
-    isLoggedIn = false,
+    isAuthenticated = false,
 }: StorySidebarProps) {
 
     return (
@@ -58,7 +58,7 @@ export function StorySidebar({
                         <SidebarMenu className="space-y-4">
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild className="text-xl">
-                                    {isLoggedIn &&
+                                    {isAuthenticated &&
                                         <a href="#">Perfil</a>
                                     }
                                 </SidebarMenuButton>

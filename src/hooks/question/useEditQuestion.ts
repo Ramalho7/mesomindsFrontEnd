@@ -8,7 +8,7 @@ export function useEditQuestion() {
 
     return useMutation({
         mutationFn: (payload: EditQuestionPayload) => EditQuestionApi(payload),
-        onSuccess: (data, variables) => {
+        onSuccess: (_, variables) => {
             queryClient.invalidateQueries({ queryKey: ["questions"] });
             queryClient.invalidateQueries({ queryKey: ["questions", variables.id] });
         },

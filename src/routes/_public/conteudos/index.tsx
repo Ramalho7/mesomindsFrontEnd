@@ -30,11 +30,8 @@ import { Link } from "@tanstack/react-router";
 import {
   CheckIcon,
   ChevronsUpDown,
-  Delete,
-  Plus,
-  SquarePen,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetContent } from "@/hooks/content/useGetContent";
 import { useContentTags } from "@/hooks/content/contentTags/useGetContentTags";
 import { useContentTypes } from "@/hooks/content/contentTypes/useGetContentTypes";
@@ -232,7 +229,7 @@ function RouteComponent() {
       </div>
 
       <div className="flex flex-col mx-auto mt-10 mb-10 gap-10 w-full">
-        {contents?.data.map((content: ContentPayload, index: any) => (
+        {contents?.data.map((content: ContentPayload) => (
           <Link
             to="/conteudos/$conteudoId"
             params={{ conteudoId: content.id.toString() }}
@@ -251,7 +248,7 @@ function RouteComponent() {
               </div>
               <div className="flex gap-2 items-center">
                 <p className="font-bold text-lg text-secondary">Tags:</p>
-                {content.content_tags.map((tag: ContentTag, index: any) => (
+                {content.content_tags.map((tag: ContentTag) => (
                   <div
                     key={tag.id}
                     className="bg-secondary/30 py-[8px] px-[8px] rounded-[8px]"

@@ -1,5 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
@@ -27,6 +29,8 @@ declare module "@tanstack/react-router" {
   }
 }
 
+export default router;
+
 function InnerApp() {
   const auth = useAuth();
 
@@ -42,14 +46,17 @@ function InnerApp() {
 }
 
 // Render the app
-const rootElement = document.getElementById("app");
-if (rootElement && !rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(
-    <AuthProvider>
-      <InnerApp />
-    </AuthProvider>,
-  );
+if (typeof document !== "undefined") {
+  const rootElement = document.getElementById("app");
+  if (rootElement && !rootElement.innerHTML) {
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(
+      <AuthProvider>
+        <ToastContainer position="top-right" autoClose={3000} />
+        <InnerApp />
+      </AuthProvider>
+    );
+  }
 }
 
 // If you want to start measuring performance in your app, pass a function
