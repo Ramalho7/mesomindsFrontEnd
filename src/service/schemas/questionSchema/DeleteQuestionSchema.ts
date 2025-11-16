@@ -1,4 +1,3 @@
-import api from "@/service/axios";
 import { z } from "zod";
 
 const DeleteQuestionSchema = z.object({

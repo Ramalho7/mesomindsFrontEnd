@@ -1,4 +1,4 @@
-import { minLength, z } from "zod";
+import { z } from "zod";
 import { UserSchema } from "./UserSchema";
 
 export const ResponseRegisterShema = z.object({

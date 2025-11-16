@@ -4,7 +4,6 @@ import viteReact from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import { resolve } from 'node:path';
-import { nitroV2Plugin } from '@tanstack/nitro-v2-vite-plugin';
 
 // https://vitejs.dev/config/
 import path from 'node:path';
@@ -14,7 +13,7 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [nitroV2Plugin(), TanStackRouterVite({
+  plugins: [TanStackRouterVite({
     autoCodeSplitting: true
   }), viteReact(), tailwindcss()],
   test: {
@@ -56,4 +55,11 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['console'], 
   },
+  build: {
+    ssr: false,
+    rollupOptions: {
+      input: './index.html',
+    },
+    chunkSizeWarningLimit: 1000,
+  }
 });

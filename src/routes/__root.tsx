@@ -38,7 +38,7 @@ function RootComponent() {
 
               <Footer />
 
-              <TanStackDevtools
+              {/* <TanStackDevtools
                 config={{
                   position: "bottom-right",
                 }}
@@ -48,7 +48,7 @@ function RootComponent() {
                     render: <TanStackRouterDevtoolsPanel />,
                   },
                 ]}
-              />
+              /> */}
             </div>
           </div>
         </div>

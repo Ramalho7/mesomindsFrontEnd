@@ -19,7 +19,7 @@ export function useNavigationLinks() {
 
   const dashboardLinks: NavigationLink[] = [
     { to: "/question", label: "Questões" },
-    { to: "/content/contents", label: "Conteúdos" },
+    { to: "/content", label: "Conteúdos" },
     { to: "/questionCollection/", label: "Coleção de questões"}
   ];
 
