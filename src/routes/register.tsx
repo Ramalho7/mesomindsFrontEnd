@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Select } from "@radix-ui/react-select";
 import {
   SelectContent,
@@ -107,7 +107,7 @@ function RouteComponent() {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-[16px]"
             />
             {errors.nome && (
-              <p className="text-destructive-foreground text-sm font-bold mt-1 mb-1">{errors.nome.message}</p>
+              <p className="text-destructive-foreground text-sm mt-1 mb-1">{errors.nome.message}</p>
             )}
           </div>
 
@@ -122,7 +122,7 @@ function RouteComponent() {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-[16px]"
             />
             {errors.email && (
-              <p className="text-destructive-foreground text-md font-bold mt-1 mb-1">{errors.email.message}</p>
+              <p className="text-destructive-foreground text-sm mt-1 mb-1">{errors.email.message}</p>
             )}
           </div>
 
@@ -140,7 +140,7 @@ function RouteComponent() {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-[16px]"
             />
             {errors.password && (
-              <p className="text-destructive-foreground text-md font-bold mt-1 mb-1">{errors.password.message}</p>
+              <p className="text-destructive-foreground text-sm mt-1 mb-1">{errors.password.message}</p>
             )}
           </div>
 
@@ -158,7 +158,7 @@ function RouteComponent() {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-[16px]"
             />
             {errors.password_confirmation && (
-              <p className="text-destructive-foreground text-md font-bold mt-1 mb-1">{errors.password_confirmation.message}</p>
+              <p className="text-destructive-foreground text-sm mt-1 mb-1">{errors.password_confirmation.message}</p>
             )}
           </div>
 
@@ -182,7 +182,7 @@ function RouteComponent() {
               )}
             />
             {errors.tipo && (
-              <p className="text-destructive-foreground text-md font-bold mt-1 mb-1">{errors.tipo.message}</p>
+              <p className="text-destructive-foreground text-sm mt-1 mb-1">{errors.tipo.message}</p>
             )}
           </div>
         </div>
