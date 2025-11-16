@@ -13,7 +13,7 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 
 export default defineConfig({
   plugins: [
-    nitroV2Plugin(), /
+    nitroV2Plugin(), 
     TanStackRouterVite({
       autoCodeSplitting: true,
     }),
@@ -61,6 +61,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     exclude: ['console'],
+    include: ['react', 'react-dom', '@storybook/react'],
   },
   build: {
     ssr: true,
