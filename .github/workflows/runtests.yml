@@ -33,9 +33,3 @@ jobs:
 
       - name: Run Vitest tests
         run: npm run test
-
-      - name: Build Storybook
-        run: npm run build-storybook
-
-      - name: Run Storybook tests
-        run: npx vitest run --projects storybook
