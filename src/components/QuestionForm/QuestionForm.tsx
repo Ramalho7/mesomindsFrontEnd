@@ -55,7 +55,7 @@ export default function QuestionForm({
       alert("Questão criada com sucesso!");
       router.history.back();
     },
-    onError: (error) => {
+    onError: () => {
       alert("Erro ao criar questão. Verifique o console para mais detalhes.");
     }
   });

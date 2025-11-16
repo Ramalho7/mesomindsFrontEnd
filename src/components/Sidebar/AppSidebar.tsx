@@ -1,3 +1,4 @@
+import { useAuth } from "@/auth"
 import {
     Sidebar,
     SidebarContent,
@@ -11,11 +12,10 @@ import {
 } from "@/components/ui/sidebar"
 import { useNavigationLinks } from "@/hooks/useNavigationLinks"
 import { Link } from "@tanstack/react-router"
-import { useState } from "react"
 
 export function AppSidebar() {
     const { links } = useNavigationLinks()
-    const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+    const { isAuthenticated } = useAuth();
 
     return (
         <Sidebar 
@@ -48,7 +48,7 @@ export function AppSidebar() {
                         <SidebarMenu className="space-y-4">
                             <SidebarMenuItem>
                                 <SidebarMenuButton asChild className="text-xl">
-                                    {isLoggedIn &&
+                                    {isAuthenticated &&
                                         <a href="#">Perfil</a>
                                     }
                                 </SidebarMenuButton>

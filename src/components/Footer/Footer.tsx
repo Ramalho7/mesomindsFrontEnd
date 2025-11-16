@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 
 export default function Footer() {
 
-    const { links, isDashboard } = useNavigationLinks()
+    const { links } = useNavigationLinks()
 
     return (
         <>

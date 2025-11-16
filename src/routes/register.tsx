@@ -35,7 +35,6 @@ function RouteComponent() {
   const { auth } = Route.useRouteContext();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -52,14 +51,12 @@ function RouteComponent() {
     const first = Object.values(formErrors)[0] as any;
     const message = first?.message ?? "Erro de validação";
     toast.error(String(message));
-    setError(String(message));
   };
 
   const onSubmit: SubmitHandler<PayloadRegisterSchemaType> = async (
     data: any
   ) => {
     setIsLoading(true);
-    setError(null);
 
     console.table(data);
 
@@ -77,7 +74,6 @@ function RouteComponent() {
       console.log("catch chamado em register.tsx:", err);
       const message = err?.message || "Erro ao registrar. Por favor, tente novamente.";
       toast.error(message);
-      setError(message);
       console.error("Erro ao registrar:", err);
     } finally {
       setIsLoading(false);

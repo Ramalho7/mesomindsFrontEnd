@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import notes from '@/assets/images/2111.w039.n003.5B.p1.5.jpg';
 import calc from '@/assets/images/2324019.jpg';
 import math from '@/assets/images/2423222.jpg';

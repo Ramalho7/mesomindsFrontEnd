@@ -25,7 +25,6 @@ function LoginComponent() {
   const { auth } = Route.useRouteContext();
   const navigate = Route.useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const { 
     register, 
@@ -39,12 +38,10 @@ function LoginComponent() {
       const first = Object.values(formErrors)[0] as any;
       const message = first?.message ?? "Erro de validação";
       toast.error(String(message));
-      setError(String(message));
     };
 
   const onSubmit: SubmitHandler<PayloadLoginShemaType> = async (data) => {
     setIsLoading(true);
-    setError("");
 
     console.log(data);
 
@@ -57,9 +54,7 @@ function LoginComponent() {
       if (err instanceof z.ZodError) {
         const message = err?.message || "Erro ao realizar login. Por favor, tente novamente.";
         toast.error(message);
-        setError(err.issues.map((e) => e.message).join(", "));
       } else {
-        setError("Invalid email or password");
       }
     } finally {
       setIsLoading(false);

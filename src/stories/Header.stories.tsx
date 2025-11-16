@@ -13,21 +13,21 @@ export default meta;
 
 export const LoggedIn: StoryObj<typeof StyledHeader> = {
   args: {
-    isLoggedIn: true,
+    isAuthenticated: true,
     links: ['Simulados', 'Questões', 'Conteúdos', 'Provas', 'Turmas'],
   },
 };
 
 export const LoggedOut: StoryObj<typeof StyledHeader> = {
   args: {
-    isLoggedIn: false,
+    isAuthenticated: false,
     links: ['Simulados', 'Questões', 'Conteúdos', 'Provas', 'Turmas'],
   },
 };
 
 export const Dashboard: StoryObj<typeof StyledHeader> = {
   args: {
-    isLoggedIn: true,
+    isAuthenticated: true,
     links: ['Questões', 'Conteúdos', 'Usuários'],
   },
 };

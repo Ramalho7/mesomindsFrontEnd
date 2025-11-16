@@ -29,13 +29,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CheckIcon, ChevronsUpDown, Delete, Plus, SquarePen, X } from "lucide-react";
+import { CheckIcon, ChevronsUpDown, Delete, Plus, SquarePen } from "lucide-react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { useGetQuestions } from "@/hooks/question/useGetQuestions";
-import { useGetMaterias } from "@/hooks/materia/useGetMateria";
 import type { QuestionDataType } from "@/service/schemas/questionSchema/ResponseQuestionSchema";
 import { useAuth } from "@/auth";
 import { useDeleteQuestion } from "@/hooks/question/useDeleteQuestion";
@@ -56,7 +55,6 @@ type QuestionFilterType = z.infer<typeof QuestionFilterSchema>;
 
 function RouteComponent() {
   const [openTypeFilter, setOpenTypeFilter] = useState(false);
-  const [openMateriaFilter, setOpenMateriaFilter] = useState(false);
   const [enable, setEnabled] = useState(false);
 
   const {
@@ -111,7 +109,7 @@ function RouteComponent() {
     enable,
   );
 
-  const { data: materias } = useGetMaterias(); // TODO: preciso melhorar o relacionamento no back-end para poder realizar o filtro de forma decente
+  // const { data: materias } = useGetMaterias(); TODO: preciso melhorar o relacionamento no back-end para poder realizar o filtro de forma decente
 
   const { mutate: mutateDeleteQuestion } = useDeleteQuestion();
 

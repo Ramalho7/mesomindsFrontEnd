@@ -3,13 +3,11 @@ import { Button } from '../ui/button'
 import { UserDropdown } from './UserDropdown'
 import { useNavigationLinks } from '@/hooks/useNavigationLinks'
 import { SidebarTrigger } from '../ui/sidebar'
+import { useAuth } from '@/auth'
 
-interface HeaderProps {
-  isLoggedIn: boolean
-}
-
-export default function Header({ isLoggedIn }: HeaderProps) {
+export default function Header() {
   const { links, isDashboard } = useNavigationLinks()
+  const { isAuthenticated } = useAuth();
 
   return (
     <header className="w-full bg-white border-b border-accent h-[100px]">
@@ -28,7 +26,7 @@ export default function Header({ isLoggedIn }: HeaderProps) {
             ))}
           </nav>
 
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <UserDropdown />
           ) : (
             <Link to='/login' search={{ redirect: '/perfil' }}><Button variant="action">Entrar</Button></Link>

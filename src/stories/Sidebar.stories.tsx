@@ -46,10 +46,10 @@ export const WithLongUsername: StoryObj<typeof StorySidebar> = {
   },
 };
 
-export const isLoggedInTrue: StoryObj<typeof StorySidebar> = {
+export const isAuthenticatedTrue: StoryObj<typeof StorySidebar> = {
   args: {
     username: 'João da Silva Santos',
-    isLoggedIn: true,
+    isAuthenticated: true,
     links: [
       { to: '/simulados', label: 'Simulados' },
       { to: '/questoes', label: 'Questões' },

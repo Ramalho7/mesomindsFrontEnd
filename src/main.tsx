@@ -46,15 +46,17 @@ function InnerApp() {
 }
 
 // Render the app
-const rootElement = document.getElementById("app");
-if (rootElement && !rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(
-    <AuthProvider>
-      <ToastContainer position="top-right" autoClose={3000} />
-      <InnerApp />
-    </AuthProvider>,
-  );
+if (typeof document !== "undefined") {
+  const rootElement = document.getElementById("app");
+  if (rootElement && !rootElement.innerHTML) {
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(
+      <AuthProvider>
+        <ToastContainer position="top-right" autoClose={3000} />
+        <InnerApp />
+      </AuthProvider>
+    );
+  }
 }
 
 // If you want to start measuring performance in your app, pass a function
