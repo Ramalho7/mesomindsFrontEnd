@@ -11,6 +11,7 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  base: "/mesominds",
   plugins: [
     TanStackRouterVite({
       autoCodeSplitting: true,
