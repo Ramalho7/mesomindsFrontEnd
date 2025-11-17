@@ -4,14 +4,8 @@ import viteReact from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import { resolve } from 'node:path';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
-
-const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  base: "/mesominds",
   plugins: [
     TanStackRouterVite({
       autoCodeSplitting: true,
@@ -25,30 +19,8 @@ export default defineConfig({
     deps: {
       inline: ['crypto-browserify'],
     },
-    projects: [
-      {
-        extends: true,
-        plugins: [
-          storybookTest({
-            configDir: path.join(dirname, '.storybook'),
-          }),
-        ],
-        test: {
-          name: 'storybook',
-          browser: {
-            enabled: true,
-            headless: true,
-            provider: 'playwright',
-            instances: [
-              {
-                browser: 'chromium',
-              },
-            ],
-          },
-          setupFiles: ['.storybook/vitest.setup.ts'],
-        },
-      },
-    ],
+    include: ['src/__tests__/**/*.test.ts', 'src/__tests__/**/*.test.tsx'],
+    exclude: ['node_modules', 'dist', 'src/**/*.stories.@(js|jsx|ts|tsx)'],
   },
   resolve: {
     alias: {

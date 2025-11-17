@@ -86,46 +86,74 @@ AsLink.args = {
 };
 
 export const AllSizes: StoryFn = () => (
-  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-    <Button variant="default" size="default">
+  <div data-testid="button-container" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+    <Button variant="default" size="default" data-testid="btn-default">
       Default
     </Button>
-    <Button variant="default" size="sm">
+    <Button variant="default" size="sm" data-testid="btn-small">
       Pequeno
     </Button>
-    <Button variant="default" size="md">
+    <Button variant="default" size="md" data-testid="btn-medium">
       Médio
     </Button>
-    <Button variant="default" size="lg">
+    <Button variant="default" size="lg" data-testid="btn-large">
       Grande
     </Button>
   </div>
 );
 
 export const AllVariants: StoryFn = () => (
-  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-    <Button variant="default" size="default">
+  <div data-testid="button-variants" style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+    <Button variant="default" size="default" data-testid="btn-default-variant">
       Default
     </Button>
-    <Button variant="action" size="default">
+    <Button variant="action" size="default" data-testid="btn-action-variant">
       Action
     </Button>
-    <Button variant="destructive" size="default">
+    <Button variant="destructive" size="default" data-testid="btn-destructive">
       Destructive
     </Button>
   </div>
 );
 
-export const InteractiveStates: StoryFn = () => (
-  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
-    <Button variant="default" size="default">
-      Default (hover me)
-    </Button>
-    <Button variant="action" size="default">
-      Action (hover me)
-    </Button>
-    <Button variant="default" size="default" disabled>
-      Disabled
+export const ButtonWithClick: StoryFn = () => {
+  const [clicked, setClicked] = React.useState(false);
+
+  return (
+    <div>
+      <Button 
+        data-testid="click-button"
+        onClick={() => setClicked(true)}
+      >
+        Clique em mim
+      </Button>
+      {clicked && <p data-testid="click-message">Botão foi clicado!</p>}
+    </div>
+  );
+};
+
+export const DisabledButton: StoryFn = () => (
+  <div>
+    <Button 
+      data-testid="disabled-button"
+      disabled
+    >
+      Botão Desabilitado
     </Button>
   </div>
 );
+
+export const ButtonCounter: StoryFn = () => {
+  const [count, setCount] = React.useState(0);
+
+  return (
+    <div>
+      <Button 
+        data-testid="counter-button"
+        onClick={() => setCount(count + 1)}
+      >
+        Cliques: {count}
+      </Button>
+    </div>
+  );
+};
