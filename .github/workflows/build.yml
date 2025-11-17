@@ -26,17 +26,5 @@ jobs:
       - name: Run build
         run: npm run build
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: production-build
-          path: dist
-
       - name: Run build storybook
         run: npm run build-storybook
-      
-      - name: Upload storybook artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: storybook-static
-          path: storybook-static
