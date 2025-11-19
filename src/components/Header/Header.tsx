@@ -13,8 +13,8 @@ export default function Header() {
     <header className="w-full bg-white border-b border-accent h-[100px]">
       <div className="mx-auto max-w-[1140px] px-4 sm:px-6 lg:px-8 h-full">
         <div className="flex items-center justify-between h-full">
-          <SidebarTrigger className="sm:hidden" />
-          <Link to={isDashboard ? '/dashboard' : '/'}>
+          <SidebarTrigger data-testid="sidebar-trigger" className="sm:hidden" />
+          <Link to={isDashboard ? '/dashboard' : '/'} aria-label="Ir para a página inicial">
             <div className="logoBrand w-[80px] h-[80px] rounded-full bg-gray-800"></div>
           </Link>
 

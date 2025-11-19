@@ -15,17 +15,23 @@ export function UserDropdown() {
 
   const handleLogout = () => {
     logout()
-    navigate({ to: '/login', search: { redirect: '/' } }) 
+    navigate({ to: '/login', search: { redirect: '/' } })
   }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <FaUserCircle className="w-[3.75rem] h-[3.75rem] cursor-pointer text-gray-700 hover:text-gray-900" />
+        <button
+          type="button"
+          className="p-0 bg-transparent border-none"
+          aria-label="Abrir menu do usuário"
+        >
+          <FaUserCircle className="w-[3.75rem] h-[3.75rem] cursor-pointer text-gray-700 hover:text-gray-900" />
+        </button>
       </DropdownMenuTrigger>
-
       <DropdownMenuContent
         className="w-[19.75rem] border-2 border-accent mt-2"
         align="end"
+        aria-label="Links do menu do usuário"
       >
         <DropdownMenuItem asChild>
           <Link to="/perfil" className="!text-lg w-full h-full flex items-center">

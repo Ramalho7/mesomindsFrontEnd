@@ -7,7 +7,6 @@ import {
     SidebarHeader,
     SidebarMenu,
     SidebarMenuItem,
-    SidebarMenuButton,
     SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { useNavigationLinks } from "@/hooks/useNavigationLinks"
@@ -18,58 +17,48 @@ export function AppSidebar() {
     const { isAuthenticated } = useAuth();
 
     return (
-        <Sidebar 
-            collapsible="offcanvas"
-            className="lg:hidden"
-        >
-            <SidebarHeader>
+        <nav aria-label="Abrir menu lateral" className="lg:hidden">
+            <Sidebar collapsible="offcanvas" data-testid="app-sidebar">
+                <SidebarHeader>
                     <div className="flex flex-row items-center mt-8 gap-4">
                         <div className="w-20 h-20 rounded-full bg-black"></div>
-                        <div className="text-center">Username</div>
+                        <div className="text-center">Nome usuário</div>
                     </div>
                 </SidebarHeader>
-                <SidebarContent>
+                
+                <SidebarContent data-testid="sidebar-content">
                     <SidebarSeparator />
                     <SidebarGroup>
-                        <SidebarMenu className="space-y-4">
-                            {links.map((link) => (
-                                <SidebarMenuItem key={link.to}>
-                                    <SidebarMenuButton asChild className="text-xl">
-                                        <Link to={link.to}>
+                        <SidebarMenu>
+                            {links && links.length > 0 ? (
+                                links.map((link) => (
+                                    <SidebarMenuItem key={link.to}>
+                                        <Link to={link.to} className="text-sm block px-4 py-2 hover:bg-gray-100">
                                             {link.label}
                                         </Link>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
+                                    </SidebarMenuItem>
+                                ))
+                            ) : (
+                                <div className="p-4">Nenhum link disponível</div>
+                            )}
                         </SidebarMenu>
                     </SidebarGroup>
                     <SidebarSeparator />
-                    <SidebarGroup>
-                        <SidebarMenu className="space-y-4">
-                            <SidebarMenuItem>
-                                <SidebarMenuButton asChild className="text-xl">
-                                    {isAuthenticated &&
-                                        <a href="#">Perfil</a>
-                                    }
-                                </SidebarMenuButton>
-                                <SidebarMenuButton asChild className="text-xl">
-                                    <a href="#">Configurações</a>
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        </SidebarMenu>
-                    </SidebarGroup>
                 </SidebarContent>
-                <SidebarFooter>
+
+                <SidebarFooter className="border-t">
                     <SidebarMenu>
                         <SidebarMenuItem>
-                            <SidebarMenuButton className="text-red-500 bg-red-200 w-full text-left">
-                                <button>
-                                    Sair
-                                </button>
-                            </SidebarMenuButton>
+                            <button 
+                                className="text-red-500 bg-red-100 w-full text-left px-4 py-2 rounded hover:bg-red-200"
+                                data-testid="sidebar-logout-button"
+                            >
+                                Sair
+                            </button>
                         </SidebarMenuItem>
                     </SidebarMenu>
                 </SidebarFooter>
-        </Sidebar>
+            </Sidebar>
+        </nav>
     )
 }

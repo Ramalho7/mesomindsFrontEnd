@@ -1,7 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState, createContext } from "react";
+
+export type NavigationLink = { to: string; label: string };
+
+export const NavigationLinksContext = createContext<{
+  links: NavigationLink[];
+  isDashboard: boolean;
+} | null>(null);
 
 export function useNavigationLinks() {
+  const contextValue = useContext(NavigationLinksContext);
   const [isDashboard, setIsDashboard] = useState(false);
+
+  if (contextValue) {
+    return contextValue;
+  }
 
   useEffect(() => {
     const hostname = window.location.hostname;
