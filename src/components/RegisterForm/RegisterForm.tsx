@@ -33,8 +33,8 @@ export default function RegisterForm({
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className="max-w-md w-full space-y-4 p-6 border rounded-lg items-center justify-center"
             >
-                <h1 className="text-2xl font-black text-center">Crie sua conta</h1>
-                <h2 className="text-lg font-medium text-center">
+                <h1 className="text-2xl font-black text-center text-secondary">Crie sua conta</h1>
+                <h2 className="text-md font-medium text-center">
                     Destrave na matemática agora mesmo
                 </h2>
 

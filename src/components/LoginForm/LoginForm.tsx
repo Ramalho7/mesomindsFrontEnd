@@ -33,8 +33,8 @@ export default function LoginForm({
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className="max-w-md w-full space-y-4 p-6 border rounded-lg"
             >
-                <h1 className="text-2xl font-black text-center">Bem-vindo de volta!</h1>
-                <h2 className="text-lg font-medium text-center">
+                <h1 className="text-2xl font-black text-center text-secondary">Bem-vindo de volta!</h1>
+                <h2 className="text-md font-medium text-center">
                     Entre com os seus dados de usuário
                 </h2>
 
@@ -84,7 +84,7 @@ export default function LoginForm({
 
                 {showRegisterLink &&
                     <Link to={"/register"} search={{ redirect: "/perfil" }}>
-                        <p>Ainda não possui conta? Crie agora.</p>
+                        <p>Ainda não possui conta? <span className="underline decoration-accent">Crie agora.</span></p>
                     </Link>
                 }
             </form>
