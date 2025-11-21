@@ -16,8 +16,6 @@ interface Props {
     showRegisterLink?: boolean,
 }
 
- 
-
 export default function RegisterForm({
     register,
     handleSubmit,
