@@ -19,6 +19,8 @@ import { Route as PublicSobreRouteImport } from './routes/_public/sobre'
 import { Route as PublicFlashcardsRouteImport } from './routes/_public/flashcards'
 import { Route as PublicConfiguracoesRouteImport } from './routes/_public/configuracoes'
 import { Route as PublicAbordagemRouteImport } from './routes/_public/abordagem'
+import { Route as DashboardProfileRouteImport } from './routes/_dashboard/profile'
+import { Route as DashboardLoginDashboardRouteImport } from './routes/_dashboard/loginDashboard'
 import { Route as DashboardDashboardRouteImport } from './routes/_dashboard/dashboard'
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as PublicSimuladosIndexRouteImport } from './routes/_public/simulados/index'
@@ -87,6 +89,16 @@ const PublicAbordagemRoute = PublicAbordagemRouteImport.update({
   id: '/abordagem',
   path: '/abordagem',
   getParentRoute: () => PublicRoute,
+} as any)
+const DashboardProfileRoute = DashboardProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardLoginDashboardRoute = DashboardLoginDashboardRouteImport.update({
+  id: '/loginDashboard',
+  path: '/loginDashboard',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardDashboardRoute = DashboardDashboardRouteImport.update({
   id: '/dashboard',
@@ -210,6 +222,8 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/dashboard': typeof DashboardDashboardRoute
+  '/loginDashboard': typeof DashboardLoginDashboardRoute
+  '/profile': typeof DashboardProfileRoute
   '/abordagem': typeof PublicAbordagemRoute
   '/configuracoes': typeof PublicConfiguracoesRoute
   '/flashcards': typeof PublicFlashcardsRoute
@@ -240,6 +254,8 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/dashboard': typeof DashboardDashboardRoute
+  '/loginDashboard': typeof DashboardLoginDashboardRoute
+  '/profile': typeof DashboardProfileRoute
   '/abordagem': typeof PublicAbordagemRoute
   '/configuracoes': typeof PublicConfiguracoesRoute
   '/flashcards': typeof PublicFlashcardsRoute
@@ -274,6 +290,8 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/_dashboard/dashboard': typeof DashboardDashboardRoute
+  '/_dashboard/loginDashboard': typeof DashboardLoginDashboardRoute
+  '/_dashboard/profile': typeof DashboardProfileRoute
   '/_public/abordagem': typeof PublicAbordagemRoute
   '/_public/configuracoes': typeof PublicConfiguracoesRoute
   '/_public/flashcards': typeof PublicFlashcardsRoute
@@ -306,6 +324,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/perfil'
     | '/dashboard'
+    | '/loginDashboard'
+    | '/profile'
     | '/abordagem'
     | '/configuracoes'
     | '/flashcards'
@@ -336,6 +356,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/perfil'
     | '/dashboard'
+    | '/loginDashboard'
+    | '/profile'
     | '/abordagem'
     | '/configuracoes'
     | '/flashcards'
@@ -369,6 +391,8 @@ export interface FileRouteTypes {
     | '/register'
     | '/_authenticated/perfil'
     | '/_dashboard/dashboard'
+    | '/_dashboard/loginDashboard'
+    | '/_dashboard/profile'
     | '/_public/abordagem'
     | '/_public/configuracoes'
     | '/_public/flashcards'
@@ -474,6 +498,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/abordagem'
       preLoaderRoute: typeof PublicAbordagemRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/_dashboard/profile': {
+      id: '/_dashboard/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof DashboardProfileRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/_dashboard/loginDashboard': {
+      id: '/_dashboard/loginDashboard'
+      path: '/loginDashboard'
+      fullPath: '/loginDashboard'
+      preLoaderRoute: typeof DashboardLoginDashboardRouteImport
+      parentRoute: typeof DashboardRoute
     }
     '/_dashboard/dashboard': {
       id: '/_dashboard/dashboard'
@@ -639,6 +677,8 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 
 interface DashboardRouteChildren {
   DashboardDashboardRoute: typeof DashboardDashboardRoute
+  DashboardLoginDashboardRoute: typeof DashboardLoginDashboardRoute
+  DashboardProfileRoute: typeof DashboardProfileRoute
   DashboardContentContentIdRoute: typeof DashboardContentContentIdRoute
   DashboardContentCreatecontentRoute: typeof DashboardContentCreatecontentRoute
   DashboardQuestionQuestionRoute: typeof DashboardQuestionQuestionRoute
@@ -655,6 +695,8 @@ interface DashboardRouteChildren {
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardDashboardRoute: DashboardDashboardRoute,
+  DashboardLoginDashboardRoute: DashboardLoginDashboardRoute,
+  DashboardProfileRoute: DashboardProfileRoute,
   DashboardContentContentIdRoute: DashboardContentContentIdRoute,
   DashboardContentCreatecontentRoute: DashboardContentCreatecontentRoute,
   DashboardQuestionQuestionRoute: DashboardQuestionQuestionRoute,

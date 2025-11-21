@@ -15,7 +15,13 @@ export function UserDropdown() {
 
   const handleLogout = () => {
     logout()
-    navigate({ to: '/login', search: { redirect: '/' } })
+    const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+    const isDashboard = hostname.startsWith("dashboard.") || hostname === "dashboard.localhost";
+    if (isDashboard) {
+      navigate({ to: '/loginDashboard', search: { redirect: '/' } })
+    } else {
+      navigate({ to: '/login', search: { redirect: '/' } })
+    }
   }
   return (
     <DropdownMenu>

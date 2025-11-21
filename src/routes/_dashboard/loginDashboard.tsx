@@ -1,20 +1,20 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import LoginForm from "@/components/LoginForm/LoginForm";
-import { useLoginForm } from "@/hooks/useLoginForm";
+import LoginForm from '@/components/LoginForm/LoginForm';
+import { useLoginForm } from '@/hooks/useLoginForm';
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
-export const Route = createFileRoute("/login")({
-  validateSearch: (search) => ({
-    redirect: (search.redirect as string) || "/perfil",
+export const Route = createFileRoute('/_dashboard/loginDashboard')({
+  validateSearch: () => ({
+    redirect: '/profile',
   }),
-  beforeLoad: ({ context, search }) => {
+  beforeLoad: ({ context }) => {
     if (context.auth.isAuthenticated) {
-      throw redirect({ to: (search.redirect as string) || "/perfil" });
+      throw redirect({ to: '/profile' });
     }
   },
-  component: LoginComponent,
-});
+  component: RouteComponent,
+})
 
-function LoginComponent() {
+function RouteComponent() {
   const { auth } = Route.useRouteContext();
   const navigate = Route.useNavigate();
   const search = Route.useSearch()
@@ -26,7 +26,7 @@ function LoginComponent() {
     isLoading,
     onSubmit,
     onError,
-  } = useLoginForm(auth as any, navigate as any, search.redirect ?? '/perfil');
+  } = useLoginForm(auth as any, navigate as any, search.redirect ?? '/profile');
 
   return (
     <div className="min-h-screen flex items-center justify-center">

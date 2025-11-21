@@ -9,6 +9,7 @@ import { routeTree } from "./routeTree.gen";
 import "./styles.css";
 import reportWebVitals from "./reportWebVitals.ts";
 import { AuthProvider, useAuth } from "./auth.tsx";
+import { Spinner } from "./components/ui/spinner.tsx";
 
 // Create a new router instance
 const router = createRouter({
@@ -37,7 +38,7 @@ function InnerApp() {
   if (auth.isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        Verificando autenticação...
+        <Spinner/>
       </div>
     );
   }

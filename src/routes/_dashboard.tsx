@@ -1,35 +1,31 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_dashboard")({
-  beforeLoad: async ({ context }) => {
+  beforeLoad: async ({ context, location }) => {
     const { auth } = context;
 
     if (!auth.isAuthenticated) {
+
+      if(location.pathname === "/loginDashboard"){
+        return
+      }
+
       throw redirect({
-        to: "/login",
+        to: "/loginDashboard",
         search: {
-          redirect: location.href,
+          redirect: location.pathname,
         },
       });
     }
 
     const user = auth.user;
 
-    if (!auth.isAuthenticated) {
-      throw redirect({
-        to: "/login",
-        search: {
-          redirect: location.href,
-        },
-      });
-    }
-
     const allowedTypes = ["ADM", "Moderador", "Operador"] as const;
     if (!user?.tipo || !allowedTypes.some((type) => user.tipo === type)) {
       throw redirect({ to: "/" });
     }
 
-    const hostname = window.location.hostname;
+  const hostname = window.location.hostname;
     if (
       !hostname.startsWith("dashboard.") &&
       hostname !== "dashboard.localhost"
