@@ -3,12 +3,12 @@ import { useLoginForm } from '@/hooks/useLoginForm';
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_dashboard/loginDashboard')({
-  validateSearch: () => ({
-    redirect: '/profile',
+  validateSearch: (search) => ({
+    redirect: (search.redirect as string) || '/dashboard',
   }),
   beforeLoad: ({ context }) => {
     if (context.auth.isAuthenticated) {
-      throw redirect({ to: '/profile' });
+      throw redirect({ to: '/dashboard' });
     }
   },
   component: RouteComponent,
@@ -37,6 +37,7 @@ function RouteComponent() {
         isLoading={isLoading}
         onSubmit={onSubmit}
         onError={onError}
+        showRegisterLink={false}
       />
     </div>
   );

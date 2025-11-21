@@ -15,6 +15,7 @@ interface Props {
     isLoading: boolean;
     onSubmit: (data: PayloadLoginShemaType) => void;
     onError?: (errors: FieldErrors<PayloadLoginShemaType>) => void;
+    showRegisterLink?: boolean,
 }
 
 export default function LoginForm({
@@ -24,6 +25,7 @@ export default function LoginForm({
     isLoading,
     onSubmit,
     onError,
+    showRegisterLink = true
 }: Props) {
     return (
         <div className="min-h-screen flex items-center justify-center">
@@ -78,10 +80,13 @@ export default function LoginForm({
                 >
                     {isLoading ? "Entrando..." : "Entrar"}
                 </Button>
-                    
-                <Link to={"/register"} search={{ redirect: "/perfil" }}>
-                    <p>Ainda não possui conta? Crie agora.</p>
-                </Link>
+
+
+                {showRegisterLink &&
+                    <Link to={"/register"} search={{ redirect: "/perfil" }}>
+                        <p>Ainda não possui conta? Crie agora.</p>
+                    </Link>
+                }
             </form>
         </div>
     );
