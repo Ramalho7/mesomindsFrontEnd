@@ -56,11 +56,11 @@ const Template: StoryFn<typeof RegisterForm> = () => {
 
     const { register, handleSubmit, control, formState } = form;
 
-    const onSubmit = (data: PayloadRegisterSchemaType) => {
+    const onSubmit = () => {
         // console.log("submitted:", data);
     };
 
-    const onError = (errors: any) => {
+    const onError = () => {
         // console.log("errors:", errors);
     };
 

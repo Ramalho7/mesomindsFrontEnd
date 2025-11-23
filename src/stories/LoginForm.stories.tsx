@@ -52,11 +52,11 @@ const Template: StoryFn<typeof LoginForm> = (args) => {
 
     const { register, handleSubmit, formState } = form;
 
-    const onSubmit = (data: { email: string; password: string }) => {
+    const onSubmit = () => {
         // console.log("submitted:", data);
     };
 
-    const onError = (errors: any) => {
+    const onError = () => {
         // console.log("errors:", errors);
     };
 
