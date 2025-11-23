@@ -29,6 +29,7 @@ export default function RegisterForm({
         <div className="min-h-screen flex items-center justify-center flex flex-col gap-[8px]  mt-10 mb-10">
             <form
                 onSubmit={handleSubmit(onSubmit, onError)}
+                noValidate
                 className="max-w-md w-full space-y-4 p-6 border rounded-lg items-center justify-center"
             >
                 <h1 className="text-2xl font-black text-center text-secondary">Crie sua conta</h1>
@@ -112,7 +113,7 @@ export default function RegisterForm({
                             name="tipo"
                             render={({ field }) => (
                                 <Select onValueChange={field.onChange} value={field.value}>
-                                    <SelectTrigger className="w-full">
+                                    <SelectTrigger className="w-full" id="tipo" aria-labelledby="tipo-label">
                                         <SelectValue placeholder="Selecione o tipo" />
                                     </SelectTrigger>
                                     <SelectContent>

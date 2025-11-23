@@ -6,7 +6,7 @@ export const Route = createFileRoute("/_dashboard")({
 
     if (!auth.isAuthenticated) {
 
-      if(location.pathname === "/loginDashboard"){
+      if (location.pathname === "/loginDashboard") {
         return
       }
 
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/_dashboard")({
       throw redirect({ to: "/" });
     }
 
-  const hostname = window.location.hostname;
+    const hostname = window.location.hostname;
     if (
       !hostname.startsWith("dashboard.") &&
       hostname !== "dashboard.localhost"
@@ -40,7 +40,7 @@ function DashboardLayout() {
   return (
     <div className="flex min-h-screen">
       <div className="flex-1">
-        <Outlet />
+          <Outlet />
       </div>
     </div>
   );

@@ -1,12 +1,12 @@
-import RegisterForm from "@/components/RegisterForm/RegisterForm";
 import type { AuthState } from "@/auth";
 import { MockRouterProvider } from "./mocks/MockRouterProvider";
 import type { Meta, StoryFn } from "@storybook/react";
 import { MockAuthProvider } from "./mocks/MockAuthProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useForm } from "react-hook-form";
-import { PayloadRegisterSchema, type PayloadRegisterSchemaType } from "@/service/schemas/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import LoginForm from "@/components/LoginForm/LoginForm";
+import { PayloadLoginShema } from "@/service/schemas/loginSchema";
 
 const baseAuthValue: AuthState = {
     isAuthenticated: true,
@@ -30,33 +30,29 @@ const withProviders =
         </MockRouterProvider>
     );
 
-const meta: Meta<typeof RegisterForm> = {
-    title: "Components/RegisterForm",
-    component: RegisterForm,
+const meta: Meta<typeof LoginForm> = {
+    title: "Components/LoginForm",
+    component: LoginForm,
     parameters: {
         layout: "fullscreen",
-        
     },
     decorators: [withProviders(baseAuthValue)],
 };
 
 export default meta;
 
-const Template: StoryFn<typeof RegisterForm> = () => {
-    const form = useForm<PayloadRegisterSchemaType>({
-        resolver: zodResolver(PayloadRegisterSchema),
+const Template: StoryFn<typeof LoginForm> = (args) => {
+    const form = useForm<{ email: string; password: string }>({
+        resolver: zodResolver(PayloadLoginShema),
         defaultValues: {
-            nome: "",
             email: "",
             password: "",
-            password_confirmation: "",
-            tipo: "Aluno",
         },
     });
 
-    const { register, handleSubmit, control, formState } = form;
+    const { register, handleSubmit, formState } = form;
 
-    const onSubmit = (data: PayloadRegisterSchemaType) => {
+    const onSubmit = (data: { email: string; password: string }) => {
         // console.log("submitted:", data);
     };
 
@@ -65,17 +61,26 @@ const Template: StoryFn<typeof RegisterForm> = () => {
     };
 
     return (
-        <RegisterForm
+        <LoginForm
             register={register}
             handleSubmit={handleSubmit}
-            control={control}
-            errors={formState.errors}
+            errors={formState.errors} 
             isLoading={false}
             onSubmit={onSubmit}
             onError={onError}
+            showRegisterLink={args.showRegisterLink} 
         />
     );
 };
 
 export const Default = Template.bind({});
 Default.storyName = "Default";
+Default.args = {
+    showRegisterLink: true, 
+};
+
+export const AdminSection = Template.bind({});
+AdminSection.storyName = "AdminSection";
+AdminSection.args = {
+    showRegisterLink: false,
+};
