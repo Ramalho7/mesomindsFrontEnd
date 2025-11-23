@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_public')({
 function PublicLayout() {
   useEffect(() => {
     const hostname = window.location.hostname
-    
+
     if (hostname.startsWith('dashboard.')) {
       const mainDomain = hostname.replace('dashboard.', '')
       const currentPath = window.location.pathname
@@ -19,5 +19,7 @@ function PublicLayout() {
     }
   }, [])
 
-  return <Outlet />
+  return (
+      <Outlet />
+  )
 }

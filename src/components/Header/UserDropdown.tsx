@@ -13,9 +13,19 @@ export function UserDropdown() {
   const { logout } = useAuth()
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    logout()
-    navigate({ to: '/login', search: { redirect: '/' } })
+  const handleLogout = async () => {
+    try {
+      await logout()
+    } catch (e) {
+      console.error("Erro ao deslogar:", e);
+    }
+    const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+    const isDashboard = hostname.startsWith("dashboard.") || hostname === "dashboard.localhost";
+    if (isDashboard) {
+      navigate({ to: '/loginDashboard', search: { redirect: '/dashboard' }, replace: true })
+    } else {
+      navigate({ to: '/login', search: { redirect: '/' }, replace: true })
+    }
   }
   return (
     <DropdownMenu>

@@ -8,10 +8,10 @@ import { MockRouterProvider } from "./mocks/MockRouterProvider";
 const baseAuthValue: AuthState = {
   isAuthenticated: true,
   user: { nome: "Usuário Teste", email: "teste@email.com" } as any,
-  login: async () => {},
-  logout: () => {},
+  login: async () => { },
+  logout: () => { },
   isLoading: false,
-  register: async () => {},
+  register: async () => { },
 };
 
 const withProviders =
