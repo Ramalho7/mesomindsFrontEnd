@@ -13,7 +13,8 @@
     "cypress:run": "cypress run",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "start": "node index.mjs"
+    "start": "node index.mjs",
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
