@@ -1,20 +1,27 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import type { Meta, StoryObj } from "@storybook/react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 
 const meta: Meta<typeof Card> = {
-  title: 'Components/Card',
+  title: "Components/Card",
   component: Card,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
   argTypes: {
     variant: {
-      control: { type: 'select' },
-      options: ['default', 'feature'],
+      control: { type: "select" },
+      options: ["default", "feature"],
     },
     size: {
-      control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
+      control: { type: "select" },
+      options: ["sm", "md", "lg"],
     },
   },
 };
@@ -23,9 +30,9 @@ export default meta;
 
 export const Default: StoryObj<typeof Card> = {
   args: {
-    variant: 'default',
-    size: 'md',
-    className: 'w-[250px] h-[250px]',
+    variant: "default",
+    size: "md",
+    className: "w-[250px] h-[250px]",
     children: (
       <>
         <CardHeader>
@@ -45,9 +52,9 @@ export const Default: StoryObj<typeof Card> = {
 
 export const Feature: StoryObj<typeof Card> = {
   args: {
-    variant: 'feature',
-    size: 'lg',
-    className: 'w-[250px] h-auto',
+    variant: "feature",
+    size: "lg",
+    className: "w-[250px] h-auto",
     children: (
       <>
         <CardHeader>
@@ -55,7 +62,10 @@ export const Feature: StoryObj<typeof Card> = {
           <CardDescription>This is a feature card description.</CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Feature card content goes here. It highlights the unique features of this card.</p>
+          <p>
+            Feature card content goes here. It highlights the unique features of
+            this card.
+          </p>
         </CardContent>
         <CardFooter>
           <p>Feature card footer with additional actions.</p>
@@ -67,9 +77,9 @@ export const Feature: StoryObj<typeof Card> = {
 
 export const Small: StoryObj<typeof Card> = {
   args: {
-    variant: 'default',
-    size: 'sm',
-    className: 'w-[250px] h-[250px]',
+    variant: "default",
+    size: "sm",
+    className: "w-[250px] h-[250px]",
     children: (
       <>
         <CardHeader>
@@ -86,3 +96,4 @@ export const Small: StoryObj<typeof Card> = {
     ),
   },
 };
+
