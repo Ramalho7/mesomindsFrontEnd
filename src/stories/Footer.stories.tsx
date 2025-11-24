@@ -28,7 +28,7 @@ const meta: Meta<typeof Footer> = {
   component: Footer,
   decorators: [withProviders(baseAuthValue)],
   parameters: {
-    layout: 'fullscreen',
+    layout: 'centered',
   },
 };
 

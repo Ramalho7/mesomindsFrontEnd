@@ -34,7 +34,7 @@ const meta: Meta<typeof RegisterForm> = {
     title: "Components/RegisterForm",
     component: RegisterForm,
     parameters: {
-        layout: "fullscreen",
+        layout: 'centered',
         
     },
     decorators: [withProviders(baseAuthValue)],

@@ -34,7 +34,8 @@ export default {
       description: {
         component: 'Componente de botão do shadcn/ui personalizado com variantes customizadas'
       }
-    }
+    },
+    layout: 'centered',
   }
 } as Meta<typeof Button>;
 

@@ -34,7 +34,7 @@ const meta: Meta<typeof LoginForm> = {
     title: "Components/LoginForm",
     component: LoginForm,
     parameters: {
-        layout: "fullscreen",
+        layout: 'centered',
     },
     decorators: [withProviders(baseAuthValue)],
 };
