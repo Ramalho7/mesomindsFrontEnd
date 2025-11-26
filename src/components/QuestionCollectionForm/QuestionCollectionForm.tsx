@@ -67,7 +67,6 @@ export default function QuestionCollectionForm({
 
     const isSubmitting = isPending || isUpdatePending;
 
-    // Sincroniza o estado de questions com o formulário
     useEffect(() => {
         setValue('questions', questions);
     }, [questions, setValue]);
@@ -97,7 +96,6 @@ export default function QuestionCollectionForm({
         console.log("Dados do formulário:", data);
 
         if (isEditMode && initialData?.id) {
-            // Prepara os dados para update com IDs das questões existentes
             const updateData: UpdateQuestionCollectionType = {
                 title: data.title,
                 description: data.description,
@@ -106,21 +104,20 @@ export default function QuestionCollectionForm({
                 due_date: data.due_date,
                 status: data.status,
                 questions: questions.map((q, index) => ({
-                    id: initialData.questions?.[index]?.id, // ID se existir
+                    id: initialData.questions?.[index]?.id,  
                     title: q.title,
                     content: q.content,
                     correction: q.correction,
                     type: q.type,
                     status: q.status,
                     alternatives: q.alternatives?.map((alt, altIndex) => ({
-                        id: initialData.questions?.[index]?.alternatives?.[altIndex]?.id, // ID se existir
+                        id: initialData.questions?.[index]?.alternatives?.[altIndex]?.id, 
                         content: alt.content,
                         correct: alt.correct ?? false,
                     })),
                 })),
             };
 
-            // Valida com Zod antes de enviar
             const validationResult = UpdateQuestionCollectionSchema.safeParse(updateData);
             
             if (!validationResult.success) {
@@ -144,7 +141,6 @@ export default function QuestionCollectionForm({
                 }
             );
         } else {
-            // Valida com Zod antes de enviar
             const validationResult = PostQuestionCollectionSchema.safeParse(data);
             
             if (!validationResult.success) {
@@ -441,7 +437,6 @@ function QuestionFormModal({ initialData, onSave, onCancel }: QuestionFormModalP
             return;
         }
 
-        // Valida com Zod
         const validationResult = PostQuestionSchema.safeParse(data);
         
         if (!validationResult.success) {
