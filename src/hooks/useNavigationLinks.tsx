@@ -1,3 +1,4 @@
+import { expectedHost } from "@/routes/_dashboard";
 import { useContext, useEffect, useState, createContext } from "react";
 
 export type NavigationLink = { to: string; label: string };
@@ -18,7 +19,7 @@ export function useNavigationLinks() {
   useEffect(() => {
     const hostname = window.location.hostname;
     setIsDashboard(
-      hostname.startsWith("dashboard.") || hostname === "dashboard.localhost",
+      hostname.startsWith("dashboard.") || hostname === expectedHost,
     );
   }, []);
 

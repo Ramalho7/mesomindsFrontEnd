@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { expectedHost } from "../_dashboard";
 
 export const Route = createFileRoute("/_authenticated/perfil")({
   component: RouteComponent,
@@ -45,7 +46,7 @@ function RouteComponent() {
               onSelect={() => {
                   logout();
                   const hostname = typeof window !== "undefined" ? window.location.hostname : "";
-                  const isDashboard = hostname.startsWith("dashboard.") || hostname === "dashboard.localhost";
+                  const isDashboard = hostname.startsWith("dashboard.") || hostname === expectedHost;
                   if (isDashboard) {
                     navigate({ to: "/loginDashboard", search: { redirect: "/" } });
                   } else {
