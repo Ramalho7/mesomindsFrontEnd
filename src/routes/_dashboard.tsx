@@ -1,8 +1,5 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
-export const expectedHost =
-  import.meta.env.VITE_DASHBOARD_HOST || "dashboard.localhost";
-
 export const Route = createFileRoute("/_dashboard")({
   beforeLoad: async ({ context, location }) => {
     const { auth } = context;
@@ -30,7 +27,7 @@ export const Route = createFileRoute("/_dashboard")({
     }
 
     const hostname = window.location.hostname;
-    if (!hostname.startsWith("dashboard.") && hostname !== expectedHost) {
+    if (!hostname.startsWith("dashboard.") && hostname !== "dashboard.localhost") {
       throw redirect({ to: "/" });
     }
   },

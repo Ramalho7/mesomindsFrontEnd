@@ -1,4 +1,3 @@
-import { expectedHost } from "@/routes/_dashboard";
 import { useContext, useEffect, useState, createContext } from "react";
 
 export type NavigationLink = { to: string; label: string };

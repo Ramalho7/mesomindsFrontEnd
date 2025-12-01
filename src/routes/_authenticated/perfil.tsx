@@ -46,7 +46,7 @@ function RouteComponent() {
               onSelect={() => {
                   logout();
                   const hostname = typeof window !== "undefined" ? window.location.hostname : "";
-                  const isDashboard = hostname.startsWith("dashboard.") || hostname === expectedHost;
+                  const isDashboard = hostname.startsWith("dashboard.") || hostname === "dashboard.localhost";
                   if (isDashboard) {
                     navigate({ to: "/loginDashboard", search: { redirect: "/" } });
                   } else {

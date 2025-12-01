@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { Settings } from 'lucide-react';
-import { expectedHost } from '../_dashboard';
 
 export const Route = createFileRoute('/_dashboard/profile')({
   component: RouteComponent,
@@ -46,7 +45,7 @@ function RouteComponent() {
               onSelect={() => {
                 logout();
                 const hostname = typeof window !== "undefined" ? window.location.hostname : "";
-                const isDashboard = hostname.startsWith("dashboard.") || hostname === expectedHost;
+                const isDashboard = hostname.startsWith("dashboard.") || hostname === "dashboard.localhost";
                 if (isDashboard) {
                   navigate({ to: "/loginDashboard", search: { redirect: "/" } });
                 } else {

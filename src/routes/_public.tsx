@@ -14,9 +14,9 @@ function PublicLayout() {
       const mainDomain = hostname.replace('dashboard.', '')
       const currentPath = window.location.pathname
       window.location.href = `${window.location.protocol}//${mainDomain}:${window.location.port}${currentPath}`
-    } else if (hostname === expectedHost) {
+    } else if (hostname === 'dashboard.localhost') {
       const currentPath = window.location.pathname
-      window.location.href = `${window.location.protocol}//${expectedHost}:${window.location.port}${currentPath}`
+      window.location.href = `${window.location.protocol}//localhost:${window.location.port}${currentPath}`
     }
   }, [])
 
