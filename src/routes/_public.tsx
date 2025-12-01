@@ -1,6 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { useEffect } from 'react'
-import { expectedHost } from './_dashboard'
 
 export const Route = createFileRoute('/_public')({
   component: PublicLayout,

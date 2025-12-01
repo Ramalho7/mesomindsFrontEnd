@@ -18,7 +18,7 @@ export function useNavigationLinks() {
   useEffect(() => {
     const hostname = window.location.hostname;
     setIsDashboard(
-      hostname.startsWith("dashboard.") || hostname === expectedHost,
+      hostname.startsWith("dashboard.") || hostname === 'dashboard.localhost',
     );
   }, []);
 
