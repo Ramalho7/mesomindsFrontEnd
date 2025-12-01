@@ -33,9 +33,11 @@ export default function CardList({
                     {isAdmin && (<p className="text-secondary font-normal"><span className="font-bold">ID:</span> {id}</p>)}
                 </CardTitle>
                 <CardAction className="flex flex-row gap-4">
-                    <Link to={editLink} className="text-accent">
-                        {editContent}
-                    </Link>
+                    {editLink && editContent && (
+                        <Link to={editLink} className="text-accent">
+                            {editContent}
+                        </Link>
+                    )}
                     <CardDialog
                         title={titleCardDialog}
                         description={descriptionCardDialog}
