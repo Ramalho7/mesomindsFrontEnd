@@ -1,7 +1,7 @@
 import { z } from "zod";
 import api from "@/service/axios";
 import type { ContentTypeResponse } from "@/Interface/content/contentType/ContentTypeResponse";
-import { UserSchema } from "@/service/schemas/UserSchema";
+import { UserSchema } from "@/schemas/UserSchema";
 
 export const contentTypeSchema = z.object({
   id: z.number(),

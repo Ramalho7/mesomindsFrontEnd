@@ -1,5 +1,5 @@
 import api from "../axios";
-import { ResponseQuestionResponseSchema, type QuestionResponseType } from "../schemas/questionSchema/ResponseQuestionSchema";
+import { ResponseQuestionResponseSchema, type QuestionResponseType } from "../../schemas/questionSchema/ResponseQuestionSchema";
 
 export async function GetQuestionByIdApi(id: number): Promise<QuestionResponseType> {
     console.log(`Buscando questão com ID: ${id}`);

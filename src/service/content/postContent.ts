@@ -1,5 +1,5 @@
 import api from "@/service/axios";
-import { createContentResponseSchema, createContentSchema, type CreateContentPayload, type CreateContentResponse } from "../schemas/contentSchema/PostContentSchema";
+import { createContentResponseSchema, createContentSchema, type CreateContentPayload, type CreateContentResponse } from "../../schemas/contentSchema/PostContentSchema";
 
 export async function createContentApi(
   payload: CreateContentPayload,

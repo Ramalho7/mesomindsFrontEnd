@@ -5,7 +5,7 @@ import type { Meta, StoryFn } from "@storybook/react";
 import { MockAuthProvider } from "./mocks/MockAuthProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useForm } from "react-hook-form";
-import { PayloadRegisterSchema, type PayloadRegisterSchemaType } from "@/service/schemas/registerSchema";
+import { PayloadRegisterSchema, type PayloadRegisterSchemaType } from "@/schemas/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const baseAuthValue: AuthState = {

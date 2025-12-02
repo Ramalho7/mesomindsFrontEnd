@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateQuestionCollection, type UpdateQuestionCollectionResponse } from "@/service/questionCollection/UpdateQuestionCollection";
-import type { UpdateQuestionCollectionType } from "@/service/schemas/questionCollection/UpdateQuestionCollectionSchema";
+import type { UpdateQuestionCollectionType } from "@/schemas/questionCollection/UpdateQuestionCollectionSchema";
 
 interface UpdateQuestionCollectionParams {
     id: number;

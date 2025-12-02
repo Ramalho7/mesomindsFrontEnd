@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteQuestionCollection } from "@/service/questionCollection/DeleteQuestionCollection";
-import type { DeleteQuestionCollectionResponse } from "@/service/schemas/questionCollection/DeleteQuestionCollectionSchema";
+import type { DeleteQuestionCollectionResponse } from "@/schemas/questionCollection/DeleteQuestionCollectionSchema";
 
 export function useDeleteQuestionCollection() {
     const queryClient = useQueryClient();

@@ -1,6 +1,6 @@
 import api from "@/service/axios";
-import type { UpdateQuestionCollectionType } from "../schemas/questionCollection/UpdateQuestionCollectionSchema";
-import type { QuestionCollectionData } from "../schemas/questionCollection/QuestionCollectionData";
+import type { UpdateQuestionCollectionType } from "../../schemas/questionCollection/UpdateQuestionCollectionSchema";
+import type { QuestionCollectionData } from "../../schemas/questionCollection/QuestionCollectionData";
 
 export interface UpdateQuestionCollectionResponse {
     success: boolean;

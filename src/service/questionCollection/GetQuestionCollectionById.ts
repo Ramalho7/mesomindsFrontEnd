@@ -1,6 +1,6 @@
 import api from "../axios";
 import { ZodError } from "zod";
-import { QuestionCollectionDataSchema, type QuestionCollectionData } from "../schemas/questionCollection/QuestionCollectionData";
+import { QuestionCollectionDataSchema, type QuestionCollectionData } from "../../schemas/questionCollection/QuestionCollectionData";
 
 export interface GetQuestionCollectionByIdResponse {
     success: boolean;

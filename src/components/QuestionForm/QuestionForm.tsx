@@ -1,7 +1,7 @@
 import { useRouter } from "@tanstack/react-router";
 import { useForm, Controller, useFieldArray, type SubmitHandler } from "react-hook-form";
 import { Input } from "../ui/input";
-import { PostQuestionSchema, type PostQuestionSchemaType } from "@/service/schemas/questionSchema/PostQuestionSchema";
+import { PostQuestionSchema, type PostQuestionSchemaType } from "@/schemas/questionSchema/PostQuestionSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
 import { useCreateQuestion } from "@/hooks/question/useCreateQuestion";
@@ -11,7 +11,7 @@ import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import { useGetMaterias } from "@/hooks/materia/useGetMateria";
 import { useEffect } from "react";
-import type { QuestionDataType } from "@/service/schemas/questionSchema/ResponseQuestionSchema";
+import type { QuestionDataType } from "@/schemas/questionSchema/ResponseQuestionSchema";
 
 interface QuestionFormProps {
   initialData?: QuestionDataType;

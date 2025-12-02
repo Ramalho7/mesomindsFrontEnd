@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 import api from "@/service/axios";
-import { apiResponseSchema } from "../schemas/contentSchema/GetContentsSchema";
+import { apiResponseSchema } from "../../schemas/contentSchema/GetContentsSchema";
 import type { ContentPayloadResponse } from "@/Interface/content/ContentPayloadResponse";
 
 export async function fetchContents(params?: {

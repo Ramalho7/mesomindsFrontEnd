@@ -46,6 +46,8 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { useGetContent } from "@/hooks/content/useGetContent";
 import { useDeleteContent } from "@/hooks/content/useDeleteContent";
+import { useContentTags } from "@/hooks/content/contentTags/useGetContentTags";
+import { useContentTypes } from "@/hooks/content/contentTypes/useGetContentTypes";
 
 export const Route = createFileRoute("/_dashboard/content/")({
   component: RouteComponent,
@@ -140,6 +142,14 @@ function RouteComponent() {
     }
   };
 
+  const { data: allTypes } = useContentTypes();
+
+  const uniqueContentTypes = allTypes?.data || [];
+
+  const { data: allTags } = useContentTags();
+
+  const uniqueContentTags = allTags?.data || [];
+
   if (isError) {
     return <div className="text-red-500">Erro ao carregar os conteúdos.</div>;
   }
@@ -173,7 +183,7 @@ function RouteComponent() {
             )}
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-[8px] sm:gap-[16px]">
+          <div className="flex flex-col justify-center items-center sm:flex-row gap-[8px] sm:gap-[16px]">
             <div className="relative w-full sm:w-auto">
               <Controller
                 name="status"
@@ -190,8 +200,9 @@ function RouteComponent() {
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Active">Ativo</SelectItem>
-                      <SelectItem value="Inactive">Inativo</SelectItem>
+                      <SelectItem value="Ativo">Ativo</SelectItem>
+                      <SelectItem value="Inativo">Inativo</SelectItem>
+                      <SelectItem value="Rascunho">Rascunho</SelectItem>
                     </SelectContent>
                   </Select>
                 )}
@@ -230,6 +241,21 @@ function RouteComponent() {
                             {!field.value && <CheckIcon className="mr-2 w-4 h-4" />}
                             Limpar filtro
                           </CommandItem>
+                          {uniqueContentTypes.map((type) => (
+                            <CommandItem
+                              key={type.id}
+                              onSelect={() => {
+                                field.onChange(type.title);
+                                setEnabled(false);
+                                setOpenContentType(false);
+                              }}
+                            >
+                              {field.value === type.title && (
+                                <CheckIcon className="mr-2 w-4 h-4" />
+                              )}
+                              {type.title}
+                            </CommandItem>
+                          ))}
                         </CommandGroup>
                       </CommandList>
                     </Command>
@@ -270,6 +296,21 @@ function RouteComponent() {
                             {!field.value && <CheckIcon className="mr-2 w-4 h-4" />}
                             Limpar filtro
                           </CommandItem>
+                          {uniqueContentTags.map((tag) => (
+                            <CommandItem
+                              key={tag.id}
+                              onSelect={() => {
+                                field.onChange(tag.tag_name);
+                                setEnabled(false);
+                                setOpenContentTag(false);
+                              }}
+                            >
+                              {field.value === tag.tag_name && (
+                                <CheckIcon className="mr-2 w-4 h-4" />
+                              )}
+                              {tag.tag_name}
+                            </CommandItem>
+                          ))}
                         </CommandGroup>
                       </CommandList>
                     </Command>
@@ -302,7 +343,7 @@ function RouteComponent() {
                       {content.title}
                     </h2>
                   </Link>
-                  
+
                   <div className="flex gap-2 items-center mt-3">
                     <p className="font-bold text-sm text-secondary">Tags:</p>
                     {content.content_tags.map((tag) => (

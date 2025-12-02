@@ -6,7 +6,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoginForm from "@/components/LoginForm/LoginForm";
-import { PayloadLoginShema } from "@/service/schemas/loginSchema";
+import { PayloadLoginShema } from "@/schemas/loginSchema";
 
 const baseAuthValue: AuthState = {
     isAuthenticated: true,

@@ -1,6 +1,6 @@
 
 import { EditQuestionApi } from "@/service/question/EditQuestion";
-import type { EditQuestionPayload } from "@/service/schemas/questionSchema/UpdateQuestionSchema";
+import type { EditQuestionPayload } from "@/schemas/questionSchema/UpdateQuestionSchema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useEditQuestion() {

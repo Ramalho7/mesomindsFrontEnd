@@ -225,6 +225,19 @@ function RouteComponent() {
               </Command>
             </PopoverContent>
           </Popover>
+
+          <Button
+            variant="outline"
+            onClick={() => {
+              setSearch("");
+              setStatusFilter(undefined);
+              setContentTypeFilter(undefined);
+              setContentTagFilter(undefined);
+              setEnabled(false);
+            }}
+          >
+            Limpar Filtros
+          </Button>
         </div>
       </div>
 
@@ -313,10 +326,10 @@ function RouteComponent() {
           {contents?.links.some(
             (link: any) => link.page && link.page > currentPage + 1,
           ) && (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
           {contents?.links
             .filter((link: any) => typeof link.page === "number")
             .reduce<any[]>((acc, link: any) => {
@@ -350,10 +363,10 @@ function RouteComponent() {
           {contents?.links.some(
             (link: any) => link.page && link.page > currentPage + 1,
           ) && (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
           <PaginationItem>
             <PaginationNext
               href={`?page=${contents?.next_page_url ? contents?.next_page_url.split("page=")[1] : 1}`}

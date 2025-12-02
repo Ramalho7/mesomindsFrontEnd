@@ -1,19 +1,19 @@
 import { useRouter } from "@tanstack/react-router";
 import { useForm, Controller, type SubmitHandler, useFieldArray } from "react-hook-form";
 import { Input } from "../ui/input";
-import { PostQuestionCollectionSchema, type PostQuestionCollectionType } from "@/service/schemas/questionCollection/PostQuestionCollection";
+import { PostQuestionCollectionSchema, type PostQuestionCollectionType } from "@/schemas/questionCollection/PostQuestionCollection";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { useCreateQuestionCollection } from "@/hooks/questionCollection/useCreateQuestionCollection";
 import { useUpdateQuestionCollection } from "@/hooks/questionCollection/useUpdateQuestionCollection";
-import { UpdateQuestionCollectionSchema, type UpdateQuestionCollectionType } from "@/service/schemas/questionCollection/UpdateQuestionCollectionSchema";
+import { UpdateQuestionCollectionSchema, type UpdateQuestionCollectionType } from "@/schemas/questionCollection/UpdateQuestionCollectionSchema";
 import Tiptap from "../TipTap/Tiptap";
 import { Button } from "../ui/button";
 import { Plus, Trash2 } from "lucide-react";
 import { useGetMaterias } from "@/hooks/materia/useGetMateria";
 import { useEffect, useState } from "react";
-import type { QuestionCollectionData } from "@/service/schemas/questionCollection/QuestionCollectionData";
-import type { PostQuestionSchemaType } from "@/service/schemas/questionSchema/PostQuestionSchema";
-import { PostQuestionSchema } from "@/service/schemas/questionSchema/PostQuestionSchema";
+import type { QuestionCollectionData } from "@/schemas/questionCollection/QuestionCollectionData";
+import type { PostQuestionSchemaType } from "@/schemas/questionSchema/PostQuestionSchema";
+import { PostQuestionSchema } from "@/schemas/questionSchema/PostQuestionSchema";
 
 interface QuestionCollectionFormProps {
     initialData?: QuestionCollectionData;

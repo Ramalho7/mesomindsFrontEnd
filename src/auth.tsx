@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import type { User } from "./Interface/User";
-import { PayloadLoginShema } from "./service/schemas/loginSchema";
+import { PayloadLoginShema } from "./schemas/loginSchema";
 import { z } from "zod";
 import api from "./service/axios";
 import {
   PayloadRegisterSchema,
-} from "./service/schemas/registerSchema";
+} from "./schemas/registerSchema";
 
 export interface AuthState {
   isAuthenticated: boolean;

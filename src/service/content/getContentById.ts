@@ -1,7 +1,7 @@
 import { ZodError } from "zod";
 import api from "@/service/axios";
 import type { ContentPayload } from "@/Interface/content/ContentPayload";
-import { ContentByIdResponseSchema } from "../schemas/contentSchema/GetContentByIdSchema";
+import { ContentByIdResponseSchema } from "../../schemas/contentSchema/GetContentByIdSchema";
 
 
 

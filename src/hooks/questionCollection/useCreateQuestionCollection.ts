@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createQuestionCollection } from "@/service/questionCollection/PostQuestionCollection";
-import type { PostQuestionCollectionType } from "@/service/schemas/questionCollection/PostQuestionCollection";
+import type { PostQuestionCollectionType } from "@/schemas/questionCollection/PostQuestionCollection";
 
 export function useCreateQuestionCollection() {
     const queryClient = useQueryClient();

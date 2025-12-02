@@ -23,7 +23,7 @@ import { useCreateContent } from "@/hooks/content/useCreateContent";
 import { useUpdateContent } from "@/hooks/content/useUpdateContent";
 import { useContentTypes } from "@/hooks/content/contentTypes/useGetContentTypes";
 import { useContentTags } from "@/hooks/content/contentTags/useGetContentTags";
-import type { getContentSchema } from "@/service/schemas/contentSchema/GetContentsSchema";
+import type { getContentSchema } from "@/schemas/contentSchema/GetContentsSchema";
 
 interface ContentFormProps {
   initialData?: getContentSchema | ContentPayload;
