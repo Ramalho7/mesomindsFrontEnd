@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm, type FieldErrors, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import { PayloadLoginShema, type PayloadLoginShemaType } from "@/service/schemas/loginSchema";
+import { PayloadLoginShema, type PayloadLoginShemaType } from "@/schemas/loginSchema";
 import { z } from "zod";
 
 type AuthLike = {

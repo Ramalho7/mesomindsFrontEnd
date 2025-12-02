@@ -2,7 +2,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { useGetQuestionCollectionById } from '@/hooks/questionCollection/useGetQuestionsCollectionById'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import type { QuestionInCollectionType } from '@/service/schemas/questionCollection/QuestionInCollection'
+import type { QuestionInCollectionType } from '@/schemas/questionCollection/QuestionInCollection'
 import TiptapReadOnly from '@/components/TipTap/TiptapReadOnly'
 
 export const Route = createFileRoute('/_public/provas/$prova')({

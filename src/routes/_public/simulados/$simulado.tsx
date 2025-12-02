@@ -3,7 +3,7 @@ import { useGetQuestionCollectionById } from '@/hooks/questionCollection/useGetQ
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import TiptapReadOnly from '@/components/TipTap/TiptapReadOnly';
-import type { QuestionInCollectionType } from '@/service/schemas/questionCollection/QuestionInCollection'
+import type { QuestionInCollectionType } from '@/schemas/questionCollection/QuestionInCollection'
 
 export const Route = createFileRoute('/_public/simulados/$simulado')({
   component: RouteComponent,

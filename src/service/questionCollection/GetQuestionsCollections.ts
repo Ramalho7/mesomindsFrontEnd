@@ -1,7 +1,7 @@
 import { ZodError } from "zod";
 import api from "@/service/axios";
-import { QuestionCollectionResponseSchema } from "../schemas/questionCollection/QuestionCollectionResponse";
-import type { QuestionCollectionResponseType } from "../schemas/questionCollection/QuestionCollectionResponse";
+import { QuestionCollectionResponseSchema } from "../../schemas/questionCollection/QuestionCollectionResponse";
+import type { QuestionCollectionResponseType } from "../../schemas/questionCollection/QuestionCollectionResponse";
 
 interface FetchQuestionsCollectionsParams {
     search?: string;

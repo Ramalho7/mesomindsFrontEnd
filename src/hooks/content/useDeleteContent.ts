@@ -1,7 +1,7 @@
 import {
   DeleteContentApi,
 } from "@/service/content/deleteContent";
-import type { DeleteContentPayload } from "@/service/schemas/contentSchema/DeleteContentSchema";
+import type { DeleteContentPayload } from "@/schemas/contentSchema/DeleteContentSchema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useDeleteContent() {

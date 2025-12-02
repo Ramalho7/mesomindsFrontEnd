@@ -34,7 +34,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
-import type { QuestionCollectionData } from "@/service/schemas/questionCollection/QuestionCollectionData";
+import type { QuestionCollectionData } from "@/schemas/questionCollection/QuestionCollectionData";
 import { useAuth } from "@/auth";
 import { useGetQuestionsCollections } from "@/hooks/questionCollection/useGetQuestionsCollections";
 import { useDeleteQuestionCollection } from "@/hooks/questionCollection/useDeleteQuestionCollection";
@@ -165,7 +165,7 @@ function RouteComponent() {
                         )}
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-[8px] sm:gap-[16px]">
+                    <div className="flex flex-col justify-center items-center sm:flex-row gap-[8px] sm:gap-[16px]">
                         <div className="relative w-full sm:w-auto">
                             <Controller
                                 name="status"

@@ -1,6 +1,6 @@
 import api from "../axios";
-import { ResponseQuestionResponseSchema, type QuestionResponseType } from "../schemas/questionSchema/ResponseQuestionSchema";
-import { UpdateQuestionSchema, type EditQuestionPayload } from "../schemas/questionSchema/UpdateQuestionSchema";
+import { ResponseQuestionResponseSchema, type QuestionResponseType } from "../../schemas/questionSchema/ResponseQuestionSchema";
+import { UpdateQuestionSchema, type EditQuestionPayload } from "../../schemas/questionSchema/UpdateQuestionSchema";
 
 export async function EditQuestionApi(
     payload: EditQuestionPayload,

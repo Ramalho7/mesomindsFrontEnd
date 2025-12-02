@@ -2,7 +2,7 @@ import type { ContentTagResponse } from "@/Interface/content/contentTag/ContentT
 
 import { z } from "zod";
 import api from "@/service/axios";
-import { UserSchema } from "@/service/schemas/UserSchema";
+import { UserSchema } from "@/schemas/UserSchema";
 
 export const contentTagSchema = z.object({
   id: z.number(),

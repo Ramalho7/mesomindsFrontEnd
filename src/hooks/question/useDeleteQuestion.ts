@@ -1,6 +1,6 @@
 
 import { DeleteQuestionApi } from "@/service/question/DeleteQuestion";
-import type { DeleteQuestionPayload } from "@/service/schemas/questionSchema/DeleteQuestionSchema";
+import type { DeleteQuestionPayload } from "@/schemas/questionSchema/DeleteQuestionSchema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useDeleteQuestion() {

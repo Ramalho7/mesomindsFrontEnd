@@ -1,5 +1,5 @@
 import api from "@/service/axios";
-import { EditContentResponseSchema, EditContentSchema, type EditContentPayload, type EditContentResponse } from "../schemas/contentSchema/EditContentSchema";
+import { EditContentResponseSchema, EditContentSchema, type EditContentPayload, type EditContentResponse } from "../../schemas/contentSchema/EditContentSchema";
 
 export async function EditContentApi(
   payload: EditContentPayload,

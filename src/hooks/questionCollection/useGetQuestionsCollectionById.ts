@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { GetQuestionCollectionByIdApi } from "@/service/questionCollection/GetQuestionCollectionById";
-import type { QuestionCollectionData } from "@/service/schemas/questionCollection/QuestionCollectionData";
+import type { QuestionCollectionData } from "@/schemas/questionCollection/QuestionCollectionData";
 
 export function useGetQuestionCollectionById(id: number) {
     return useQuery<QuestionCollectionData, Error>({

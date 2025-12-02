@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/utils/formatDate";
-import type { QuestionDataType } from '@/service/schemas/questionSchema/ResponseQuestionSchema';
+import type { QuestionDataType } from '@/schemas/questionSchema/ResponseQuestionSchema';
 
 export const Route = createFileRoute('/_public/questoes/')({
   component: RouteComponent,

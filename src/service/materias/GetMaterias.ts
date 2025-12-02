@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 import api from "@/service/axios";
-import { getMateriaSchema, type GetMateriaResponseType } from "../schemas/materia/GetMateriaSchema";
+import { getMateriaSchema, type GetMateriaResponseType } from "../../schemas/materia/GetMateriaSchema";
 
 export async function fetchMaterias(): Promise<GetMateriaResponseType> {
     try {

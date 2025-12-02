@@ -1,7 +1,7 @@
 import { ZodError } from "zod";
 import api from "@/service/axios";
-import { GetQuestionsResponseSchema } from "../schemas/questionSchema/GetQuestionSchema";
-import type { GetQuestionsResponseType } from "../schemas/questionSchema/GetQuestionSchema";
+import { GetQuestionsResponseSchema } from "../../schemas/questionSchema/GetQuestionSchema";
+import type { GetQuestionsResponseType } from "../../schemas/questionSchema/GetQuestionSchema";
 
 export async function fetchQuestions(params?: {
     search?: string;

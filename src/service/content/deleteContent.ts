@@ -1,5 +1,5 @@
 import api from "@/service/axios";
-import { DeleteContentResponseSchema, DeleteContentSchema, type DeleteContentPayload, type DeleteContentResponse } from "../schemas/contentSchema/DeleteContentSchema";
+import { DeleteContentResponseSchema, DeleteContentSchema, type DeleteContentPayload, type DeleteContentResponse } from "../../schemas/contentSchema/DeleteContentSchema";
 
 export async function DeleteContentApi(
   payload: DeleteContentPayload,

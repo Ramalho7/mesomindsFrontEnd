@@ -1,5 +1,5 @@
 import { Controller, type Control, type UseFormRegister, type UseFormHandleSubmit, type FieldErrors } from "react-hook-form";
-import type { PayloadRegisterSchemaType } from "@/service/schemas/registerSchema";
+import type { PayloadRegisterSchemaType } from "@/schemas/registerSchema";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Button } from "../ui/button";

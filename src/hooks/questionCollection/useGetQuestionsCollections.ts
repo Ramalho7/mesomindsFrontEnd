@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchQuestionsCollections } from "@/service/questionCollection/GetQuestionsCollections";
-import type { QuestionCollectionResponseType } from "@/service/schemas/questionCollection/QuestionCollectionResponse";
+import type { QuestionCollectionResponseType } from "@/schemas/questionCollection/QuestionCollectionResponse";
 
 interface UseGetQuestionsCollectionsParams {
     search?: string;

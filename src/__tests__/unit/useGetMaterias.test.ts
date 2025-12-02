@@ -4,7 +4,7 @@ import { useGetMaterias } from "@/hooks/materia/useGetMateria";
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as GetMateriasModule from "@/service/materias/GetMaterias";
-import type { GetMateriaResponseType } from "@/service/schemas/materia/GetMateriaSchema";
+import type { GetMateriaResponseType } from "@/schemas/materia/GetMateriaSchema";
 
 vi.mock("@/service/materias/GetMaterias");
 

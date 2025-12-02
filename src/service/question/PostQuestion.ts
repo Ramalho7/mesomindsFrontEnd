@@ -1,6 +1,6 @@
 import api from "@/service/axios";
-import { PostQuestionSchema, type PostQuestionSchemaType } from "../schemas/questionSchema/PostQuestionSchema";
-import { ResponseQuestionResponseSchema, type QuestionResponseType } from "../schemas/questionSchema/ResponseQuestionSchema";
+import { PostQuestionSchema, type PostQuestionSchemaType } from "../../schemas/questionSchema/PostQuestionSchema";
+import { ResponseQuestionResponseSchema, type QuestionResponseType } from "../../schemas/questionSchema/ResponseQuestionSchema";
 
 export async function postQuestion(questionData: PostQuestionSchemaType): Promise<QuestionResponseType> {
     try {

@@ -6,7 +6,7 @@ import type {
   UseFormHandleSubmit,
   FieldErrors,
 } from "react-hook-form";
-import type { PayloadLoginShemaType } from "@/service/schemas/loginSchema";
+import type { PayloadLoginShemaType } from "@/schemas/loginSchema";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 
