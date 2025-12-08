@@ -15,7 +15,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-full">
           <SidebarTrigger data-testid="sidebar-trigger" className="sm:hidden" />
           <Link to={isDashboard ? '/dashboard' : '/'} aria-label="Ir para a página inicial">
-            <div className="logoBrand w-[80px] h-[80px] rounded-full bg-gray-800"></div>
+            <div className="logoBrand w-[80px] h-[80px] rounded-full"></div>
           </Link>
 
           <nav className="hidden sm:flex gap-12 text-2xl">
